@@ -15,12 +15,11 @@
       <sparkle:shortVersionString>1.3</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
 
-      <!-- ⚠️  Replace the URL and edSignature below with values from sign_update after uploading the DMG -->
       <enclosure
-        url="https://snapzone-seven.vercel.app/releases/SnapZone-1.3.dmg"
-        length="0"
-        type="application/octet-stream"
-        sparkle:edSignature="PLACEHOLDER_SIGNATURE_REPLACE_ME"
+        url="https://github.com/michelemeattini/snapzone-website/releases/download/Release/SnapZone.zip"
+        length="1671132"
+        type="application/zip"
+        sparkle:edSignature="MqMc+YKb89HViZEFT9TLMY8KvLJCU9zupKkKKQ6sxzaAxIG46pVDmPQPSSw1HclAmsrfx4k7YFMoA8hY4ZHSDw=="
       />
 
       <description><![CDATA[
