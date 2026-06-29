@@ -7,12 +7,12 @@
     <description>SnapZone version history</description>
     <language>en</language>
 
-    <!-- ==================== VERSION 1.3 ==================== -->
+    <!-- ==================== VERSION 1.4 ==================== -->
     <item>
-      <title>SnapZone 1.3</title>
-      <pubDate>Mon, 30 Jun 2026 12:00:00 +0000</pubDate>
-      <sparkle:version>4</sparkle:version>
-      <sparkle:shortVersionString>1.3</sparkle:shortVersionString>
+      <title>SnapZone 1.4</title>
+      <pubDate>Mon, 29 Jun 2026 14:00:00 +0200</pubDate>
+      <sparkle:version>5</sparkle:version>
+      <sparkle:shortVersionString>1.4</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
 
       <enclosure
@@ -23,27 +23,35 @@
       />
 
       <description><![CDATA[
+        <h2>SnapZone 1.4</h2>
+        <ul>
+          <li>Integrated Sparkle auto-updater for seamless background app updates.</li>
+          <li>Added Spanish language support (Español) across the app.</li>
+          <li>Redesigned Settings: merged License management into the General tab for a cleaner layout.</li>
+          <li>Removed Audit Log to reduce clutter and improve performance.</li>
+        </ul>
+      ]]></description>
+    </item>
+
+    <!-- ==================== VERSION 1.3 ==================== -->
+    <item>
+      <title>SnapZone 1.3</title>
+      <pubDate>Mon, 15 Jun 2026 12:00:00 +0200</pubDate>
+      <sparkle:version>4</sparkle:version>
+      <sparkle:shortVersionString>1.3</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+
+      <enclosure
+        url="https://github.com/michelemeattini/snapzone-website/releases/download/Release/SnapZone_v1.3.zip"
+        length="1600000"
+        type="application/zip"
+        sparkle:edSignature="PLACEHOLDER_ED25519_SIGNATURE_FOR_V1.3"
+      />
+
+      <description><![CDATA[
         <h2>SnapZone 1.3</h2>
         <ul>
           <li>All snap layouts, shortcuts, and trackpad gestures dynamically adapt to the available screen space.</li>
-          <li>Automatic updates powered by Sparkle — the app now checks for updates daily and notifies you when a new version is available.</li>
-          <li>Added Spanish language support.</li>
-        </ul>
-
-        <h2>SnapZone 1.2</h2>
-        <ul>
-          <li>New 'Centered Zone' layout with custom aspect ratios (e.g. 16:9 on ultra-wide 21:9 monitors).</li>
-          <li>Percentage scale adjustment (10–100%) for centered zones with live preview.</li>
-          <li>Ability to bind snap zones to specific monitors.</li>
-          <li>Fixed thumbnail preview for layouts with empty or scaled zones.</li>
-          <li>Improved drag-to-snap overlay to accurately reflect scaled layout dimensions.</li>
-        </ul>
-
-        <h2>SnapZone 1.1</h2>
-        <ul>
-          <li>Added Changelog view.</li>
-          <li>Fixed false gesture activations when dragging windows.</li>
-          <li>Granular toggles to enable/disable individual gestures (up, down, left, right, corners).</li>
         </ul>
       ]]></description>
     </item>
