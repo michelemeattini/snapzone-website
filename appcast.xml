@@ -6,6 +6,50 @@
     <link>https://snapzone-seven.vercel.app</link>
     <description>SnapZone version history</description>
     <language>en</language>
+    <!-- ==================== VERSION 1.4 ==================== -->
+    <item>
+      <title>SnapZone 1.4</title>
+      <pubDate>Mon, 29 Jun 2026 17:03:35 +0200</pubDate>
+      <sparkle:version>5</sparkle:version>
+      <sparkle:shortVersionString>1.4</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <enclosure
+        url="https://github.com/michelemeattini/snapzone-website/releases/download/v1.4/SnapZone.zip"
+        length="1618536"
+        type="application/zip"
+        sparkle:edSignature="bXa9OcH/jIjAcBh3lP2eNpGFNuyM32TASQxPFlw9arCp5eoTw/gpcyr575q+bwc6mm2OJBWMr4CN4j47lQrACg=="
+      />
+      <description><![CDATA[
+        <h2>SnapZone 1.4</h2>
+        <ul>
+          <li>See <a href="https://snapzone-seven.vercel.app">snapzone.app</a> for release notes.</li>
+        </ul>
+      ]]></description>
+    </item>
+
+
+    <!-- ==================== VERSION 1.4 ==================== -->
+    <item>
+      <title>SnapZone 1.4</title>
+      <pubDate>Mon, 29 Jun 2026 16:55:59 +0200</pubDate>
+      <sparkle:version>5</sparkle:version>
+      <sparkle:shortVersionString>1.4</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <enclosure
+        url="https://github.com/michelemeattini/snapzone-website/releases/download/v1.4/SnapZone.zip"
+        length="1618536"
+        type="application/zip"
+        sparkle:edSignature="bXa9OcH/jIjAcBh3lP2eNpGFNuyM32TASQxPFlw9arCp5eoTw/gpcyr575q+bwc6mm2OJBWMr4CN4j47lQrACg=="
+      />
+      <description><![CDATA[
+        <h2>SnapZone 1.4</h2>
+        <ul>
+          <li>See <a href="https://snapzone-seven.vercel.app">snapzone.app</a> for release notes.</li>
+        </ul>
+      ]]></description>
+    </item>
+
+
 
     <!-- ==================== VERSION 1.4 ==================== -->
     <item>
