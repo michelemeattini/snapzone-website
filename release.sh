@@ -2,115 +2,140 @@
 # ============================================================
 # SnapZone — Release Helper
 # ============================================================
-# Firma il DMG con la chiave privata Sparkle salvata nel Keychain,
-# aggiorna l'appcast.xml e prepara tutto per il push su Vercel.
+# Firma il file (zip o dmg) con la chiave privata Sparkle salvata
+# nel Keychain e aggiorna l'appcast.xml per il deploy su Vercel.
 #
 # UTILIZZO:
-#   ./release.sh <percorso_al_DMG> <versione> <data_rilascio>
+#   ./release.sh <percorso_file> <versione> <build_number> <url_download>
 #
-# ESEMPIO:
-#   ./release.sh ~/Desktop/SnapZone-1.3.dmg 1.3 "Mon, 30 Jun 2026 12:00:00 +0000"
+# ESEMPI:
+#   # File su GitHub Releases (consigliato):
+#   ./release.sh ~/Downloads/SnapZone.zip 1.4 5 \
+#     "https://github.com/michelemeattini/snapzone-website/releases/download/v1.4/SnapZone.zip"
+#
+#   # File hostato su Vercel:
+#   ./release.sh ~/Downloads/SnapZone.zip 1.4 5 ""
+#   # (URL vuoto = usa https://snapzone-seven.vercel.app/releases/SnapZone-1.4.zip)
 # ============================================================
 
 set -e
 
-# ── Parametri ────────────────────────────────────────────────
-DMG_PATH="$1"
+FILE_PATH="$1"
 VERSION="$2"
-RELEASE_DATE="${3:-$(date -R)}"
+BUILD_NUMBER="$3"
+DOWNLOAD_URL="$4"
+RELEASE_DATE="${5:-$(date -R)}"
 
 SPARKLE_BIN=~/Library/Developer/Xcode/DerivedData/SnapZone-fcooqtkxzbarbqbfdejdmtjbsvof/SourcePackages/artifacts/sparkle/Sparkle/bin
 SIGN_UPDATE="$SPARKLE_BIN/sign_update"
 APPCAST="$(dirname "$0")/appcast.xml"
-RELEASES_DIR="$(dirname "$0")/releases"
 
 # ── Validazioni ──────────────────────────────────────────────
-if [ -z "$DMG_PATH" ] || [ -z "$VERSION" ]; then
-  echo "❌  Uso: $0 <percorso_dmg> <versione> [data_rilascio]"
-  echo "    Esempio: $0 ~/Desktop/SnapZone-1.4.dmg 1.4"
+if [ -z "$FILE_PATH" ] || [ -z "$VERSION" ] || [ -z "$BUILD_NUMBER" ]; then
+  echo "❌  Uso: $0 <percorso_file> <versione> <build_number> [url_download] [data_rilascio]"
+  echo "    Esempio: $0 ~/Downloads/SnapZone.zip 1.4 5 https://github.com/.../SnapZone.zip"
   exit 1
 fi
 
-if [ ! -f "$DMG_PATH" ]; then
-  echo "❌  File DMG non trovato: $DMG_PATH"
+if [ ! -f "$FILE_PATH" ]; then
+  echo "❌  File non trovato: $FILE_PATH"
   exit 1
 fi
 
 if [ ! -f "$SIGN_UPDATE" ]; then
   echo "❌  sign_update non trovato in: $SIGN_UPDATE"
-  echo "    Assicurati di aver compilato il progetto almeno una volta con Xcode."
+  echo "    Apri il progetto in Xcode almeno una volta per scaricare le dipendenze SPM."
   exit 1
 fi
 
-# ── Copia DMG nella cartella releases/ ──────────────────────
-mkdir -p "$RELEASES_DIR"
-DMG_FILENAME="SnapZone-${VERSION}.dmg"
-cp "$DMG_PATH" "$RELEASES_DIR/$DMG_FILENAME"
-echo "✅  DMG copiato in releases/$DMG_FILENAME"
+# ── Determina URL e tipo ─────────────────────────────────────
+FILENAME=$(basename "$FILE_PATH")
+EXT="${FILENAME##*.}"
 
-# ── Firma il DMG con Sparkle ─────────────────────────────────
-echo "🔏  Firma del DMG in corso..."
-SIGNATURE=$("$SIGN_UPDATE" "$RELEASES_DIR/$DMG_FILENAME" 2>&1 | grep -o 'sparkle:edSignature="[^"]*"' | sed 's/sparkle:edSignature="//;s/"//')
-DMG_SIZE=$(stat -f%z "$RELEASES_DIR/$DMG_FILENAME")
-echo "✅  Firma generata: $SIGNATURE"
-echo "📦  Dimensione DMG: $DMG_SIZE bytes"
+if [ -z "$DOWNLOAD_URL" ]; then
+  # Copia nella cartella releases/ del sito e usa URL Vercel
+  RELEASES_DIR="$(dirname "$0")/releases"
+  mkdir -p "$RELEASES_DIR"
+  DEST_FILENAME="SnapZone-${VERSION}.${EXT}"
+  cp "$FILE_PATH" "$RELEASES_DIR/$DEST_FILENAME"
+  DOWNLOAD_URL="https://snapzone-seven.vercel.app/releases/$DEST_FILENAME"
+  echo "✅  File copiato in releases/$DEST_FILENAME"
+fi
 
-# ── Aggiorna appcast.xml ─────────────────────────────────────
+if [ "$EXT" = "zip" ]; then
+  CONTENT_TYPE="application/zip"
+else
+  CONTENT_TYPE="application/octet-stream"
+fi
+
+# ── Firma il file con Sparkle ─────────────────────────────────
+echo "🔏  Firma del file in corso..."
+chmod +x "$SIGN_UPDATE"
+SIGN_OUTPUT=$("$SIGN_UPDATE" "$FILE_PATH" 2>&1)
+SIGNATURE=$(echo "$SIGN_OUTPUT" | grep -o 'sparkle:edSignature="[^"]*"' | sed 's/sparkle:edSignature="//;s/"//')
+FILE_SIZE=$(echo "$SIGN_OUTPUT" | grep -o 'length="[^"]*"' | sed 's/length="//;s/"//')
+
+if [ -z "$SIGNATURE" ]; then
+  echo "❌  Firma fallita. Output:"
+  echo "$SIGN_OUTPUT"
+  exit 1
+fi
+
+echo "✅  Firma: $SIGNATURE"
+echo "📦  Dimensione: $FILE_SIZE bytes"
+
+# ── Inserisce nuovo item in appcast.xml ──────────────────────
 echo "📝  Aggiornamento appcast.xml..."
 
-# Legge il changelog dall'ultima versione nel changelog Swift (testo semplice)
-CHANGELOG_HTML="<ul><li>See <a href=\"https://snapzone-seven.vercel.app/#changelog\">Changelog</a> for details.</li></ul>"
+python3 - "$APPCAST" "$VERSION" "$BUILD_NUMBER" "$RELEASE_DATE" "$DOWNLOAD_URL" "$FILE_SIZE" "$CONTENT_TYPE" "$SIGNATURE" <<'PYEOF'
+import sys, re
 
-python3 - <<PYEOF
-import re
+appcast_path, version, build, date, url, size, ctype, sig = sys.argv[1:]
 
-appcast_path = "$APPCAST"
 with open(appcast_path, "r") as f:
     content = f.read()
 
-new_item = """
-    <!-- ==================== VERSION $VERSION ==================== -->
+new_item = f"""
+    <!-- ==================== VERSION {version} ==================== -->
     <item>
-      <title>SnapZone $VERSION</title>
-      <pubDate>$RELEASE_DATE</pubDate>
-      <sparkle:version>$VERSION</sparkle:version>
-      <sparkle:shortVersionString>$VERSION</sparkle:shortVersionString>
+      <title>SnapZone {version}</title>
+      <pubDate>{date}</pubDate>
+      <sparkle:version>{build}</sparkle:version>
+      <sparkle:shortVersionString>{version}</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
       <enclosure
-        url="https://snapzone-seven.vercel.app/releases/$DMG_FILENAME"
-        length="$DMG_SIZE"
-        type="application/octet-stream"
-        sparkle:edSignature="$SIGNATURE"
+        url="{url}"
+        length="{size}"
+        type="{ctype}"
+        sparkle:edSignature="{sig}"
       />
-      <description><![CDATA[$CHANGELOG_HTML]]></description>
+      <description><![CDATA[
+        <h2>SnapZone {version}</h2>
+        <ul>
+          <li>See <a href="https://snapzone-seven.vercel.app">snapzone.app</a> for release notes.</li>
+        </ul>
+      ]]></description>
     </item>
 
 """
 
-# Inserisce il nuovo item subito dopo il tag <channel> + intestazione
-content = content.replace(
-    "    <!-- ==================== VERSION $VERSION ====================",
-    ""  # Rimuove eventuale placeholder duplicato
-)
-# Inserisce prima del primo <item>
-content = re.sub(r"(<item>)", new_item + r"\1", content, count=1)
+# Inserisce prima del primo <item> esistente
+content = re.sub(r"(\s+<!-- =+)", new_item + r"\1", content, count=1)
 
 with open(appcast_path, "w") as f:
     f.write(content)
 
-print("✅  appcast.xml aggiornato")
+print("✅  appcast.xml aggiornato con versione", version)
 PYEOF
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "  ✅  Release v$VERSION pronta!"
+echo "  ✅  Release v${VERSION} (build ${BUILD_NUMBER}) pronta!"
 echo ""
 echo "  Passi successivi:"
-echo "  1. Fai commit e push della repo SnapZoneWeb"
-echo "     → Vercel farà il deploy automatico"
-echo "     → appcast.xml sarà su https://snapzone-seven.vercel.app/appcast.xml"
-echo "     → Il DMG sarà su https://snapzone-seven.vercel.app/releases/$DMG_FILENAME"
+echo "  1. git add appcast.xml && git commit -m 'release: v${VERSION}' && git push"
+echo "     → Vercel fa il deploy automatico"
+echo "     → appcast.xml aggiornato su https://snapzone-seven.vercel.app/appcast.xml"
 echo ""
-echo "  2. Gli utenti con la v precedente riceveranno la notifica di aggiornamento"
-echo "     la prossima volta che aprono l'app (entro 24h automaticamente)"
+echo "  2. Gli utenti riceveranno la notifica entro 24h"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
