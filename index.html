@@ -11,6 +11,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Mona+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="alternate icon" type="image/png" href="assets/logo.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -36,20 +38,17 @@
   <nav id="navbar" role="navigation" aria-label="Main navigation">
     <a href="/" class="logo" aria-label="SnapZone home">
       <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-        <rect x="2" y="2" width="11" height="11" rx="2.5" fill="var(--primary)"/>
-        <rect x="15" y="2" width="11" height="11" rx="2.5" fill="var(--primary)" opacity="0.5"/>
-        <rect x="2" y="15" width="11" height="11" rx="2.5" fill="var(--primary)" opacity="0.5"/>
-        <rect x="15" y="15" width="11" height="11" rx="2.5" fill="var(--primary)" opacity="0.25"/>
+        <rect x="3" y="6" width="10" height="16" rx="3" fill="var(--primary)"/>
+        <rect x="15" y="6" width="10" height="16" rx="3" fill="var(--primary)"/>
       </svg>
       <span>SnapZone</span>
     </a>
     <div class="nav-links" role="list">
-      <a href="#features"     role="listitem" data-i18n="nav_features">Features</a>
-      <a href="#how-it-works" role="listitem" data-i18n="nav_how_it_works">How it works</a>
-      <a href="#fancyzone"    role="listitem" data-i18n="nav_zones">Zones</a>
-      <a href="#pricing"      role="listitem" data-i18n="nav_pricing">Pricing</a>
       <a href="#gestures"     role="listitem" data-i18n="nav_gestures">Gestures</a>
+      <a href="#fancyzone"    role="listitem" data-i18n="nav_zones">Zones</a>
+      <a href="#how-it-works" role="listitem" data-i18n="nav_how_it_works">How it works</a>
       <a href="#analytics"    role="listitem" data-i18n="nav_analytics">Analytics</a>
+      <a href="#pricing"      role="listitem" data-i18n="nav_pricing">Pricing</a>
     </div>
     <div class="nav-right">
       <div class="lang-selector" role="group" aria-label="Language selection" id="lang-selector">
@@ -98,396 +97,16 @@
         <p class="hero-footnote" data-i18n="hero_footnote">10-day free trial · macOS 13+ · No account required</p>
       </div>
 
-      <!-- Video placeholder — replace with your embed -->
-      <div class="hero-video-slot" id="hero-video-slot" aria-label="Product demo video">
-        <div class="hvs-inner">
-          <div class="hvs-play" aria-hidden="true">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-          <span class="hvs-label" data-i18n="hero_video_label">Watch SnapZone in action</span>
-        </div>
-        <div class="hvs-badge" aria-hidden="true" data-i18n="hero_video_badge">📽 Replace with your video embed</div>
-      </div>
+
 
     </div><!-- /hero-inner -->
 
     <div class="hero-scroll-hint" aria-hidden="true">
-      <span>Scroll</span>
       <div class="scroll-line"></div>
     </div>
   </section>
 
-  <!-- ════════════════ HOW IT WORKS ════════════════ -->
-  <section id="how-it-works" aria-labelledby="how-heading">
-    <div class="section-inner">
-      <h2 id="how-heading" class="section-h2" data-i18n="how_title">Three ways to snap</h2>
-      <p class="section-sub" data-i18n="how_sub">Use whichever method feels natural. SnapZone handles all three simultaneously.</p>
-      <div class="methods-grid">
 
-        <article class="method-card" id="method-drag">
-          <div class="method-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="3" width="9" height="18" rx="2" stroke="var(--primary)" stroke-width="1.5" fill="var(--primary-dim)"/>
-              <rect x="13" y="3" width="9" height="18" rx="2" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.4"/>
-              <path d="M11.5 12H13" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3 data-i18n="method_drag_title">Drag to edge</h3>
-          <p data-i18n="method_drag_body">Move any window toward a screen edge or corner. A high-fidelity translucent overlay appears instantly. Release, and it locks perfectly.</p>
-          <div class="method-demo drag-demo" aria-hidden="true">
-            <div class="dd-screen">
-              <div class="dd-window" id="dd-window"></div>
-              <div class="dd-zone" id="dd-zone"></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="method-card" id="method-gesture">
-          <div class="method-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="13" width="20" height="9" rx="3" fill="var(--primary-dim)" stroke="var(--primary)" stroke-width="1.5"/>
-              <path d="M7 13V10M10 13V9M13 13V10M16 13V11" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3 data-i18n="method_gesture_title">Trackpad gesture</h3>
-          <p data-i18n="method_gesture_body">Forget dragging windows across ultrawide monitors. Hover on a titlebar, then swipe two fingers. Works at the native macOS event level.</p>
-          <div class="method-demo gesture-demo" aria-hidden="true">
-            <div class="gd-pad">
-              <div class="gd-fingers" id="gd-fingers">
-                <span class="gd-finger"></span>
-                <span class="gd-finger"></span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="method-card" id="method-hotkey">
-          <div class="method-icon" aria-hidden="true">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <rect x="2" y="6" width="20" height="12" rx="2.5" stroke="var(--primary)" stroke-width="1.5" fill="var(--primary-dim)"/>
-              <rect x="5"  y="9" width="6" height="5" rx="1" fill="var(--primary)" opacity="0.25"/>
-              <rect x="13" y="9" width="6" height="5" rx="1" fill="var(--primary)" opacity="0.9"/>
-            </svg>
-          </div>
-          <h3 data-i18n="method_hotkey_title">Keyboard shortcuts</h3>
-          <p data-i18n="method_hotkey_body">Every snap action has a dedicated global shortcut. Fully remappable. The shortcuts act instantly on the currently focused window.</p>
-          <div class="method-demo hotkey-demo" aria-hidden="true">
-            <div class="hk-sequence" id="hk-sequence">
-              <kbd class="hk-key" id="hk-ctrl">⌃</kbd>
-              <kbd class="hk-key" id="hk-opt">⌥</kbd>
-              <kbd class="hk-key" id="hk-arrow">→</kbd>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════ FANCYZONE SHOWCASE ══════════════ -->
-  <section id="fancyzone" aria-labelledby="fancyzone-heading">
-    <div class="section-inner fancyzone-inner">
-
-      <!-- Left: text -->
-      <div class="fz-showcase-text">
-        <div class="hero-badge" style="margin-bottom: var(--space-m);" data-i18n="fz_badge">
-          <span class="badge-dot" aria-hidden="true"></span>
-          Smart Zones
-        </div>
-        <h2 id="fancyzone-heading" class="section-h2" style="max-width:16ch;" data-i18n="fz_title">Your screen,<br><span class="hero-accent">divided perfectly.</span></h2>
-        <p class="section-sub left-align" data-i18n="fz_sub">SnapZone draws translucent zone overlays the moment you start dragging. Hover into a zone — it lights up instantly. Release — the window locks in, pixel-perfect.</p>
-        <ul class="fz-feature-list" role="list">
-          <li data-i18n="fz_item1">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Instant zone highlight — no latency
-          </li>
-          <li data-i18n="fz_item2">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Numbered zones with custom labels
-          </li>
-          <li data-i18n="fz_item3">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            200 ms CoreAnimation snap
-          </li>
-          <li data-i18n="fz_item4">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Halves, thirds, quarters, custom grids
-          </li>
-        </ul>
-        <a href="#pricing" class="btn-primary" id="fancyzone-cta-btn" data-i18n="fz_cta">Try it free for 10 days</a>
-      </div>
-
-      <!-- Right: live zone demo -->
-      <div class="fz-showcase-demo" aria-hidden="true">
-        <div class="fz-demo-screen" id="fz-demo-screen">
-          <!-- macOS mock menubar -->
-          <div class="fz-demo-menubar">
-            <div class="fz-demo-dots">
-              <span class="dw-dot dw-dot-r"></span>
-              <span class="dw-dot dw-dot-y"></span>
-              <span class="dw-dot dw-dot-g"></span>
-            </div>
-            <span class="fz-demo-clock">9:41</span>
-          </div>
-          <!-- Desktop area with zones -->
-          <div class="fz-demo-desktop">
-            <!-- Background windows -->
-            <div class="fzd-bg-win fzd-win-1"></div>
-            <div class="fzd-bg-win fzd-win-2"></div>
-            <!-- Zone overlay — always visible -->
-            <div class="fzd-overlay" id="fzd-overlay">
-              <div class="fzd-zone" id="fzd-z1">
-                <div class="fzd-num">1</div>
-                <div class="fzd-label" data-i18n="fz_label_left">Left Half</div>
-              </div>
-              <div class="fzd-zone" id="fzd-z2">
-                <div class="fzd-num">2</div>
-                <div class="fzd-label" data-i18n="fz_label_right">Right Half</div>
-              </div>
-            </div>
-            <!-- Animated dragged window -->
-            <div class="fzd-window" id="fzd-window">
-              <div class="fzd-win-bar">
-                <div class="dw-dots">
-                  <span class="dw-dot dw-dot-r"></span>
-                  <span class="dw-dot dw-dot-y"></span>
-                  <span class="dw-dot dw-dot-g"></span>
-                </div>
-                <span class="dw-title" data-i18n="fz_win_title">Xcode — SnapZone.xcodeproj</span>
-              </div>
-              <div class="fzd-win-body">
-                <div class="fzd-code-line fzd-w90"></div>
-                <div class="fzd-code-line fzd-w70"></div>
-                <div class="fzd-code-line fzd-w55"></div>
-                <div class="fzd-code-line fzd-w80"></div>
-              </div>
-            </div>
-            <!-- Snap badge -->
-            <div class="fzd-snap-badge" id="fzd-snap-badge" data-i18n="fz_toast_left">Snapped to Left Half</div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ══════════════ FEATURES — BENTO ══════════════ -->
-  <section id="features" aria-labelledby="features-heading">
-    <div class="section-inner">
-      <h2 id="features-heading" class="section-h2" data-i18n="bento_title">Built for precision work</h2>
-      <div class="features-bento">
-
-        <article class="bento-card" id="feat-layouts">
-          <div class="bento-text">
-            <h3 data-i18n="bento_layout_title">Custom &amp; Centered Zones</h3>
-            <p data-i18n="bento_layout_body">Design your own grid using exact percentages. Perfect for Ultrawide monitors: create a perfectly centered zone (e.g., 60% width) for optimal posture and focus.</p>
-          </div>
-          <div class="bento-visual layout-vis" aria-hidden="true">
-            <div class="lv-grid" id="lv-grid">
-              <div class="lv-zone lv-z1 lv-active"></div>
-              <div class="lv-zone lv-z2"></div>
-              <div class="lv-zone lv-z3"></div>
-              <div class="lv-handle" id="lv-handle"></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="bento-card" id="feat-pinning">
-          <div class="bento-text">
-            <h3 data-i18n="bento_pin_title">Window pinning</h3>
-            <p data-i18n="bento_pin_body">Mark a window's position as permanent. SnapZone restores it to the exact frame after app restarts, display changes, or space switches.</p>
-          </div>
-          <div class="bento-visual pin-vis" aria-hidden="true">
-            <div class="pv-container">
-              <div class="pv-window"></div>
-              <div class="pv-pin" id="pv-pin">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--primary)" aria-hidden="true">
-                  <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                </svg>
-              </div>
-              <div class="pv-restore" id="pv-restore" aria-hidden="true">↩</div>
-            </div>
-          </div>
-        </article>
-
-        <article class="bento-card" id="feat-access">
-          <div class="bento-text">
-            <h3 data-i18n="bento_access_title">Native performance</h3>
-            <p data-i18n="bento_access_body">Written in Swift with CoreAnimation. 200ms animations. No battery drain, no lag — under 15 MB of RAM and less than 0.1% CPU.</p>
-          </div>
-          <div class="bento-visual stats-mini" aria-hidden="true">
-            <div class="sm-row">
-              <span class="sm-label" data-i18n="bento_mem">Memory</span>
-              <div class="sm-bar-wrap"><div class="sm-bar sm-bar-low" id="sm-mem"></div></div>
-              <span class="sm-val">11 MB</span>
-            </div>
-            <div class="sm-row">
-              <span class="sm-label" data-i18n="bento_cpu">CPU</span>
-              <div class="sm-bar-wrap"><div class="sm-bar sm-bar-minimal" id="sm-cpu"></div></div>
-              <span class="sm-val">0.04%</span>
-            </div>
-          </div>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════ ANALYTICS ══════════════ -->
-  <section id="analytics" aria-labelledby="analytics-heading">
-    <div class="section-inner analytics-inner">
-      <div class="analytics-text">
-        <h2 id="analytics-heading" class="section-h2" data-i18n="analytics_title">Know where your time goes</h2>
-        <p class="section-sub left-align" data-i18n="analytics_sub">
-          SnapZone logs every snap and calculates exactly how much time you save compared to dragging manually. Surfaced in a beautiful, glanceable dashboard.
-        </p>
-        <ul class="analytics-list" role="list">
-          <li data-i18n="analytics_item1">Daily and weekly time-saved summaries</li>
-          <li data-i18n="analytics_item2">Snap frequency by layout and method</li>
-          <li data-i18n="analytics_item3">Most-used zones per app</li>
-          <li data-i18n="analytics_item4">Streaks and personal records</li>
-        </ul>
-        <a href="#pricing" class="btn-primary" id="analytics-download-btn" data-i18n="analytics_btn">Start tracking free</a>
-      </div>
-      <div class="analytics-visual" aria-hidden="true">
-        <div class="chart-card">
-          <div class="chart-header">
-            <span class="chart-title" data-i18n="chart_title">Time saved this week</span>
-            <span class="chart-total">4h 23m</span>
-          </div>
-          <div class="chart-area" id="chart-area">
-            <svg class="chart-svg" id="chart-svg" viewBox="0 0 340 120" preserveAspectRatio="none" aria-hidden="true">
-              <defs>
-                <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.18"/>
-                  <stop offset="100%" stop-color="var(--primary)" stop-opacity="0"/>
-                </linearGradient>
-              </defs>
-              <path id="chart-fill" d="" fill="url(#chartGrad)"/>
-              <path id="chart-line" d="" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-              <g id="chart-dots"></g>
-            </svg>
-            <div class="chart-labels">
-              <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-            </div>
-          </div>
-          <div class="chart-stats">
-            <div class="cstat">
-              <span class="cstat-val" id="cs-snaps">1,247</span>
-              <span class="cstat-label" data-i18n="chart_stat_snaps">Total snaps</span>
-            </div>
-            <div class="cstat">
-              <span class="cstat-val">37 min</span>
-              <span class="cstat-label" data-i18n="chart_stat_avg">Avg. daily saved</span>
-            </div>
-            <div class="cstat">
-              <span class="cstat-val" data-i18n="chart_stat_layout_val">Side by Side</span>
-              <span class="cstat-label" data-i18n="chart_stat_layout">Favorite layout</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════ PRICING ══════════════ -->
-  <section id="pricing" aria-labelledby="pricing-heading">
-    <div class="section-inner">
-      <h2 id="pricing-heading" class="section-h2" data-i18n="pricing_title">Simple, honest pricing</h2>
-      <p class="section-sub" style="text-align:center;max-width:none;" data-i18n="pricing_sub">Try everything free for 10 days. No credit card, no strings attached.</p>
-
-      <!-- Currency toggle -->
-      <div class="currency-toggle" role="group" aria-label="Currency">
-        <button class="curr-btn curr-active" data-currency="usd" id="btn-usd">$ USD</button>
-        <button class="curr-btn" data-currency="eur" id="btn-eur">€ EUR</button>
-      </div>
-
-      <div class="pricing-grid">
-
-        <!-- Free Trial card -->
-        <article class="pricing-card" id="pricing-free">
-          <div class="pricing-plan" data-i18n="pricing_free_title">Free Trial</div>
-          <div class="pricing-price-block">
-            <span class="pricing-amount">$0</span>
-            <span class="pricing-period" data-i18n="pricing_free_sub">10 days · all features</span>
-          </div>
-          <ul class="pricing-features">
-            <li class="pf pf-yes" data-i18n="pricing_free_f1">All features unlocked</li>
-            <li class="pf pf-yes" data-i18n="pricing_free_f2">1 Mac</li>
-            <li class="pf pf-yes" data-i18n="pricing_free_f3">No credit card needed</li>
-            <li class="pf pf-no" data-i18n="pricing_free_f4">License key</li>
-            <li class="pf pf-no" data-i18n="pricing_free_f5">Future updates</li>
-            <li class="pf pf-no" data-i18n="pricing_free_f6">Priority support</li>
-          </ul>
-          <a class="btn-ghost pricing-btn" href="#download" id="free-trial-btn" data-i18n="pricing_free_btn">Start Free Trial</a>
-        </article>
-
-        <!-- Lifetime card -->
-        <article class="pricing-card pricing-featured" id="pricing-pro">
-          <div class="pricing-badge-pill" data-i18n="pricing_pro_badge">Most Popular</div>
-          <div class="pricing-plan" data-i18n="pricing_pro_title">Lifetime</div>
-          <div class="pricing-promo-strip">
-            <span>🎉</span>
-            <span data-i18n="pricing_pro_promo">Code <strong>NEW30</strong> → 30% off</span>
-          </div>
-          <div class="pricing-price-block">
-            <div class="pricing-price-row">
-              <span class="pricing-original price-val" data-usd="$31.99" data-eur="€29.99">$31.99</span>
-              <span class="pricing-amount price-val" data-usd="$21.99" data-eur="€20.99">$21.99</span>
-            </div>
-            <span class="pricing-period" data-i18n="pricing_pro_sub">one-time · lifetime license</span>
-          </div>
-          <ul class="pricing-features">
-            <li class="pf pf-yes pf-bold" data-i18n="pricing_pro_f1">3 Macs included</li>
-            <li class="pf pf-yes" data-i18n="pricing_pro_f2">All features, forever</li>
-            <li class="pf pf-yes" data-i18n="pricing_pro_f3">All future updates</li>
-            <li class="pf pf-yes" data-i18n="pricing_pro_f4">Lifetime license key</li>
-            <li class="pf pf-yes" data-i18n="pricing_pro_f5">Priority support</li>
-            <li class="pf pf-yes" data-i18n="pricing_pro_f6">Offline activation</li>
-          </ul>
-
-          <!-- Device management -->
-          <div class="pricing-devices">
-            <div class="pd-header">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-              </svg>
-              <span data-i18n="pricing_pro_slots">3 device slots — add or detach anytime</span>
-            </div>
-            <div class="pd-slots">
-              <div class="pd-slot pd-occupied" id="pd1">
-                <svg class="pd-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-                </svg>
-                <span class="pd-name">MacBook Pro 14"</span>
-                <button class="pd-detach" aria-label="Detach MacBook Pro">×</button>
-              </div>
-              <div class="pd-slot pd-occupied" id="pd2">
-                <svg class="pd-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
-                </svg>
-                <span class="pd-name">Mac mini</span>
-                <button class="pd-detach" aria-label="Detach Mac mini">×</button>
-              </div>
-              <div class="pd-slot pd-empty" id="pd3">
-                <svg class="pd-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                  <path d="M12 5v14M5 12h14"/>
-                </svg>
-                <span class="pd-name" data-i18n="pricing_slot_empty">Add a Mac</span>
-              </div>
-            </div>
-          </div>
-
-          <a class="btn-primary pricing-btn" href="#" id="buy-lifetime-btn">
-            <span data-i18n="pricing_pro_btn">Buy Lifetime</span>
-            <span class="price-inline price-val" data-usd=" — $21.99" data-eur=" — €20.99"> — $21.99</span>
-          </a>
-          <p class="pricing-trust" data-i18n="pricing_pro_trust">🔒 Lemon Squeezy · Instant delivery · 30-day money-back</p>
-        </article>
-
-      </div>
-    </div>
-  </section>
 
   <!-- ══════════════ GESTURE ANIMATIONS ══════════════ -->
   <section id="gestures" aria-labelledby="gestures-heading">
@@ -581,6 +200,258 @@
     </div>
   </section>
 
+  <!-- ══════════════ FANCYZONE SHOWCASE ══════════════ -->
+  <section id="fancyzone" aria-labelledby="fancyzone-heading">
+    <div class="section-inner fancyzone-inner">
+
+      <!-- Left: text -->
+      <div class="fz-showcase-text">
+        <div class="hero-badge" style="margin-bottom: var(--space-m);" data-i18n="fz_badge">
+          <span class="badge-dot" aria-hidden="true"></span>
+          Smart Zones
+        </div>
+        <h2 id="fancyzone-heading" class="section-h2" style="max-width:16ch;" data-i18n="fz_title">Your screen,<br><span class="hero-accent">divided perfectly.</span></h2>
+        <p class="section-sub left-align" data-i18n="fz_sub">SnapZone draws translucent zone overlays the moment you start dragging. Hover into a zone — it lights up instantly. Release — the window locks in, pixel-perfect.</p>
+        <a href="#pricing" class="btn-primary" id="fancyzone-cta-btn" data-i18n="fz_cta">Try it free for 10 days</a>
+      </div>
+
+      <!-- Right: YouTube video embed -->
+      <div class="fz-showcase-video">
+        <iframe 
+          width="100%" 
+          height="100%" 
+          src="https://www.youtube-nocookie.com/embed/ey1Futp5330" 
+          title="SnapZone - Your screen, divided perfectly" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+        </iframe>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ════════════════ HOW IT WORKS ════════════════ -->
+  <section id="how-it-works" aria-labelledby="how-heading">
+    <div class="section-inner">
+      <h2 id="how-heading" class="section-h2" data-i18n="how_title">Three ways to snap</h2>
+      <p class="section-sub" data-i18n="how_sub">Use whichever method feels natural. SnapZone handles all three simultaneously.</p>
+      <div class="methods-grid">
+
+        <article class="method-card" id="method-drag">
+          <div class="method-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="3" width="9" height="18" rx="2" stroke="var(--primary)" stroke-width="1.5" fill="var(--primary-dim)"/>
+              <rect x="13" y="3" width="9" height="18" rx="2" stroke="var(--primary)" stroke-width="1.5" fill="none" opacity="0.4"/>
+              <path d="M11.5 12H13" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 data-i18n="method_drag_title">Drag to edge</h3>
+          <p data-i18n="method_drag_body">Move any window toward a screen edge or corner. A high-fidelity translucent overlay appears instantly. Release, and it locks perfectly.</p>
+          <div class="method-demo drag-demo" aria-hidden="true">
+            <div class="dd-screen">
+              <div class="dd-window" id="dd-window"></div>
+              <div class="dd-zone" id="dd-zone"></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="method-card" id="method-gesture">
+          <div class="method-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="13" width="20" height="9" rx="3" fill="var(--primary-dim)" stroke="var(--primary)" stroke-width="1.5"/>
+              <path d="M7 13V10M10 13V9M13 13V10M16 13V11" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 data-i18n="method_gesture_title">Trackpad gesture</h3>
+          <p data-i18n="method_gesture_body">Forget dragging windows across ultrawide monitors. Hover on a titlebar, then swipe two fingers. Works at the native macOS event level.</p>
+          <div class="method-demo gesture-demo" aria-hidden="true">
+            <div class="gd-pad">
+              <div class="gd-fingers" id="gd-fingers">
+                <span class="gd-finger"></span>
+                <span class="gd-finger"></span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="method-card" id="method-hotkey">
+          <div class="method-icon" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <rect x="2" y="6" width="20" height="12" rx="2.5" stroke="var(--primary)" stroke-width="1.5" fill="var(--primary-dim)"/>
+              <rect x="5"  y="9" width="6" height="5" rx="1" fill="var(--primary)" opacity="0.25"/>
+              <rect x="13" y="9" width="6" height="5" rx="1" fill="var(--primary)" opacity="0.9"/>
+            </svg>
+          </div>
+          <h3 data-i18n="method_hotkey_title">Keyboard shortcuts</h3>
+          <p data-i18n="method_hotkey_body">Every snap action has a dedicated global shortcut. Fully remappable. The shortcuts act instantly on the currently focused window.</p>
+          <div class="method-demo hotkey-demo" aria-hidden="true">
+            <div class="hk-sequence" id="hk-sequence">
+              <kbd class="hk-key" id="hk-ctrl">⌃</kbd>
+              <kbd class="hk-key" id="hk-opt">⌥</kbd>
+              <kbd class="hk-key" id="hk-arrow">→</kbd>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ ANALYTICS ══════════════ -->
+  <section id="analytics" aria-labelledby="analytics-heading">
+    <div class="section-inner analytics-inner">
+      <div class="analytics-text">
+        <h2 id="analytics-heading" class="section-h2" data-i18n="analytics_title">Know where your time goes</h2>
+        <p class="section-sub left-align" data-i18n="analytics_sub">
+          SnapZone logs every snap and calculates exactly how much time you save compared to dragging manually.
+        </p>
+        <!-- Interactive Savings Calculator Slider -->
+        <div class="savings-calc">
+          <div class="slider-header">
+            <span class="slider-label" data-i18n="calc_hours_label">Hours at PC per day:</span>
+            <span class="slider-value" id="calc-hours-val">8h</span>
+          </div>
+          <input type="range" id="calc-hours-slider" min="2" max="12" value="8" step="1" class="calc-slider" aria-label="Hours at PC per day">
+        </div>
+        <a href="#pricing" class="btn-primary" id="analytics-download-btn" data-i18n="analytics_btn">Start free</a>
+      </div>
+      <div class="analytics-visual" aria-hidden="true">
+        <div class="chart-card">
+          <div class="chart-header">
+            <span class="chart-title" data-i18n="chart_title">Time saved this week</span>
+            <div class="chart-total-wrap">
+              <span class="chart-total" id="chart-total-val">4h 23m</span>
+              <button class="info-btn" id="info-btn" aria-label="How this is calculated" type="button">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+              </button>
+              <div class="info-disclaimer-card" id="info-disclaimer-card">
+                <p data-i18n="chart_disclaimer">Based on 8h/day for 30 days. Snapping ~117 times/day saves 4.5s per window compared to manual resizing (5s vs 0.5s).</p>
+              </div>
+            </div>
+          </div>
+          <div class="chart-area" id="chart-area">
+            <svg class="chart-svg" id="chart-svg" viewBox="0 0 340 120" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="var(--primary)" stop-opacity="0.18"/>
+                  <stop offset="100%" stop-color="var(--primary)" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <path id="chart-fill" d="" fill="url(#chartGrad)"/>
+              <path id="chart-line" d="" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <g id="chart-dots"></g>
+            </svg>
+            <div class="chart-labels">
+              <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════ PRICING ══════════════ -->
+  <section id="pricing" aria-labelledby="pricing-heading">
+    <div class="section-inner">
+      <h2 id="pricing-heading" class="section-h2" data-i18n="pricing_title">Simple, honest pricing</h2>
+      <p class="section-sub" style="text-align:center;max-width:none;" data-i18n="pricing_sub">Try everything free for 10 days. No credit card, no strings attached.</p>
+
+      <!-- Currency toggle -->
+      <div class="currency-toggle" role="group" aria-label="Currency">
+        <button class="curr-btn curr-active" data-currency="usd" id="btn-usd">$ USD</button>
+        <button class="curr-btn" data-currency="eur" id="btn-eur">€ EUR</button>
+      </div>
+
+      <div class="pricing-grid">
+
+        <!-- Free Trial card -->
+        <article class="pricing-card" id="pricing-free">
+          <div class="pricing-plan" data-i18n="pricing_free_title">Free Trial</div>
+          <div class="pricing-price-block">
+            <span class="pricing-amount">$0</span>
+            <span class="pricing-period" data-i18n="pricing_free_sub">10 days · all features</span>
+          </div>
+          <ul class="pricing-features">
+            <li class="pf pf-yes" data-i18n="pricing_free_f1">All features unlocked</li>
+            <li class="pf pf-yes" data-i18n="pricing_free_f2">1 Mac</li>
+            <li class="pf pf-yes" data-i18n="pricing_free_f3">No credit card needed</li>
+            <li class="pf pf-no" data-i18n="pricing_free_f4">License key</li>
+            <li class="pf pf-no" data-i18n="pricing_free_f5">Future updates</li>
+            <li class="pf pf-no" data-i18n="pricing_free_f6">Priority support</li>
+          </ul>
+          <a class="btn-ghost pricing-btn" href="#download" id="free-trial-btn" data-i18n="pricing_free_btn">Start Free Trial</a>
+        </article>
+
+        <!-- Lifetime card -->
+        <article class="pricing-card pricing-featured" id="pricing-pro">
+          <div class="pricing-badge-pill" data-i18n="pricing_pro_badge">Most Popular</div>
+          <div class="pricing-plan" data-i18n="pricing_pro_title">Lifetime</div>
+          <div class="pricing-promo-strip">
+            <span>🎉</span>
+            <span data-i18n="pricing_pro_promo">Code <strong>NEW30</strong> → 30% off</span>
+          </div>
+          <div class="pricing-price-block">
+            <div class="pricing-price-row">
+              <span class="pricing-original price-val" data-usd="$31.99" data-eur="€29.99">$31.99</span>
+              <span class="pricing-amount price-val" data-usd="$21.99" data-eur="€20.99">$21.99</span>
+            </div>
+            <span class="pricing-period" data-i18n="pricing_pro_sub">one-time · lifetime license</span>
+          </div>
+          <ul class="pricing-features">
+            <li class="pf pf-yes pf-bold" data-i18n="pricing_pro_f1">3 Macs included</li>
+            <li class="pf pf-yes" data-i18n="pricing_pro_f2">All features, forever</li>
+            <li class="pf pf-yes" data-i18n="pricing_pro_f3">All future updates</li>
+            <li class="pf pf-yes" data-i18n="pricing_pro_f4">Lifetime license key</li>
+            <li class="pf pf-yes" data-i18n="pricing_pro_f5">Priority support</li>
+          </ul>
+
+          <!-- Device management -->
+          <div class="pricing-devices">
+            <div class="pd-header">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+              </svg>
+              <span data-i18n="pricing_pro_slots">3 device slots — add or detach anytime</span>
+            </div>
+            <div class="pd-slots">
+              <div class="pd-slot pd-occupied" id="pd1">
+                <svg class="pd-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+                </svg>
+                <span class="pd-name">MacBook Pro 14"</span>
+                <button class="pd-detach" aria-label="Detach MacBook Pro">×</button>
+              </div>
+              <div class="pd-slot pd-occupied" id="pd2">
+                <svg class="pd-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+                </svg>
+                <span class="pd-name">Mac mini</span>
+                <button class="pd-detach" aria-label="Detach Mac mini">×</button>
+              </div>
+              <div class="pd-slot pd-empty" id="pd3">
+                <svg class="pd-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M12 5v14M5 12h14"/>
+                </svg>
+                <span class="pd-name" data-i18n="pricing_slot_empty">Add a Mac</span>
+              </div>
+            </div>
+          </div>
+
+          <a class="btn-primary pricing-btn" href="https://snapzone.lemonsqueezy.com/" id="buy-lifetime-btn">
+            <span data-i18n="pricing_pro_btn">Buy Lifetime</span>
+            <span class="price-inline price-val" data-usd=" — $21.99" data-eur=" — €20.99"> — $21.99</span>
+          </a>
+          <p class="pricing-trust" data-i18n="pricing_pro_trust">🔒 Lemon Squeezy · Instant delivery · 30-day money-back</p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+
   <!-- ══════════════ TESTIMONIALS ══════════════ -->
   <section id="testimonials" aria-labelledby="testimonials-heading">
     <div class="section-inner">
@@ -606,16 +477,20 @@
   <section id="download" aria-labelledby="download-heading">
     <div class="section-inner download-inner">
       <div class="download-glow" aria-hidden="true"></div>
+      <div class="download-logo-wrap">
+        <img src="assets/logo.png" alt="SnapZone App Icon" class="download-logo-img" loading="lazy" decoding="async">
+      </div>
       <h2 id="download-heading" class="download-h2" data-i18n="download_title">Take control of your workspace.</h2>
       <p class="download-sub" data-i18n="download_sub">10-day free trial. No account. macOS 13 Ventura or later.</p>
       <div class="download-actions">
-        <a href="https://github.com/michelemeattini/snapzone-website/releases/download/Release/SnapZone.zip" class="btn-primary btn-large" id="download-main-btn" download>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+        <a href="https://github.com/michelemeattini/snapzone-website/releases/latest/download/SnapZone.zip" class="btn-primary btn-large" id="download-main-btn" download>
+          <svg width="20" height="20" viewBox="8 8 22 23" fill="currentColor" aria-hidden="true" focusable="false">
+            <path d="M24.76888,20.30068a4.94881,4.94881,0,0,1,2.35656-4.15206,5.06566,5.06566,0,0,0-3.99116-2.15768c-1.67924-.17626-3.30719,1.00483-4.1629,1.00483-.87227,0-2.18977-.98733-3.6085-.95814a5.31529,5.31529,0,0,0-4.47292,2.72787c-1.934,3.34842-.49141,8.26947,1.3612,10.97608.9269,1.32535,2.01018,2.8058,3.42763,2.7533,1.38706-.05753,1.9051-.88448,3.5794-.88448,1.65876,0,2.14479.88448,3.591.8511,1.48838-.02416,2.42613-1.33124,3.32051-2.66914a10.962,10.962,0,0,0,1.51842-3.09251A4.78205,4.78205,0,0,1,24.76888,20.30068Z"></path>
+            <path d="M22.03725,12.21089a4.87248,4.87248,0,0,0,1.11452-3.49062,4.95746,4.95746,0,0,0-3.20758,1.65961,4.63634,4.63634,0,0,0-1.14371,3.36139A4.09905,4.09905,0,0,0,22.03725,12.21089Z"></path>
           </svg>
           <span data-i18n="download_btn">Download for macOS</span>
         </a>
-        <span class="download-version" data-i18n="download_version">v1.4 · Universal Binary</span>
+        <span class="download-version" data-i18n="download_version">v1.4</span>
       </div>
       <div class="download-trust">
         <span data-i18n="download_trust1">🔒 Notarized by Apple</span>
@@ -632,18 +507,17 @@
     <div class="footer-inner">
       <a href="/" class="footer-logo" aria-label="SnapZone home">
         <svg width="20" height="20" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-          <rect x="2" y="2" width="11" height="11" rx="2" fill="var(--primary)"/>
-          <rect x="15" y="2" width="11" height="11" rx="2" fill="var(--primary)" opacity="0.5"/>
-          <rect x="2" y="15" width="11" height="11" rx="2" fill="var(--primary)" opacity="0.5"/>
-          <rect x="15" y="15" width="11" height="11" rx="2" fill="var(--primary)" opacity="0.25"/>
+          <rect x="3" y="6" width="10" height="16" rx="3" fill="var(--primary)"/>
+          <rect x="15" y="6" width="10" height="16" rx="3" fill="var(--primary)"/>
         </svg>
         SnapZone
       </a>
       <nav class="footer-nav" aria-label="Footer navigation">
-        <a href="#features" data-i18n="nav_features">Features</a>
+        <a href="#gestures" data-i18n="nav_gestures">Gestures</a>
+        <a href="#fancyzone" data-i18n="nav_zones">Zones</a>
         <a href="#pricing" data-i18n="nav_pricing">Pricing</a>
-        <a href="#analytics" data-i18n="nav_analytics">Analytics</a>
         <a href="#download" data-i18n="nav_cta">Try Free</a>
+        <a href="terms.html" data-i18n="footer_terms">Terms</a>
       </nav>
       <p class="footer-copy" data-i18n="footer_copy">© 2026 SnapZone. Made for macOS.</p>
     </div>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms & Conditions — SnapZone</title>
+  <meta name="description" content="Terms and Conditions of use for the SnapZone macOS window management application.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Mona+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="alternate icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Initialize theme instantly in head to avoid flash
+    const savedTheme = localStorage.getItem('sz-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+  <style>
+    /* Dedicated styles for readability of terms content */
+    .terms-container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: calc(108px + var(--space-xl)) var(--space-l) var(--space-2xl);
+    }
+    .terms-h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: var(--space-m);
+      color: var(--ink);
+    }
+    .terms-meta {
+      font-size: var(--step-0);
+      color: var(--ink-muted);
+      margin-bottom: var(--space-l);
+      font-family: var(--font-mono);
+    }
+    .terms-content {
+      font-size: var(--step-0);
+      color: var(--ink-muted);
+      line-height: 1.7;
+    }
+    .terms-content h2 {
+      font-size: var(--step-2);
+      color: var(--ink);
+      margin-top: var(--space-l);
+      margin-bottom: var(--space-s);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .terms-content p {
+      margin-bottom: var(--space-s);
+    }
+    .terms-content ul {
+      margin-bottom: var(--space-s);
+      padding-left: var(--space-m);
+    }
+    .terms-content li {
+      margin-bottom: 4px;
+    }
+    .lang-toggle-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: var(--space-l);
+      border-bottom: 1px solid rgba(100, 100, 100, 0.08);
+      padding-bottom: 12px;
+    }
+    .lang-toggle-btn {
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--ink-faint);
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .lang-toggle-btn:hover {
+      color: var(--ink-muted);
+    }
+    .lang-toggle-btn.active {
+      color: var(--primary);
+      background: var(--primary-dim);
+    }
+    [lang-content] {
+      display: none;
+    }
+    [lang-content].visible {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating pill Navbar -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="logo" aria-label="SnapZone home">
+      <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="3" y="6" width="10" height="16" rx="3" fill="var(--primary)"/>
+        <rect x="15" y="6" width="10" height="16" rx="3" fill="var(--primary)"/>
+      </svg>
+      <span>SnapZone</span>
+    </a>
+    <div class="nav-links" role="list">
+      <a href="index.html#gestures"     role="listitem">Gestures</a>
+      <a href="index.html#fancyzone"    role="listitem">Zones</a>
+      <a href="index.html#how-it-works" role="listitem">How it works</a>
+      <a href="index.html#pricing"      role="listitem">Pricing</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle light/dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+      <a href="index.html#pricing" class="nav-cta">Try Free</a>
+    </div>
+  </nav>
+
+  <main class="terms-container">
+    <h1 class="terms-h1">Terms & Conditions</h1>
+    <div class="terms-meta">Last Updated: July 1, 2026</div>
+
+    <div class="lang-toggle-bar">
+      <button class="lang-toggle-btn active" onclick="switchLang('en')">English</button>
+      <button class="lang-toggle-btn" onclick="switchLang('it')">Italiano</button>
+    </div>
+
+    <!-- English Terms -->
+    <div class="terms-content visible" id="terms-en" lang-content>
+      <p>Welcome to SnapZone. By using our software application ("Program") and website, you agree to comply with and be bound by the following terms and conditions. Please read them carefully.</p>
+
+      <h2>1. License Grant</h2>
+      <p>SnapZone grants you a limited, non-exclusive, non-transferable, and revocable license to install and use the Program on macOS devices owned or controlled by you, subject to the terms of your purchased license key:</p>
+      <ul>
+        <li><strong>Free Trial:</strong> Evaluation license valid for 10 consecutive days.</li>
+        <li><strong>Lifetime License:</strong> Perpetual license valid for installation on up to 3 personal macOS devices simultaneously.</li>
+      </ul>
+
+      <h2>2. Permitted Use & Restrictions</h2>
+      <p>You agree not to, and will not permit others to:</p>
+      <ul>
+        <li>Decompile, reverse engineer, disassemble, or attempt to derive the source code of the Program.</li>
+        <li>Distribute, sell, rent, lease, sublicense, or otherwise transfer your license key to third parties.</li>
+        <li>Modify, adapt, or create derivative works based on the Program.</li>
+      </ul>
+
+      <h2>3. Privacy & Telemetry</h2>
+      <p>SnapZone is built with a local-first philosophy. The Program runs entirely on your local machine. No window titles, application coordinates, trackpad gesture recordings, or personal data are collected or transmitted to external servers. Your usage statistics (e.g., total snaps, time saved) remain private on your device.</p>
+
+      <h2>4. Updates & Maintenance</h2>
+      <p>SnapZone may from time to time provide Program updates, which may include bug fixes, enhancements, or new features. Lifetime license owners are entitled to all future minor and major updates of the Program without additional charge.</p>
+
+      <h2>5. Disclaimer of Warranty</h2>
+      <p>The Program is provided "AS IS" without warranty of any kind, either express or implied. SnapZone does not guarantee that the Program will meet your requirements or run entirely error-free.</p>
+
+      <h2>6. Limitation of Liability</h2>
+      <p>In no event shall SnapZone be liable for any special, incidental, indirect, or consequential damages whatsoever (including, without limitation, damages for loss of profits, business interruption, or loss of information) arising out of the use of or inability to use the Program.</p>
+    </div>
+
+    <!-- Italian Terms -->
+    <div class="terms-content" id="terms-it" lang-content>
+      <p>Benvenuto su SnapZone. Utilizzando la nostra applicazione software ("Programma") e il sito web, accetti di rispettare e di essere vincolato dai seguenti termini e condizioni. Ti preghiamo di leggerli attentamente.</p>
+
+      <h2>1. Concessione della Licenza</h2>
+      <p>SnapZone ti concede una licenza limitata, non esclusiva, non trasferibile e revocabile per installare e utilizzare il Programma su dispositivi macOS di tua proprietà o sotto il tuo controllo, in base ai termini della licenza acquistata:</p>
+      <ul>
+        <li><strong>Prova Gratuita:</strong> Licenza di valutazione valida per 10 giorni consecutivi.</li>
+        <li><strong>Licenza a Vita (Lifetime):</strong> Licenza perpetua valida per l'installazione su un massimo di 3 dispositivi macOS personali contemporaneamente.</li>
+      </ul>
+
+      <h2>2. Uso Consentito e Restrizioni</h2>
+      <p>Accetti di non fare, e di non permettere ad altri di fare, quanto segue:</p>
+      <ul>
+        <li>Decompilare, decodificare, disassemblare o tentare di ricavare il codice sorgente del Programma.</li>
+        <li>Distribuire, vendere, noleggiare, concedere in sublicenza o trasferire in altro modo la tua chiave di licenza a terzi.</li>
+        <li>Modificare, adattare o creare opere derivate basate sul Programma.</li>
+      </ul>
+
+      <h2>3. Privacy e Telemetria</h2>
+      <p>SnapZone è sviluppato seguendo una filosofia locale-first. Il Programma viene eseguito interamente sulla tua macchina locale. Nessun titolo di finestra, coordinata di applicazione, registrazione di gesture del trackpad o dato personale viene raccolto o trasmesso a server esterni. Le statistiche di utilizzo (es. agganci totali, tempo salvato) rimangono private sul tuo dispositivo.</p>
+
+      <h2>4. Aggiornamenti e Manutenzione</h2>
+      <p>SnapZone può di volta in volta fornire aggiornamenti del Programma, che possono includere correzioni di bug, miglioramenti o nuove funzionalità. I possessori della licenza a vita hanno diritto a tutti gli aggiornamenti futuri, minori e maggiori, senza costi aggiuntivi.</p>
+
+      <h2>5. Esclusione di Garanzia</h2>
+      <p>Il Programma viene fornito "COSÌ COM'È" senza garanzie di alcun tipo, espresse o implicite. SnapZone non garantisce che il Programma soddisfi le tue esigenze o che funzioni completamente senza errori.</p>
+
+      <h2>6. Limitazione di Responsabilità</h2>
+      <p>In nessun caso SnapZone sarà responsabile per danni speciali, incidentali, indiretti o consequenziali di qualsiasi tipo (inclusi, senza limitazione, danni per perdita di profitti, interruzione dell'attività o perdita di informazioni) derivanti dall'uso o dall'impossibilità di usare il Programma.</p>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer id="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo" aria-label="SnapZone home">
+        <svg width="20" height="20" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <rect x="3" y="6" width="10" height="16" rx="3" fill="var(--primary)"/>
+          <rect x="15" y="6" width="10" height="16" rx="3" fill="var(--primary)"/>
+        </svg>
+        SnapZone
+      </a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html#gestures">Gestures</a>
+        <a href="index.html#fancyzone">Zones</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="index.html#download">Download</a>
+      </nav>
+      <p class="footer-copy">© 2026 SnapZone. Made for macOS.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle interaction
+    const toggleBtn = document.getElementById('theme-toggle');
+    toggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', nextTheme);
+      localStorage.setItem('sz-theme', nextTheme);
+    });
+
+    // Language switch interaction
+    function switchLang(lang) {
+      document.querySelectorAll('[lang-content]').forEach(el => el.classList.remove('visible'));
+      document.querySelectorAll('.lang-toggle-btn').forEach(btn => btn.classList.remove('active'));
+
+      if (lang === 'en') {
+        document.getElementById('terms-en').classList.add('visible');
+        document.querySelector('.lang-toggle-btn[onclick*="en"]').classList.add('active');
+      } else {
+        document.getElementById('terms-it').classList.add('visible');
+        document.querySelector('.lang-toggle-btn[onclick*="it"]').classList.add('active');
+      }
+    }
+  </script>
+</body>
+</html>

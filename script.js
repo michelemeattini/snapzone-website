@@ -351,42 +351,120 @@
 
 
 // ─────────────────────────────────────────────────────
-// 7. SVG CHART
+// 7. SVG CHART & SAVINGS CALCULATOR
 // ─────────────────────────────────────────────────────
-(function initChart() {
+(function initChartAndCalculator() {
   const svg  = document.getElementById('chart-svg');
   const fill = document.getElementById('chart-fill');
   const line = document.getElementById('chart-line');
   const dots = document.getElementById('chart-dots');
+  const slider = document.getElementById('calc-hours-slider');
+  const sliderVal = document.getElementById('calc-hours-val');
+  const totalValEl = document.getElementById('chart-total-val');
+  const disclaimerEl = document.getElementById('info-disclaimer-card');
+
   if (!svg || !fill || !line || !dots) return;
 
   const values = [32, 41, 29, 47, 38, 51, 47];
-  const W = 340, H = 120, padX = 8, padY = 10;
-  const maxV = 58;
+  const W = 340, H_height = 120, padX = 8, padY = 10;
+  const maxV = 87; // Fixed max value to make the line scale up and down dynamically
+  
+  let revealed = false;
 
-  const toX = i => padX + (i / (values.length - 1)) * (W - padX * 2);
-  const toY = v => padY + (1 - v / maxV) * (H - padY * 2);
-  const pts = values.map((v, i) => ({ x: toX(i), y: toY(v) }));
+  function updateChart(hours) {
+    const scale = hours / 8;
+    const currentValues = values.map(v => v * scale);
 
-  let d = `M ${pts[0].x} ${pts[0].y}`;
-  for (let i = 1; i < pts.length; i++) {
-    const t = 0.4;
-    d += ` C ${pts[i-1].x + (pts[i].x - pts[i-1].x) * t} ${pts[i-1].y}, ${pts[i].x - (pts[i].x - pts[i-1].x) * t} ${pts[i].y}, ${pts[i].x} ${pts[i].y}`;
+    const toX = i => padX + (i / (currentValues.length - 1)) * (W - padX * 2);
+    const toY = v => padY + (1 - v / maxV) * (H_height - padY * 2);
+    const pts = currentValues.map((v, i) => ({ x: toX(i), y: toY(v) }));
+
+    let d = `M ${pts[0].x} ${pts[0].y}`;
+    for (let i = 1; i < pts.length; i++) {
+      const t = 0.4;
+      d += ` C ${pts[i-1].x + (pts[i].x - pts[i-1].x) * t} ${pts[i-1].y}, ${pts[i].x - (pts[i].x - pts[i-1].x) * t} ${pts[i].y}, ${pts[i].x} ${pts[i].y}`;
+    }
+
+    line.setAttribute('d', d);
+    fill.setAttribute('d', d + ` L ${toX(currentValues.length-1)} ${H_height - padY} L ${toX(0)} ${H_height - padY} Z`);
+
+    // Reset dash properties if already animated/revealed
+    if (revealed) {
+      line.style.strokeDasharray = 'none';
+      line.style.strokeDashoffset = '0';
+      line.style.transition = 'none';
+    }
+
+    dots.innerHTML = '';
+    pts.forEach(p => {
+      const o = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      o.setAttribute('cx', p.x); o.setAttribute('cy', p.y); o.setAttribute('r', '5');
+      o.setAttribute('fill', 'var(--primary)'); o.setAttribute('opacity', '0.2');
+      const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); c.setAttribute('r', '3');
+      c.setAttribute('fill', 'var(--primary)');
+      dots.appendChild(o); dots.appendChild(c);
+    });
   }
 
-  line.setAttribute('d', d);
-  fill.setAttribute('d', d + ` L ${toX(values.length-1)} ${H - padY} L ${toX(0)} ${H - padY} Z`);
+  function updateDisclaimerText(hours) {
+    if (!disclaimerEl) return;
+    const p = disclaimerEl.querySelector('p');
+    if (!p) return;
 
-  pts.forEach(p => {
-    const o = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    o.setAttribute('cx', p.x); o.setAttribute('cy', p.y); o.setAttribute('r', '5');
-    o.setAttribute('fill', 'var(--primary)'); o.setAttribute('opacity', '0.2');
-    const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); c.setAttribute('r', '3');
-    c.setAttribute('fill', 'var(--primary)');
-    dots.appendChild(o); dots.appendChild(c);
+    const currentLang = document.documentElement.getAttribute('lang') || 'en';
+    const translations = window.SnapZoneTranslations;
+    if (!translations || !translations[currentLang]) return;
+
+    const rawText = translations[currentLang]['chart_disclaimer'];
+    if (!rawText) return;
+
+    const snapsPerDay = Math.round(hours * 14.625);
+    
+    // Replace 8 with selected hours and 117 with dynamically computed snaps per day
+    const updatedText = rawText
+      .replace(/(\b8\b|8(?=h|o))/g, hours)
+      .replace(/\b117\b/g, snapsPerDay);
+
+    p.textContent = updatedText;
+  }
+
+  function updateSavings(hours) {
+    if (sliderVal) {
+      sliderVal.textContent = `${hours}h`;
+    }
+
+    // Calculate total time saved per month
+    const totalMinutes = hours * 32.90625;
+    const h = Math.floor(totalMinutes / 60);
+    const m = Math.round(totalMinutes % 60);
+
+    if (totalValEl) {
+      totalValEl.textContent = `${h}h ${m}m`;
+    }
+
+    updateDisclaimerText(hours);
+    updateChart(hours);
+  }
+
+  // Set up initial state with slider default value (8)
+  const initialHours = slider ? parseInt(slider.value, 10) : 8;
+  updateSavings(initialHours);
+
+  if (slider) {
+    slider.addEventListener('input', (e) => {
+      const H = parseInt(e.target.value, 10);
+      updateSavings(H);
+    });
+  }
+
+  // Handle language change event
+  window.addEventListener('sz-lang-changed', () => {
+    const H = slider ? parseInt(slider.value, 10) : 8;
+    updateDisclaimerText(H);
   });
 
+  // Reveal animation on intersection
   const length = line.getTotalLength?.() ?? 700;
   line.style.strokeDasharray  = length;
   line.style.strokeDashoffset = length;
@@ -395,37 +473,14 @@
     if (e.isIntersecting) {
       line.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.22,1,0.36,1)';
       line.style.strokeDashoffset = '0';
+      revealed = true;
+      setTimeout(() => {
+        if (revealed) {
+          line.style.strokeDasharray = 'none';
+        }
+      }, 1800);
     }
   }, { threshold: 0.25 }).observe(svg);
-})();
-
-
-// ─────────────────────────────────────────────────────
-// 8. COUNTER ANIMATION
-// ─────────────────────────────────────────────────────
-(function initCounter() {
-  const el = document.getElementById('cs-snaps');
-  if (!el) return;
-  const target = 1247;
-  let started = false;
-
-  function easeOut(t) { return 1 - Math.pow(1 - t, 4); }
-
-  function run() {
-    if (started) return;
-    started = true;
-    const dur = 1600, t0 = performance.now();
-    function step(now) {
-      const p = Math.min((now - t0) / dur, 1);
-      el.textContent = Math.round(easeOut(p) * target).toLocaleString();
-      if (p < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-
-  new IntersectionObserver(([e]) => {
-    if (e.isIntersecting) { run(); }
-  }, { threshold: 0.5 }).observe(el);
 })();
 
 
@@ -454,45 +509,80 @@
 
 
 // ─────────────────────────────────────────────────────
-// 10. PRICING — DEVICE DETACH INTERACTION
+// 10. PRICING — DEVICE MANAGEMENT (ADD / DETACH SIMULATOR)
 // ─────────────────────────────────────────────────────
 (function initDevices() {
-  const slots = ['pd1', 'pd2', 'pd3'];
+  const container = document.querySelector('.pd-slots');
+  if (!container) return;
 
-  slots.forEach(id => {
-    const slot = document.getElementById(id);
-    if (!slot) return;
+  const macNamesPool = ["MacBook Air", "Mac Studio", "iMac", "Mac Pro", "MacBook Pro 16\""];
 
-    const detachBtn = slot.querySelector('.pd-detach');
-    if (!detachBtn) return;
+  function getAvailableMacName() {
+    // Find all currently occupied Mac names
+    const occupiedNames = Array.from(container.querySelectorAll('.pd-occupied .pd-name')).map(el => el.textContent.trim());
+    // Pick the first one from pool that is not currently occupied
+    const available = macNamesPool.filter(name => !occupiedNames.includes(name));
+    if (available.length > 0) {
+      return available[0];
+    }
+    // Fallback if all are occupied
+    return macNamesPool[Math.floor(Math.random() * macNamesPool.length)];
+  }
 
-    detachBtn.addEventListener('click', (e) => {
+  container.addEventListener('click', (e) => {
+    // 1. DETACH CLICK
+    const detachBtn = e.target.closest('.pd-detach');
+    if (detachBtn) {
       e.stopPropagation();
-      // Animate out the device
-      slot.style.transition = 'opacity 0.3s ease, transform 0.3s ease, max-height 0.35s ease';
+      const slot = detachBtn.closest('.pd-slot');
+      if (!slot) return;
+
+      // Animate out the device slot
+      slot.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
       slot.style.opacity = '0';
-      slot.style.transform = 'translateX(10px)';
-      slot.style.overflow = 'hidden';
+      slot.style.transform = 'scale(0.95)';
 
       setTimeout(() => {
-        slot.style.maxHeight = '0';
-        slot.style.padding   = '0';
-        slot.style.margin    = '0';
-        slot.style.border    = 'none';
-      }, 280);
+        const currentLang = document.documentElement.getAttribute('lang') || 'en';
+        const label = (window.SnapZoneTranslations && window.SnapZoneTranslations[currentLang] && window.SnapZoneTranslations[currentLang]['pricing_slot_empty']) || 'Add a Mac';
 
-      setTimeout(() => {
-        // Replace with empty slot
-        slot.style.cssText = '';
         slot.className = 'pd-slot pd-empty';
         slot.innerHTML = `
           <svg class="pd-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M12 5v14M5 12h14"/>
           </svg>
-          <span class="pd-name">Add a Mac</span>
+          <span class="pd-name" data-i18n="pricing_slot_empty">${label}</span>
         `;
-      }, 600);
-    });
+        slot.style.opacity = '1';
+        slot.style.transform = 'scale(1)';
+      }, 200);
+      return;
+    }
+
+    // 2. ADD CLICK
+    const emptySlot = e.target.closest('.pd-empty');
+    if (emptySlot) {
+      e.stopPropagation();
+      const newName = getAvailableMacName();
+
+      // Animate transition
+      emptySlot.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+      emptySlot.style.opacity = '0';
+      emptySlot.style.transform = 'scale(0.95)';
+
+      setTimeout(() => {
+        emptySlot.className = 'pd-slot pd-occupied';
+        emptySlot.innerHTML = `
+          <svg class="pd-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+          </svg>
+          <span class="pd-name">${newName}</span>
+          <button class="pd-detach" aria-label="Detach ${newName}">×</button>
+        `;
+        emptySlot.style.opacity = '1';
+        emptySlot.style.transform = 'scale(1)';
+      }, 200);
+    }
   });
 })();
 
@@ -728,4 +818,24 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       setTimeout(() => window.dispatchEvent(new Event('sz-theme-changed')), 50);
     });
   }
+
+  // ─────────────────────────────────────────────────────
+  // 13. ANALYTICS DISCLAIMER POPUP
+  // ─────────────────────────────────────────────────────
+  (function initAnalyticsDisclaimer() {
+    const infoBtn = document.getElementById('info-btn');
+    const card = document.getElementById('info-disclaimer-card');
+    if (!infoBtn || !card) return;
+
+    infoBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      card.classList.toggle('visible');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!card.contains(e.target) && e.target !== infoBtn) {
+        card.classList.remove('visible');
+      }
+    });
+  })();
 })();
