@@ -3204,13 +3204,12 @@ footer {
   .story-slide.active-slide { pointer-events: auto; }
 
   /* ─── THE WINDOW ─────────────────────────────────
-     Every single panel uses the same fixed dimensions.
-     No overflow, no scrollbar, ever.
+     Maximized macOS Windows. Fills the screen but leaves 
+     a tiny gap (16px) to preserve borders and shadows.
   ──────────────────────────────────────────────── */
   .sz-window {
-    /* Fixed uniform dimensions */
-    width: clamp(340px, 40vw, 680px);
-    height: clamp(300px, 62vh, 560px);
+    /* Fixed maximized height */
+    height: calc(100vh - 32px);
     overflow: hidden; /* hard clip — no scrollbar */
 
     /* macOS glass appearance */
@@ -3224,8 +3223,16 @@ footer {
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     box-sizing: border-box;
-    padding: 44px 32px 28px;
+    
+    /* Comfortable padding for inner content */
+    padding: 60px 4vw;
     position: relative;
+
+    /* Center content inside the giant window */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     /* Animate position when centered ↔ split */
     transition:
@@ -3247,7 +3254,7 @@ footer {
     content: '';
     position: absolute;
     top: 16px;
-    left: 16px;
+    left: 18px;
     width: 52px;
     height: 12px;
     background-image:
@@ -3259,29 +3266,30 @@ footer {
     z-index: 2;
   }
 
-  /* Window content — fills available space compactly */
+  /* Window content — constrains text so it doesn't span 100vw */
   .sz-window > * {
     width: 100%;
+    max-width: 800px;
   }
 
   /* ─── CENTERED SLIDE (full-width single window) ── */
   .story-slide.layout-centered .sz-window {
-    /* Wider when shown alone in the center */
-    width: clamp(480px, 56vw, 900px);
+    /* Full screen minus 16px gap on each side */
+    width: calc(100vw - 32px);
     transform: translateX(0);
   }
 
   /* ─── SPLIT SLIDE (two windows side by side) ─────
-     Instead of jumping via justify-content, we animate 
-     the translate position so it's perfectly smooth.
+     Perfectly anchored to left/right halves with a gap.
+     Width: 50vw minus 16px outer gap minus 8px center gap = 24px
   ──────────────────────────────────────────────── */
   .story-slide.layout-left .sz-window {
-    width: clamp(340px, 40vw, 680px);
-    transform: translateX(-24vw); /* anchor to left */
+    width: calc(50vw - 24px);
+    transform: translateX(calc(-25vw + 8px)); /* shifts center */
   }
   .story-slide.layout-right .sz-window {
-    width: clamp(340px, 40vw, 680px);
-    transform: translateX(24vw); /* anchor to right */
+    width: calc(50vw - 24px);
+    transform: translateX(calc(25vw - 8px)); /* shifts center */
   }
 
   /* ─── CONTENT DENSITY OVERRIDES ─────────────────
