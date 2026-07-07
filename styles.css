@@ -3145,3 +3145,112 @@ footer {
     display: none;
   }
 }
+
+/* ═══════════════════════════════════════════════
+   STORYTELLING SCROLL LAYOUT (DESKTOP ONLY)
+   ═══════════════════════════════════════════════ */
+@media (min-width: 900px) {
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+  }
+
+  /* Sticky storytelling container */
+  #story-container {
+    position: relative;
+    background: var(--bg);
+  }
+
+  #story-sticky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background: var(--bg);
+  }
+
+  /* Sibling scroll triggers that lock the browser scrolling */
+  .story-trigger {
+    height: 100vh;
+    scroll-snap-align: start;
+    pointer-events: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Full screen slide panels */
+  .story-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    opacity: var(--slide-opacity, 0);
+    transform: translateX(var(--slide-tx, 100vw));
+    transition: opacity 0.85s var(--ease-out), transform 0.85s var(--ease-out);
+  }
+
+  /* Prevent mouse interactions on hidden slides */
+  .story-slide:not(.active-slide) {
+    pointer-events: none;
+  }
+
+  .story-slide.active-slide {
+    pointer-events: auto;
+  }
+
+  /* Content shifts inside slides to create split screens */
+  .story-slide .hero-inner,
+  .story-slide .fancyzone-inner,
+  .story-slide .analytics-inner,
+  .story-slide .download-inner,
+  .story-slide .section-inner {
+    transition: transform 0.85s var(--ease-out), max-width 0.85s var(--ease-out);
+    transform: translateX(var(--content-tx, 0));
+  }
+
+  /* Custom overrides for split-screen layouts to fit side-by-side */
+  .story-slide#hero .hero-inner {
+    max-width: min(44vw, 680px);
+  }
+
+  .story-slide#fancyzone .fancyzone-inner {
+    max-width: min(48vw, 840px);
+    grid-template-columns: 1fr;
+    gap: var(--space-m);
+  }
+
+  .story-slide#how-it-works .section-inner {
+    max-width: min(46vw, 780px);
+  }
+  .story-slide#how-it-works .methods-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-s);
+  }
+
+  .story-slide#analytics .analytics-inner {
+    max-width: min(48vw, 840px);
+    grid-template-columns: 1fr;
+    gap: var(--space-m);
+  }
+
+  .story-slide#pricing .section-inner {
+    max-width: min(44vw, 720px);
+  }
+  .story-slide#pricing .pricing-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-m);
+  }
+
+  .story-slide#download .download-inner {
+    max-width: min(48vw, 840px);
+  }
+}

@@ -71,7 +71,9 @@
   </nav>
 
   <!-- ═══════════════════════════════════════════════ HERO ═══════════════════════════════════════════════ -->
-  <section id="hero" aria-labelledby="hero-headline">
+  <div id="story-container">
+    <div id="story-sticky">
+      <section id="hero" class="story-slide" aria-labelledby="hero-headline">
     <div class="hero-inner">
 
       <!-- Hero copy — centered -->
@@ -107,7 +109,7 @@
 
 
   <!-- ══════════════ GESTURE ANIMATIONS ══════════════ -->
-  <section id="gestures" aria-labelledby="gestures-heading">
+  <section id="gestures" class="story-slide" aria-labelledby="gestures-heading">
     <div class="section-inner">
       <h2 id="gestures-heading" class="section-h2" data-i18n="gestures_title">Every gesture, instant response</h2>
       <p class="section-sub" data-i18n="gestures_sub">Hover any window's titlebar, then swipe two fingers in any direction. SnapZone recognises eight gestures and snaps in 200 ms.</p>
@@ -199,7 +201,7 @@
   </section>
 
   <!-- ══════════════ FANCYZONE SHOWCASE ══════════════ -->
-  <section id="fancyzone" aria-labelledby="fancyzone-heading">
+  <section id="fancyzone" class="story-slide" aria-labelledby="fancyzone-heading">
     <div class="section-inner fancyzone-inner">
 
       <!-- Left: text -->
@@ -229,7 +231,7 @@
   </section>
 
   <!-- ════════════════ HOW IT WORKS ════════════════ -->
-  <section id="how-it-works" aria-labelledby="how-heading">
+  <section id="how-it-works" class="story-slide" aria-labelledby="how-heading">
     <div class="section-inner">
       <h2 id="how-heading" class="section-h2" data-i18n="how_title">Three ways to snap</h2>
       <p class="section-sub" data-i18n="how_sub">Use whichever method feels natural. SnapZone handles all three simultaneously.</p>
@@ -296,7 +298,7 @@
   </section>
 
   <!-- ══════════════ ANALYTICS ══════════════ -->
-  <section id="analytics" aria-labelledby="analytics-heading">
+  <section id="analytics" class="story-slide" aria-labelledby="analytics-heading">
     <div class="section-inner analytics-inner">
       <div class="analytics-text">
         <h2 id="analytics-heading" class="section-h2" data-i18n="analytics_title">Know where your time goes</h2>
@@ -349,7 +351,7 @@
   </section>
 
   <!-- ══════════════ PRICING ══════════════ -->
-  <section id="pricing" aria-labelledby="pricing-heading">
+  <section id="pricing" class="story-slide" aria-labelledby="pricing-heading">
     <div class="section-inner">
       <h2 id="pricing-heading" class="section-h2" data-i18n="pricing_title">Simple, honest pricing</h2>
       <p class="section-sub" style="text-align:center;max-width:none;" data-i18n="pricing_sub">Try everything free for 10 days. No credit card, no strings attached.</p>
@@ -451,7 +453,7 @@
 
 
   <!-- ══════════════ DOWNLOAD CTA ══════════════ -->
-  <section id="download" aria-labelledby="download-heading">
+  <section id="download" class="story-slide" aria-labelledby="download-heading">
     <div class="section-inner download-inner">
       <div class="download-glow" aria-hidden="true"></div>
       <div class="download-logo-wrap">
@@ -478,6 +480,14 @@
       </div>
     </div>
   </section>
+    </div> <!-- end #story-sticky -->
+    <div class="story-trigger"></div>
+    <div class="story-trigger"></div>
+    <div class="story-trigger"></div>
+    <div class="story-trigger"></div>
+    <div class="story-trigger"></div>
+    <div class="story-trigger"></div>
+  </div> <!-- end #story-container -->
 
   <!-- Footer -->
   <footer id="site-footer" role="contentinfo">

@@ -854,4 +854,145 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       `;
     });
   })();
+
+  // ─────────────────────────────────────────────────────
+  // 15. STORYTELLING SCROLL ANIMATIONS
+  // ─────────────────────────────────────────────────────
+  (function initStoryScroll() {
+    const slides = {
+      hero:         document.getElementById('hero'),
+      gestures:     document.getElementById('gestures'),
+      fancyzone:    document.getElementById('fancyzone'),
+      howItWorks:   document.getElementById('how-it-works'),
+      analytics:    document.getElementById('analytics'),
+      pricing:      document.getElementById('pricing'),
+      download:     document.getElementById('download')
+    };
+
+    const container = document.getElementById('story-container');
+    if (!container) return;
+
+    function update() {
+      if (window.innerWidth < 900) {
+        // Reset all inline styles on mobile to ensure vertical layout works
+        Object.values(slides).forEach(slide => {
+          if (slide) {
+            slide.style.removeProperty('--slide-tx');
+            slide.style.removeProperty('--slide-opacity');
+            slide.style.removeProperty('--content-tx');
+            slide.classList.remove('active-slide');
+          }
+        });
+        return;
+      }
+
+      const rect = container.getBoundingClientRect();
+      const viewH = window.innerHeight;
+      const totalHeight = container.clientHeight - viewH;
+      if (totalHeight <= 0) return;
+
+      // Calculate scroll progress from 0.0 to 6.0
+      let progress = -rect.top / viewH;
+      progress = Math.max(0, Math.min(6, progress));
+
+      const configs = {};
+
+      // 0. Hero
+      if (progress < 1) {
+        configs.hero = { slideTx: 0, contentTx: -22 * progress, opacity: 1 };
+      } else if (progress < 2) {
+        configs.hero = { slideTx: -100 * (progress - 1), contentTx: -22, opacity: 1 - (progress - 1) };
+      } else {
+        configs.hero = { slideTx: -100, contentTx: -22, opacity: 0 };
+      }
+
+      // 1. FancyZone
+      if (progress < 1) {
+        configs.fancyzone = { slideTx: 100 - 100 * progress, contentTx: 22, opacity: progress };
+      } else if (progress < 2) {
+        configs.fancyzone = { slideTx: -100 * (progress - 1), contentTx: 22, opacity: 1 - (progress - 1) };
+      } else {
+        configs.fancyzone = { slideTx: -100, contentTx: 22, opacity: 0 };
+      }
+
+      // 2. Gestures
+      if (progress < 1) {
+        configs.gestures = { slideTx: 100, contentTx: 0, opacity: 0 };
+      } else if (progress < 2) {
+        configs.gestures = { slideTx: 100 - 100 * (progress - 1), contentTx: 0, opacity: progress - 1 };
+      } else if (progress < 3) {
+        configs.gestures = { slideTx: -100 * (progress - 2), contentTx: 0, opacity: 1 - (progress - 2) };
+      } else {
+        configs.gestures = { slideTx: -100, contentTx: 0, opacity: 0 };
+      }
+
+      // 3. How it Works
+      if (progress < 2) {
+        configs.howItWorks = { slideTx: 100, contentTx: 0, opacity: 0 };
+      } else if (progress < 3) {
+        configs.howItWorks = { slideTx: 100 - 100 * (progress - 2), contentTx: -22 * (progress - 2), opacity: progress - 2 };
+      } else if (progress < 4) {
+        configs.howItWorks = { slideTx: 0, contentTx: -22, opacity: 1 };
+      } else if (progress < 5) {
+        configs.howItWorks = { slideTx: -100 * (progress - 4), contentTx: -22, opacity: 1 - (progress - 4) };
+      } else {
+        configs.howItWorks = { slideTx: -100, contentTx: -22, opacity: 0 };
+      }
+
+      // 4. Analytics
+      if (progress < 3) {
+        configs.analytics = { slideTx: 100, contentTx: 22, opacity: 0 };
+      } else if (progress < 4) {
+        configs.analytics = { slideTx: 100 - 100 * (progress - 3), contentTx: 22, opacity: progress - 3 };
+      } else if (progress < 5) {
+        configs.analytics = { slideTx: -100 * (progress - 4), contentTx: 22, opacity: 1 - (progress - 4) };
+      } else {
+        configs.analytics = { slideTx: -100, contentTx: 22, opacity: 0 };
+      }
+
+      // 5. Pricing
+      if (progress < 4) {
+        configs.pricing = { slideTx: 100, contentTx: 0, opacity: 0 };
+      } else if (progress < 5) {
+        configs.pricing = { slideTx: 100 - 100 * (progress - 4), contentTx: -22 * (progress - 4), opacity: progress - 4 };
+      } else if (progress < 6) {
+        configs.pricing = { slideTx: 0, contentTx: -22, opacity: 1 };
+      } else {
+        configs.pricing = { slideTx: -100 * (progress - 6), contentTx: -22, opacity: 1 - (progress - 6) };
+      }
+
+      // 6. Download
+      if (progress < 5) {
+        configs.download = { slideTx: 100, contentTx: 22, opacity: 0 };
+      } else if (progress < 6) {
+        configs.download = { slideTx: 100 - 100 * (progress - 5), contentTx: 22 - 22 * (progress - 5), opacity: progress - 5 };
+      } else {
+        configs.download = { slideTx: 0, contentTx: 0, opacity: 1 };
+      }
+
+      // Apply configs to slides
+      Object.keys(slides).forEach(key => {
+        const slide = slides[key];
+        const conf = configs[key];
+        if (slide && conf) {
+          slide.style.setProperty('--slide-tx', `${conf.slideTx}vw`);
+          slide.style.setProperty('--slide-opacity', conf.opacity);
+          slide.style.setProperty('--content-tx', `${conf.contentTx}vw`);
+          
+          if (conf.opacity > 0.15) {
+            slide.classList.add('active-slide');
+          } else {
+            slide.classList.remove('active-slide');
+          }
+        }
+      });
+    }
+
+    // Attach listeners
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    
+    // Initial run
+    update();
+  })();
 })();
