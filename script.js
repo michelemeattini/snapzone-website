@@ -686,14 +686,6 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     ctx.roundRect(padX, padY, padW, padH, padR);
     ctx.stroke();
 
-    // Trackpad click line (physical click line near bottom)
-    ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.04)';
-    ctx.lineWidth   = 1;
-    ctx.beginPath();
-    ctx.moveTo(padX + 12, padY + padH * 0.88);
-    ctx.lineTo(padX + padW - 12, padY + padH * 0.88);
-    ctx.stroke();
-
     const { dx, dy } = DIRS[dir];
     const { px, py } = perp(dx, dy);
 
@@ -734,29 +726,24 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       const fx = startX + dx * currentDist + px * FINGER_SEP * 0.5 * f;
       const fy = startY + dy * currentDist + py * FINGER_SEP * 0.5 * f;
 
-      // Outer glow
-      const glow = ctx.createRadialGradient(fx, fy, 0, fx, fy, FINGER_R * 2.2);
-      glow.addColorStop(0, `rgba(${primaryRgb[0]},${primaryRgb[1]},${primaryRgb[2]},0.28)`);
-      glow.addColorStop(1, `rgba(${primaryRgb[0]},${primaryRgb[1]},${primaryRgb[2]},0)`);
-      ctx.beginPath();
-      ctx.arc(fx, fy, FINGER_R * 2.2, 0, Math.PI * 2);
-      ctx.fillStyle = glow;
-      ctx.fill();
-
-      // Finger body gradient
-      const grad = ctx.createRadialGradient(fx - FINGER_R * 0.3, fy - FINGER_R * 0.3, 1, fx, fy, FINGER_R);
-      grad.addColorStop(0, isDark ? '#89b4f7' : '#6ea6f5');
-      grad.addColorStop(1, isDark ? '#4a80e0' : '#3764c8');
+      // Flat, modern finger circle with soft ambient shadow
+      ctx.save();
+      ctx.shadowColor = isDark ? 'rgba(0, 0, 0, 0.4)' : 'rgba(55, 100, 210, 0.18)';
+      ctx.shadowBlur  = 8;
+      ctx.shadowOffsetY = 2.5;
+      
+      ctx.fillStyle = primary;
       ctx.beginPath();
       ctx.arc(fx, fy, FINGER_R, 0, Math.PI * 2);
-      ctx.fillStyle = grad;
       ctx.fill();
+      ctx.restore();
 
-      // Specular highlight
+      // Clean, subtle border stroke for premium finish
+      ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.45)';
+      ctx.lineWidth   = 1.5;
       ctx.beginPath();
-      ctx.arc(fx - FINGER_R * 0.3, fy - FINGER_R * 0.3, FINGER_R * 0.32, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,255,255,0.35)';
-      ctx.fill();
+      ctx.arc(fx, fy, FINGER_R - 0.75, 0, Math.PI * 2);
+      ctx.stroke();
     }
   }
 
