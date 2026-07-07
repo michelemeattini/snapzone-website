@@ -3222,6 +3222,14 @@ footer {
     max-width: min(44vw, 680px);
   }
 
+  .story-slide#gestures .section-inner {
+    max-width: min(48vw, 840px);
+  }
+  .story-slide#gestures .gestures-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-s);
+  }
+
   .story-slide#fancyzone .fancyzone-inner {
     max-width: min(48vw, 840px);
     grid-template-columns: 1fr;
