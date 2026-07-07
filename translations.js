@@ -102,8 +102,10 @@ window.SnapZoneTranslations = {
     download_trust3: '✨ Auto-updates',
     download_trust4: '·',
     download_trust5: '🚫 No telemetry',
-    footer_copy: '© 2026 SnapZone. Made for macOS.',
-    footer_terms: 'Terms & Conditions'
+    footer_copy: '&copy; 2026 Michele Meattini. All rights reserved.',
+    footer_terms: 'Terms &amp; Conditions',
+    footer_privacy: 'Privacy Policy',
+    video_play_consent: 'Click to play video. By doing so, you accept YouTube\'s Privacy Policy.'
   },
   it: {
     announce_text: 'Offerta di lancio: <strong>30% di sconto</strong> sulla licenza Lifetime con il codice',
@@ -206,8 +208,10 @@ window.SnapZoneTranslations = {
     download_trust3: '✨ Aggiornamenti automatici',
     download_trust4: '·',
     download_trust5: '🚫 Nessuna telemetria',
-    footer_copy: '© 2026 SnapZone. Creato per macOS.',
-    footer_terms: 'Termini e Condizioni'
+    footer_copy: '&copy; 2026 Michele Meattini. Tutti i diritti riservati.',
+    footer_terms: 'Termini e Condizioni',
+    footer_privacy: 'Informativa sulla Privacy',
+    video_play_consent: 'Clicca per riprodurre il video. Facendolo, accetti l\'Informativa sulla Privacy di YouTube.'
   },
   es: {
     announce_text: 'Oferta de lanzamiento: <strong>30% de descuento</strong> en licencia Lifetime con código',
@@ -310,7 +314,9 @@ window.SnapZoneTranslations = {
     download_trust3: '✨ Actualizaciones automáticas',
     download_trust4: '·',
     download_trust5: '🚫 Sin telemetría',
-    footer_copy: '© 2026 SnapZone. Hecho para macOS.',
-    footer_terms: 'Términos y Condiciones'
+    footer_copy: '&copy; 2026 Michele Meattini. Todos los derechos reservados.',
+    footer_terms: 'Términos y Condiciones',
+    footer_privacy: 'Política de Privacidad',
+    video_play_consent: 'Haz clic para reproducir el video. Al farlo, aceptas la Política de Privacidad de YouTube.'
   }
 };

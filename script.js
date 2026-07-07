@@ -843,5 +843,26 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         card.classList.remove('visible');
       }
     });
+  // ─────────────────────────────────────────────────────
+  // 14. GDPR YOUTUBE LAZY LOADER
+  // ─────────────────────────────────────────────────────
+  (function initYouTubeLazyLoad() {
+    const wrapper = document.getElementById('video-wrapper');
+    if (!wrapper) return;
+
+    wrapper.addEventListener('click', () => {
+      wrapper.innerHTML = `
+        <iframe 
+          width="100%" 
+          height="100%" 
+          src="https://www.youtube-nocookie.com/embed/ey1Futp5330?autoplay=1" 
+          title="SnapZone - Your screen, divided perfectly" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          referrerpolicy="strict-origin-when-cross-origin" 
+          allowfullscreen>
+        </iframe>
+      `;
+    });
   })();
 })();

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — SnapZone</title>
+  <meta name="description" content="Privacy Policy for SnapZone macOS window management application and website. GDPR compliant.">
+  <meta name="robots" content="index, follow">
+  <!-- Fonts are self-hosted in assets/fonts/ — no Google servers contacted (GDPR) -->
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="alternate icon" type="image/png" href="assets/logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    // Initialize theme instantly in head to avoid flash
+    const savedTheme = localStorage.getItem('sz-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  </script>
+  <style>
+    /* ── Privacy page layout ── */
+    .legal-container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: calc(108px + var(--space-xl)) var(--space-l) var(--space-2xl);
+    }
+    .legal-h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: var(--space-s);
+      color: var(--ink);
+      letter-spacing: -0.03em;
+    }
+    .legal-meta {
+      font-size: 0.82rem;
+      color: var(--ink-faint);
+      margin-bottom: var(--space-l);
+      font-family: var(--font-mono);
+      letter-spacing: 0.04em;
+    }
+    .legal-content {
+      font-size: var(--step-0);
+      color: var(--ink-muted);
+      line-height: 1.75;
+    }
+    .legal-content h2 {
+      font-size: var(--step-2);
+      color: var(--ink);
+      margin-top: var(--space-l);
+      margin-bottom: var(--space-s);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--surface-3);
+    }
+    .legal-content h3 {
+      font-size: var(--step-1);
+      color: var(--ink);
+      margin-top: var(--space-m);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .legal-content p { margin-bottom: var(--space-s); }
+    .legal-content ul {
+      margin-bottom: var(--space-s);
+      padding-left: var(--space-m);
+    }
+    .legal-content li { margin-bottom: 6px; }
+    .legal-content a {
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+    .legal-content strong { color: var(--ink); }
+    .legal-content .callout {
+      background: var(--primary-dim);
+      border-left: 3px solid var(--primary);
+      border-radius: 0 var(--r-m) var(--r-m) 0;
+      padding: var(--space-s) var(--space-m);
+      margin: var(--space-m) 0;
+    }
+    .legal-content .callout p { margin-bottom: 0; color: var(--ink); }
+    .legal-content table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: var(--space-m) 0;
+      font-size: 0.9rem;
+    }
+    .legal-content th {
+      text-align: left;
+      padding: 8px 12px;
+      background: var(--surface-2);
+      color: var(--ink);
+      font-weight: 600;
+      border-bottom: 2px solid var(--surface-3);
+    }
+    .legal-content td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--surface-2);
+      vertical-align: top;
+    }
+    .legal-content tr:last-child td { border-bottom: none; }
+
+    /* Language toggle */
+    .lang-toggle-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: var(--space-l);
+      border-bottom: 1px solid rgba(100, 100, 100, 0.08);
+      padding-bottom: 12px;
+    }
+    .lang-toggle-btn {
+      background: none;
+      border: none;
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--ink-faint);
+      padding: 4px 10px;
+      border-radius: var(--r-s);
+      transition: color 0.2s, background 0.2s;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .lang-toggle-btn:hover { color: var(--ink-muted); }
+    .lang-toggle-btn.active {
+      color: var(--primary);
+      background: var(--primary-dim);
+    }
+    [lang-content] { display: none; }
+    [lang-content].visible { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- Floating pill Navbar -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <a href="index.html" class="logo" aria-label="SnapZone home">
+      <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+        <rect x="3" y="6" width="10" height="16" rx="3" fill="var(--primary)"/>
+        <rect x="15" y="6" width="10" height="16" rx="3" fill="var(--primary)"/>
+      </svg>
+      <span>SnapZone</span>
+    </a>
+    <div class="nav-links" role="list">
+      <a href="index.html#gestures"     role="listitem">Gestures</a>
+      <a href="index.html#fancyzone"    role="listitem">Zones</a>
+      <a href="index.html#how-it-works" role="listitem">How it works</a>
+      <a href="index.html#pricing"      role="listitem">Pricing</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle light/dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+      <a href="index.html#pricing" class="nav-cta">Try Free</a>
+    </div>
+  </nav>
+
+  <main class="legal-container">
+    <h1 class="legal-h1">Privacy Policy</h1>
+    <p class="legal-meta">Last updated: July 7, 2026 · Version 1.0</p>
+
+    <div class="lang-toggle-bar" role="tablist" aria-label="Language selection">
+      <button class="lang-toggle-btn active" onclick="switchLang('en')" role="tab" aria-selected="true"  aria-controls="privacy-en" id="tab-en">🇬🇧 English</button>
+      <button class="lang-toggle-btn"        onclick="switchLang('it')" role="tab" aria-selected="false" aria-controls="privacy-it" id="tab-it">🇮🇹 Italiano</button>
+      <button class="lang-toggle-btn"        onclick="switchLang('es')" role="tab" aria-selected="false" aria-controls="privacy-es" id="tab-es">🇪🇸 Español</button>
+    </div>
+
+    <!-- ════════════ ENGLISH ════════════ -->
+    <div class="legal-content visible" id="privacy-en" lang-content role="tabpanel" aria-labelledby="tab-en">
+
+      <div class="callout">
+        <p><strong>Short version:</strong> SnapZone is a local-first app. It collects no personal data. This website stores only your theme and language preference — no tracking, no cookies, no analytics.</p>
+      </div>
+
+      <h2>1. Data Controller</h2>
+      <p>The data controller for this website and the SnapZone application is:</p>
+      <ul>
+        <li><strong>Name:</strong> Michele Meattini</li>
+        <li><strong>Email:</strong> <a href="mailto:m@michelemeattini.it">m@michelemeattini.it</a></li>
+        <li><strong>Country:</strong> Italy (EU)</li>
+      </ul>
+      <p>For any privacy-related requests, including the exercise of your GDPR rights, you may contact the data controller directly at the address above.</p>
+
+      <h2>2. What Data We Collect</h2>
+
+      <h3>2.1 — This Website</h3>
+      <p>The SnapZone website (<strong>snapzone-seven.vercel.app</strong>) does not use cookies, tracking pixels, or analytics scripts. It does not collect any personally identifiable information.</p>
+      <p>The following data is stored <strong>locally in your browser</strong> (via <code>localStorage</code>) and never transmitted to any server:</p>
+      <table>
+        <thead><tr><th>Key</th><th>Purpose</th><th>Expires</th></tr></thead>
+        <tbody>
+          <tr><td><code>sz-theme</code></td><td>Remembers your light/dark mode preference</td><td>Until cleared by user</td></tr>
+          <tr><td><code>sz-lang</code></td><td>Remembers your manually selected language</td><td>Until cleared by user</td></tr>
+          <tr><td><code>sz-announce-dismissed</code></td><td>Hides the announcement banner after dismissal</td><td>Session only</td></tr>
+        </tbody>
+      </table>
+      <p>These values never leave your device and contain no personal information. They are strictly necessary for the website to function as expected.</p>
+
+      <h3>2.2 — The SnapZone Application</h3>
+      <p>The SnapZone macOS application is <strong>local-first</strong>. All processing happens on your device. The application does not collect, transmit, or store:</p>
+      <ul>
+        <li>Window titles or application names</li>
+        <li>Trackpad gesture recordings or raw input data</li>
+        <li>Usage statistics or behavioral analytics</li>
+        <li>Crash reports or diagnostics</li>
+        <li>Any personal or device-identifying information</li>
+      </ul>
+      <p>Usage statistics displayed within the app (e.g. total snaps, time saved) are calculated and stored exclusively on your local device and are never transmitted externally.</p>
+
+      <h2>3. Third-Party Services</h2>
+
+      <h3>3.1 — Hosting (Vercel)</h3>
+      <p>This website is hosted on <strong>Vercel Inc.</strong> (San Francisco, CA, USA). Vercel may collect standard web server logs (IP address, browser user agent, request path, timestamp) as part of normal server operation. These logs are retained for a short period for security and operational purposes. Vercel's privacy policy is available at <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">vercel.com/legal/privacy-policy</a>.</p>
+
+      <h3>3.2 — Payment Processor (Lemon Squeezy)</h3>
+      <p>Purchases of the SnapZone Lifetime License are processed by <strong>Lemon Squeezy</strong> (a service of Lemon Squeezy, LLC). When you make a purchase, you will be redirected to Lemon Squeezy's checkout at <code>snapzone.lemonsqueezy.com</code>. Lemon Squeezy acts as the <em>Merchant of Record</em> and collects the billing information necessary to process the transaction (name, email, payment details). SnapZone does not receive or store your payment card data. Lemon Squeezy's privacy policy is available at <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noopener noreferrer">lemonsqueezy.com/privacy</a>.</p>
+
+      <h3>3.3 — Software Updates (Sparkle)</h3>
+      <p>The application uses the <strong>Sparkle</strong> open-source framework to deliver automatic updates. When the app checks for updates, it contacts our update server to download the appcast file (<code>appcast.xml</code>). This request may include your IP address as part of the standard HTTP request, but no additional personal data is transmitted. No usage data or analytics are collected as part of this process.</p>
+
+      <h3>3.4 — Embedded Video (YouTube)</h3>
+      <p>The homepage includes a demo video embedded from YouTube using the privacy-enhanced mode (<code>youtube-nocookie.com</code>). According to Google's documentation, this domain does not store cookies on your device unless you interact with the video player. If you play the video, YouTube may collect data as described in the <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>. The video is loaded with <code>loading="lazy"</code> and will not connect to YouTube servers until the page section is scrolled into view.</p>
+
+      <h3>3.5 — Fonts</h3>
+      <p>All fonts used on this website are <strong>self-hosted</strong>. No requests are made to Google Fonts, Adobe Fonts, or any external font service. Font files are served directly from our own servers.</p>
+
+      <h2>4. Legal Basis for Processing (GDPR)</h2>
+      <p>Under the EU General Data Protection Regulation (GDPR), the legal bases for any processing described in this policy are:</p>
+      <ul>
+        <li><strong>Legitimate Interest (Art. 6(1)(f)):</strong> Standard web server logs maintained by our hosting provider (Vercel) for security and operational purposes.</li>
+        <li><strong>Contract performance (Art. 6(1)(b)):</strong> Processing your email and license key for license delivery and update notifications via Lemon Squeezy.</li>
+        <li><strong>No processing:</strong> All other interactions with this website involve no personal data processing.</li>
+      </ul>
+
+      <h2>5. Data Transfers Outside the EU</h2>
+      <p>Our hosting provider (Vercel) and payment processor (Lemon Squeezy) are based in the United States. Any transfers of personal data to these processors are covered by Standard Contractual Clauses (SCCs) as approved by the European Commission, or by the EU-U.S. Data Privacy Framework where applicable.</p>
+
+      <h2>6. Your Rights Under GDPR</h2>
+      <p>If you are located in the EU/EEA, you have the following rights regarding your personal data:</p>
+      <ul>
+        <li><strong>Right of access (Art. 15)</strong> — Request a copy of the personal data we hold about you.</li>
+        <li><strong>Right to rectification (Art. 16)</strong> — Request correction of inaccurate data.</li>
+        <li><strong>Right to erasure (Art. 17)</strong> — Request deletion of your data ("right to be forgotten").</li>
+        <li><strong>Right to restriction (Art. 18)</strong> — Request that we limit the processing of your data.</li>
+        <li><strong>Right to portability (Art. 20)</strong> — Request your data in a machine-readable format.</li>
+        <li><strong>Right to object (Art. 21)</strong> — Object to processing based on legitimate interests.</li>
+        <li><strong>Right to lodge a complaint</strong> — Contact the Italian data protection authority (Garante per la Protezione dei Dati Personali) at <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer">garanteprivacy.it</a>.</li>
+      </ul>
+      <p>To exercise any of these rights, contact: <a href="mailto:m@michelemeattini.it">m@michelemeattini.it</a>. We will respond within 30 days.</p>
+
+      <h2>7. Data Retention</h2>
+      <p>Since we do not collect personal data through this website, there is no personal data to retain or delete on our end. Browser-local storage data (theme, language preference) is controlled entirely by you and can be cleared at any time from your browser settings. For data processed by Lemon Squeezy in the context of a purchase, please refer to their privacy policy and data retention practices.</p>
+
+      <h2>8. Children's Privacy</h2>
+      <p>SnapZone is not directed to children under 16 years of age. We do not knowingly collect personal information from children. If you believe a child has provided personal data, please contact us immediately.</p>
+
+      <h2>9. Changes to This Policy</h2>
+      <p>We may update this Privacy Policy from time to time. The "Last updated" date at the top of this page reflects the most recent revision. We encourage you to review this page periodically. Continued use of the website or application after any changes constitutes acceptance of the updated policy.</p>
+
+      <h2>10. Contact</h2>
+      <p>For any questions about this Privacy Policy or to exercise your rights:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:m@michelemeattini.it">m@michelemeattini.it</a></li>
+        <li><strong>Data Controller:</strong> Michele Meattini, Italy</li>
+      </ul>
+    </div>
+
+    <!-- ════════════ ITALIANO ════════════ -->
+    <div class="legal-content" id="privacy-it" lang-content role="tabpanel" aria-labelledby="tab-it">
+
+      <div class="callout">
+        <p><strong>In breve:</strong> SnapZone è un'app local-first. Non raccoglie dati personali. Questo sito salva solo la tua preferenza di tema e lingua — nessun tracciamento, nessun cookie, nessuna analisi.</p>
+      </div>
+
+      <h2>1. Titolare del Trattamento</h2>
+      <p>Il titolare del trattamento dei dati per questo sito web e per l'applicazione SnapZone è:</p>
+      <ul>
+        <li><strong>Nome:</strong> Michele Meattini</li>
+        <li><strong>Email:</strong> <a href="mailto:m@michelemeattini.it">m@michelemeattini.it</a></li>
+        <li><strong>Paese:</strong> Italia (UE)</li>
+      </ul>
+      <p>Per qualsiasi richiesta relativa alla privacy, incluso l'esercizio dei tuoi diritti GDPR, puoi contattare il titolare direttamente all'indirizzo sopra indicato.</p>
+
+      <h2>2. Dati Raccolti</h2>
+
+      <h3>2.1 — Questo Sito Web</h3>
+      <p>Il sito web di SnapZone (<strong>snapzone-seven.vercel.app</strong>) non utilizza cookie, pixel di tracciamento o script analitici. Non raccoglie alcuna informazione personalmente identificabile.</p>
+      <p>I seguenti dati sono memorizzati <strong>localmente nel tuo browser</strong> (tramite <code>localStorage</code>) e non vengono mai trasmessi ad alcun server:</p>
+      <table>
+        <thead><tr><th>Chiave</th><th>Scopo</th><th>Scadenza</th></tr></thead>
+        <tbody>
+          <tr><td><code>sz-theme</code></td><td>Ricorda la tua preferenza modalità chiara/scura</td><td>Fino alla cancellazione da parte dell'utente</td></tr>
+          <tr><td><code>sz-lang</code></td><td>Ricorda la lingua selezionata manualmente</td><td>Fino alla cancellazione da parte dell'utente</td></tr>
+          <tr><td><code>sz-announce-dismissed</code></td><td>Nasconde il banner informativo dopo la chiusura</td><td>Solo per la sessione corrente</td></tr>
+        </tbody>
+      </table>
+      <p>Questi valori non lasciano mai il tuo dispositivo e non contengono informazioni personali. Sono strettamente necessari al corretto funzionamento del sito.</p>
+
+      <h3>2.2 — L'Applicazione SnapZone</h3>
+      <p>L'applicazione macOS SnapZone è <strong>local-first</strong>. Tutto il processamento avviene sul tuo dispositivo. L'applicazione non raccoglie, trasmette o memorizza:</p>
+      <ul>
+        <li>Titoli delle finestre o nomi delle applicazioni</li>
+        <li>Registrazioni di gesture sul trackpad o dati di input grezzi</li>
+        <li>Statistiche di utilizzo o analytics comportamentali</li>
+        <li>Report di crash o dati diagnostici</li>
+        <li>Qualsiasi informazione personale o identificativa del dispositivo</li>
+      </ul>
+      <p>Le statistiche di utilizzo mostrate nell'app (es. snap totali, tempo risparmiato) sono calcolate e memorizzate esclusivamente sul tuo dispositivo locale e non vengono mai trasmesse esternamente.</p>
+
+      <h2>3. Servizi di Terze Parti</h2>
+
+      <h3>3.1 — Hosting (Vercel)</h3>
+      <p>Questo sito è ospitato su <strong>Vercel Inc.</strong> (San Francisco, CA, USA). Vercel può raccogliere log standard del server web (indirizzo IP, user agent del browser, percorso della richiesta, data/ora) come parte del normale funzionamento del server. Questi log sono conservati per un breve periodo per scopi di sicurezza e operativi. L'informativa sulla privacy di Vercel è disponibile su <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">vercel.com/legal/privacy-policy</a>.</p>
+
+      <h3>3.2 — Processore di Pagamento (Lemon Squeezy)</h3>
+      <p>Gli acquisti della Licenza Lifetime di SnapZone sono processati da <strong>Lemon Squeezy</strong> (un servizio di Lemon Squeezy, LLC). Quando effettui un acquisto, sarai reindirizzato al checkout di Lemon Squeezy su <code>snapzone.lemonsqueezy.com</code>. Lemon Squeezy agisce come <em>Merchant of Record</em> e raccoglie le informazioni di fatturazione necessarie per elaborare la transazione (nome, email, dati di pagamento). SnapZone non riceve né memorizza i dati della tua carta di pagamento. L'informativa sulla privacy di Lemon Squeezy è disponibile su <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noopener noreferrer">lemonsqueezy.com/privacy</a>.</p>
+
+      <h3>3.3 — Aggiornamenti Software (Sparkle)</h3>
+      <p>L'applicazione utilizza il framework open-source <strong>Sparkle</strong> per gli aggiornamenti automatici. Quando l'app cerca aggiornamenti, contatta il nostro server di aggiornamento per scaricare il file appcast (<code>appcast.xml</code>). Questa richiesta può includere il tuo indirizzo IP come parte della normale richiesta HTTP, ma nessun altro dato personale viene trasmesso. Nessun dato di utilizzo o analisi viene raccolto in questo processo.</p>
+
+      <h3>3.4 — Video Incorporato (YouTube)</h3>
+      <p>La homepage include un video dimostrativo incorporato da YouTube tramite la modalità privacy-enhanced (<code>youtube-nocookie.com</code>). Secondo la documentazione di Google, questo dominio non memorizza cookie sul tuo dispositivo a meno che tu non interagisca con il player video. Se riproduci il video, YouTube potrebbe raccogliere dati come descritto nella <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>. Il video è caricato con <code>loading="lazy"</code> e non contatterà i server di YouTube finché non scorri fino alla relativa sezione.</p>
+
+      <h3>3.5 — Font</h3>
+      <p>Tutti i font utilizzati su questo sito sono <strong>auto-ospitati</strong>. Non vengono effettuate richieste a Google Fonts, Adobe Fonts o qualsiasi altro servizio di font esterno. I file dei font sono serviti direttamente dai nostri server.</p>
+
+      <h2>4. Base Giuridica del Trattamento (GDPR)</h2>
+      <p>Ai sensi del Regolamento Generale sulla Protezione dei Dati (GDPR), le basi giuridiche per i trattamenti descritti in questa informativa sono:</p>
+      <ul>
+        <li><strong>Legittimo interesse (Art. 6(1)(f)):</strong> Log standard del server web mantenuti dal nostro provider di hosting (Vercel) per scopi di sicurezza e operativi.</li>
+        <li><strong>Esecuzione del contratto (Art. 6(1)(b)):</strong> Trattamento della tua email e chiave di licenza per la consegna della licenza e le notifiche di aggiornamento tramite Lemon Squeezy.</li>
+        <li><strong>Nessun trattamento:</strong> Tutte le altre interazioni con questo sito web non comportano alcun trattamento di dati personali.</li>
+      </ul>
+
+      <h2>5. Trasferimenti di Dati al di Fuori dell'UE</h2>
+      <p>Il nostro provider di hosting (Vercel) e il processore di pagamento (Lemon Squeezy) hanno sede negli Stati Uniti. Eventuali trasferimenti di dati personali a questi responsabili sono coperti da Clausole Contrattuali Standard (SCC) approvate dalla Commissione Europea, o dal framework EU-U.S. Data Privacy Framework ove applicabile.</p>
+
+      <h2>6. I Tuoi Diritti ai sensi del GDPR</h2>
+      <p>Se ti trovi nell'UE/SEE, hai i seguenti diritti riguardo ai tuoi dati personali:</p>
+      <ul>
+        <li><strong>Diritto di accesso (Art. 15)</strong> — Richiedere una copia dei dati personali che deteniamo su di te.</li>
+        <li><strong>Diritto di rettifica (Art. 16)</strong> — Richiedere la correzione di dati inesatti.</li>
+        <li><strong>Diritto alla cancellazione (Art. 17)</strong> — Richiedere la cancellazione dei tuoi dati ("diritto all'oblio").</li>
+        <li><strong>Diritto alla limitazione del trattamento (Art. 18)</strong> — Richiedere la limitazione del trattamento dei tuoi dati.</li>
+        <li><strong>Diritto alla portabilità (Art. 20)</strong> — Richiedere i tuoi dati in formato leggibile da macchina.</li>
+        <li><strong>Diritto di opposizione (Art. 21)</strong> — Opporsi al trattamento basato su legittimi interessi.</li>
+        <li><strong>Diritto di reclamo</strong> — Contattare il Garante per la Protezione dei Dati Personali su <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer">garanteprivacy.it</a>.</li>
+      </ul>
+      <p>Per esercitare uno qualsiasi di questi diritti, contatta: <a href="mailto:m@michelemeattini.it">m@michelemeattini.it</a>. Risponderemo entro 30 giorni.</p>
+
+      <h2>7. Conservazione dei Dati</h2>
+      <p>Poiché non raccogliamo dati personali tramite questo sito web, non vi sono dati personali da conservare o cancellare da parte nostra. I dati memorizzati localmente nel browser (tema, preferenza lingua) sono gestiti interamente da te e possono essere cancellati in qualsiasi momento dalle impostazioni del browser. Per i dati trattati da Lemon Squeezy nel contesto di un acquisto, si prega di fare riferimento alla loro informativa sulla privacy e alle loro pratiche di conservazione dei dati.</p>
+
+      <h2>8. Privacy dei Minori</h2>
+      <p>SnapZone non è destinato a minori di 16 anni. Non raccogliamo consapevolmente informazioni personali da minori. Se ritieni che un minore abbia fornito dati personali, ti preghiamo di contattarci immediatamente.</p>
+
+      <h2>9. Modifiche a Questa Informativa</h2>
+      <p>Potremmo aggiornare questa Informativa sulla Privacy di tanto in tanto. La data "Ultimo aggiornamento" in cima a questa pagina riflette la revisione più recente. Ti invitiamo a consultare periodicamente questa pagina. L'uso continuato del sito o dell'applicazione dopo eventuali modifiche costituisce accettazione dell'informativa aggiornata.</p>
+
+      <h2>10. Contatti</h2>
+      <p>Per qualsiasi domanda su questa Informativa sulla Privacy o per esercitare i tuoi diritti:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:m@michelemeattini.it">m@michelemeattini.it</a></li>
+        <li><strong>Titolare del Trattamento:</strong> Michele Meattini, Italia</li>
+      </ul>
+    </div>
+
+    <!-- ════════════ ESPAÑOL ════════════ -->
+    <div class="legal-content" id="privacy-es" lang-content role="tabpanel" aria-labelledby="tab-es">
+
+      <div class="callout">
+        <p><strong>Resumen:</strong> SnapZone es una app local-first. No recopila datos personales. Este sitio web solo guarda tu preferencia de tema e idioma — sin rastreo, sin cookies, sin análisis.</p>
+      </div>
+
+      <h2>1. Responsable del Tratamiento</h2>
+      <p>El responsable del tratamiento de datos para este sitio web y la aplicación SnapZone es:</p>
+      <ul>
+        <li><strong>Nombre:</strong> Michele Meattini</li>
+        <li><strong>Email:</strong> <a href="mailto:m@michelemeattini.it">m@michelemeattini.it</a></li>
+        <li><strong>País:</strong> Italia (UE)</li>
+      </ul>
+      <p>Para cualquier solicitud relacionada con la privacidad, incluido el ejercicio de tus derechos GDPR, puedes contactar directamente al responsable en la dirección indicada.</p>
+
+      <h2>2. Datos que Recopilamos</h2>
+
+      <h3>2.1 — Este Sitio Web</h3>
+      <p>El sitio web de SnapZone (<strong>snapzone-seven.vercel.app</strong>) no utiliza cookies, píxeles de rastreo ni scripts de análisis. No recopila ninguna información de identificación personal.</p>
+      <p>Los siguientes datos se almacenan <strong>localmente en tu navegador</strong> (mediante <code>localStorage</code>) y nunca se transmiten a ningún servidor:</p>
+      <table>
+        <thead><tr><th>Clave</th><th>Propósito</th><th>Caducidad</th></tr></thead>
+        <tbody>
+          <tr><td><code>sz-theme</code></td><td>Recuerda tu preferencia de modo claro/oscuro</td><td>Hasta que el usuario lo borre</td></tr>
+          <tr><td><code>sz-lang</code></td><td>Recuerda el idioma seleccionado manualmente</td><td>Hasta que el usuario lo borre</td></tr>
+          <tr><td><code>sz-announce-dismissed</code></td><td>Oculta el banner informativo tras cerrarlo</td><td>Solo durante la sesión</td></tr>
+        </tbody>
+      </table>
+      <p>Estos valores nunca abandonan tu dispositivo y no contienen información personal. Son estrictamente necesarios para el correcto funcionamiento del sitio web.</p>
+
+      <h3>2.2 — La Aplicación SnapZone</h3>
+      <p>La aplicación macOS SnapZone es <strong>local-first</strong>. Todo el procesamiento ocurre en tu dispositivo. La aplicación no recopila, transmite ni almacena:</p>
+      <ul>
+        <li>Títulos de ventanas o nombres de aplicaciones</li>
+        <li>Grabaciones de gestos del trackpad o datos de entrada sin procesar</li>
+        <li>Estadísticas de uso o análisis de comportamiento</li>
+        <li>Informes de fallos o diagnósticos</li>
+        <li>Ninguna información personal o identificativa del dispositivo</li>
+      </ul>
+      <p>Las estadísticas de uso mostradas en la app (p. ej., snaps totales, tiempo ahorrado) se calculan y almacenan exclusivamente en tu dispositivo local y nunca se transmiten externamente.</p>
+
+      <h2>3. Servicios de Terceros</h2>
+
+      <h3>3.1 — Alojamiento (Vercel)</h3>
+      <p>Este sitio web está alojado en <strong>Vercel Inc.</strong> (San Francisco, CA, EE. UU.). Vercel puede recopilar registros estándar del servidor web (dirección IP, agente de usuario del navegador, ruta de solicitud, fecha/hora) como parte del funcionamiento normal del servidor. Estos registros se conservan durante un breve período para fines de seguridad y operativos. La política de privacidad de Vercel está disponible en <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">vercel.com/legal/privacy-policy</a>.</p>
+
+      <h3>3.2 — Procesador de Pagos (Lemon Squeezy)</h3>
+      <p>Las compras de la Licencia Lifetime de SnapZone son procesadas por <strong>Lemon Squeezy</strong> (un servicio de Lemon Squeezy, LLC). Al realizar una compra, serás redirigido al checkout de Lemon Squeezy en <code>snapzone.lemonsqueezy.com</code>. Lemon Squeezy actúa como <em>Merchant of Record</em> y recopila la información de facturación necesaria para procesar la transacción (nombre, email, datos de pago). SnapZone no recibe ni almacena los datos de tu tarjeta de pago. La política de privacidad de Lemon Squeezy está disponible en <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noopener noreferrer">lemonsqueezy.com/privacy</a>.</p>
+
+      <h3>3.3 — Actualizaciones de Software (Sparkle)</h3>
+      <p>La aplicación utiliza el framework de código abierto <strong>Sparkle</strong> para las actualizaciones automáticas. Cuando la app busca actualizaciones, contacta nuestro servidor para descargar el archivo appcast (<code>appcast.xml</code>). Esta solicitud puede incluir tu dirección IP como parte de la solicitud HTTP estándar, pero no se transmiten datos personales adicionales.</p>
+
+      <h3>3.4 — Video Incrustado (YouTube)</h3>
+      <p>La página principal incluye un video de demostración incrustado desde YouTube usando el modo de privacidad mejorada (<code>youtube-nocookie.com</code>). Según la documentación de Google, este dominio no almacena cookies en tu dispositivo a menos que interactúes con el reproductor de video. Si reproduces el video, YouTube puede recopilar datos según se describe en la <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Política de privacidad de Google</a>.</p>
+
+      <h3>3.5 — Fuentes Tipográficas</h3>
+      <p>Todas las fuentes utilizadas en este sitio web están <strong>auto-alojadas</strong>. No se realizan solicitudes a Google Fonts, Adobe Fonts ni ningún servicio externo de fuentes.</p>
+
+      <h2>4. Base Legal del Tratamiento (GDPR)</h2>
+      <p>En virtud del Reglamento General de Protección de Datos (RGPD), las bases legales para cualquier tratamiento descrito en esta política son:</p>
+      <ul>
+        <li><strong>Interés legítimo (Art. 6(1)(f)):</strong> Registros estándar del servidor web mantenidos por nuestro proveedor de alojamiento (Vercel) para fines de seguridad y operativos.</li>
+        <li><strong>Ejecución del contrato (Art. 6(1)(b)):</strong> Tratamiento de tu email y clave de licencia para la entrega de la licencia y notificaciones de actualización a través de Lemon Squeezy.</li>
+        <li><strong>Sin tratamiento:</strong> Todas las demás interacciones con este sitio web no implican ningún tratamiento de datos personales.</li>
+      </ul>
+
+      <h2>5. Transferencias de Datos Fuera de la UE</h2>
+      <p>Nuestro proveedor de alojamiento (Vercel) y el procesador de pagos (Lemon Squeezy) tienen su sede en Estados Unidos. Las transferencias de datos personales a estos encargados del tratamiento están cubiertas por las Cláusulas Contractuales Tipo (CCT) aprobadas por la Comisión Europea.</p>
+
+      <h2>6. Tus Derechos bajo el RGPD</h2>
+      <p>Si te encuentras en la UE/EEE, tienes los siguientes derechos respecto a tus datos personales:</p>
+      <ul>
+        <li><strong>Derecho de acceso (Art. 15)</strong> — Solicitar una copia de los datos personales que conservamos sobre ti.</li>
+        <li><strong>Derecho de rectificación (Art. 16)</strong> — Solicitar la corrección de datos inexactos.</li>
+        <li><strong>Derecho de supresión (Art. 17)</strong> — Solicitar la eliminación de tus datos ("derecho al olvido").</li>
+        <li><strong>Derecho a la limitación (Art. 18)</strong> — Solicitar que limitemos el tratamiento de tus datos.</li>
+        <li><strong>Derecho a la portabilidad (Art. 20)</strong> — Solicitar tus datos en un formato legible por máquina.</li>
+        <li><strong>Derecho de oposición (Art. 21)</strong> — Oponerse al tratamiento basado en intereses legítimos.</li>
+        <li><strong>Derecho a presentar una reclamación</strong> — Contactar con la autoridad de protección de datos italiana (Garante per la Protezione dei Dati Personali) en <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer">garanteprivacy.it</a>.</li>
+      </ul>
+      <p>Para ejercer cualquiera de estos derechos, contacta: <a href="mailto:m@michelemeattini.it">m@michelemeattini.it</a>. Responderemos en un plazo de 30 días.</p>
+
+      <h2>7. Conservación de Datos</h2>
+      <p>Dado que no recopilamos datos personales a través de este sitio web, no hay datos personales que conservar o eliminar por nuestra parte. Los datos de almacenamiento local del navegador (tema, preferencia de idioma) están controlados completamente por ti y pueden eliminarse en cualquier momento desde la configuración del navegador.</p>
+
+      <h2>8. Privacidad de los Menores</h2>
+      <p>SnapZone no está dirigido a menores de 16 años. No recopilamos conscientemente información personal de menores.</p>
+
+      <h2>9. Cambios en Esta Política</h2>
+      <p>Podemos actualizar esta Política de Privacidad periódicamente. La fecha de "Última actualización" en la parte superior de esta página refleja la revisión más reciente.</p>
+
+      <h2>10. Contacto</h2>
+      <p>Para cualquier pregunta sobre esta Política de Privacidad o para ejercer tus derechos:</p>
+      <ul>
+        <li><strong>Email:</strong> <a href="mailto:m@michelemeattini.it">m@michelemeattini.it</a></li>
+        <li><strong>Responsable del Tratamiento:</strong> Michele Meattini, Italia</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer id="site-footer" role="contentinfo">
+    <div class="footer-inner">
+      <a href="index.html" class="footer-logo" aria-label="SnapZone home">
+        <svg width="20" height="20" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <rect x="3" y="6" width="10" height="16" rx="3" fill="var(--primary)"/>
+          <rect x="15" y="6" width="10" height="16" rx="3" fill="var(--primary)"/>
+        </svg>
+        SnapZone
+      </a>
+      <nav class="footer-nav" aria-label="Footer navigation">
+        <a href="index.html#gestures">Gestures</a>
+        <a href="index.html#fancyzone">Zones</a>
+        <a href="index.html#pricing">Pricing</a>
+        <a href="index.html#download">Download</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 Michele Meattini. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    const toggleBtn = document.getElementById('theme-toggle');
+    toggleBtn.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('sz-theme', next);
+    });
+
+    // Language switch — respects browser language on first load
+    const supportedLangs = ['en', 'it', 'es'];
+    function detectLang() {
+      const saved = localStorage.getItem('sz-lang');
+      if (saved && supportedLangs.includes(saved)) return saved;
+      const preferred = Array.from(navigator.languages || [navigator.language || 'en']);
+      return preferred.map(l => l.split('-')[0].toLowerCase()).find(l => supportedLangs.includes(l)) || 'en';
+    }
+
+    function switchLang(lang) {
+      document.querySelectorAll('[lang-content]').forEach(el => el.classList.remove('visible'));
+      document.querySelectorAll('.lang-toggle-btn').forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-selected', 'false');
+      });
+      const panel = document.getElementById('privacy-' + lang);
+      const tab   = document.getElementById('tab-' + lang);
+      if (panel) panel.classList.add('visible');
+      if (tab)   { tab.classList.add('active'); tab.setAttribute('aria-selected', 'true'); }
+    }
+
+    // Init with detected language
+    switchLang(detectLang());
+  </script>
+</body>
+</html>

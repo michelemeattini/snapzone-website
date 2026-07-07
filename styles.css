@@ -3,6 +3,10 @@
    Light-first + MacBook frame + FancyZones + Pricing
    ===================================================== */
 
+/* Self-hosted fonts (GDPR — no Google servers contacted) */
+@import url('assets/fonts/fonts.css');
+
+
 /* ═══════════════════════════════════════════════
    DESIGN TOKENS — Light (default)
 ═══════════════════════════════════════════════ */
@@ -1597,6 +1601,58 @@ a {
   height: 100%;
   border: none;
   display: block;
+}
+
+.video-consent-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-m);
+  background: linear-gradient(135deg, oklch(0.18 0.02 230), oklch(0.08 0.01 230));
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.3s var(--ease-out);
+}
+
+.video-consent-placeholder:hover {
+  background: linear-gradient(135deg, oklch(0.22 0.03 230), oklch(0.10 0.01 230));
+}
+
+.video-consent-placeholder:hover .video-play-btn {
+  transform: scale(1.1);
+  background: var(--primary);
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+.video-play-btn {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  margin-bottom: var(--space-s);
+  transition: transform 0.3s var(--ease-out), background 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+
+.video-play-btn svg {
+  margin-left: 3px;
+}
+
+.video-consent-text {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 320px;
+  line-height: 1.4;
+  margin: 0;
 }
 
 .fz-demo-screen {
