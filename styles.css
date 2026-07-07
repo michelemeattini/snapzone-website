@@ -3204,28 +3204,31 @@ footer {
   .story-slide.active-slide { pointer-events: auto; }
 
   /* ─── THE WINDOW ─────────────────────────────────
-     Every single panel uses the same fixed dimensions.
-     No overflow, no scrollbar, ever.
+     Full-bleed split-screen panels. No outer padding.
   ──────────────────────────────────────────────── */
   .sz-window {
-    /* Fixed uniform dimensions */
-    width: clamp(340px, 40vw, 680px);
-    height: clamp(300px, 62vh, 560px);
-    overflow: hidden; /* hard clip — no scrollbar */
+    /* Base dimensions */
+    height: 100vh;
+    overflow: hidden;
 
-    /* macOS glass appearance */
+    /* Appearance */
     background: rgba(248, 248, 250, 0.88);
-    border: 1px solid rgba(0, 0, 0, 0.10);
-    border-radius: 14px;
-    box-shadow:
-      0 2px 0 rgba(255,255,255,0.8) inset,
-      0 24px 56px rgba(0, 0, 0, 0.13),
-      0 4px 14px rgba(0, 0, 0, 0.07);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     box-sizing: border-box;
-    padding: 44px 32px 28px;
+    
+    /* Inner padding so content isn't flush against the edges */
+    padding: 80px 4vw;
     position: relative;
+
+    /* Center inner content */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     /* Animate position when centered ↔ split */
     transition:
@@ -3236,18 +3239,16 @@ footer {
 
   [data-theme="dark"] .sz-window {
     background: rgba(28, 28, 32, 0.88);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.04) inset,
-      0 28px 64px rgba(0, 0, 0, 0.45);
+    border: none;
+    box-shadow: none;
   }
 
-  /* macOS window control dots */
+  /* macOS window control dots — adjusted for full bleed */
   .sz-window::before {
     content: '';
     position: absolute;
-    top: 16px;
-    left: 16px;
+    top: 24px;
+    left: 24px;
     width: 52px;
     height: 12px;
     background-image:
@@ -3259,29 +3260,28 @@ footer {
     z-index: 2;
   }
 
-  /* Window content — fills available space compactly */
+  /* Window content — fills available space but constrained */
   .sz-window > * {
     width: 100%;
+    max-width: 640px; /* Constrain reading width for 100vw panels */
   }
 
   /* ─── CENTERED SLIDE (full-width single window) ── */
   .story-slide.layout-centered .sz-window {
-    /* Wider when shown alone in the center */
-    width: clamp(480px, 56vw, 900px);
+    width: 100vw;
     transform: translateX(0);
   }
 
   /* ─── SPLIT SLIDE (two windows side by side) ─────
-     Instead of jumping via justify-content, we animate 
-     the translate position so it's perfectly smooth.
+     Perfectly anchored to left/right halves
   ──────────────────────────────────────────────── */
   .story-slide.layout-left .sz-window {
-    width: clamp(340px, 40vw, 680px);
-    transform: translateX(-24vw); /* anchor to left */
+    width: 50vw;
+    transform: translateX(-25vw); /* center to 25vw -> left edge at 0 */
   }
   .story-slide.layout-right .sz-window {
-    width: clamp(340px, 40vw, 680px);
-    transform: translateX(24vw); /* anchor to right */
+    width: 50vw;
+    transform: translateX(25vw); /* center to 75vw -> right edge at 100vw */
   }
 
   /* ─── CONTENT DENSITY OVERRIDES ─────────────────
