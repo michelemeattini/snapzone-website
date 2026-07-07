@@ -3280,11 +3280,11 @@ footer {
   ──────────────────────────────────────────────── */
   .story-slide.layout-left {
     justify-content: flex-start;
-    padding-left: 6vw;
+    padding-left: 7vw !important;
   }
   .story-slide.layout-right {
     justify-content: flex-end;
-    padding-right: 6vw;
+    padding-right: 7vw !important;
   }
 
   /* ─── CONTENT DENSITY OVERRIDES ─────────────────
