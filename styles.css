@@ -3204,28 +3204,26 @@ footer {
   .story-slide.active-slide { pointer-events: auto; }
 
   /* ─── THE WINDOW ─────────────────────────────────
-     Maximized macOS Windows. Fills the screen but leaves 
-     a tiny gap (16px) to preserve borders and shadows.
+     Full-bleed macOS Split View. Perfectly flush to the 
+     screen edges and each other, no gaps.
   ──────────────────────────────────────────────── */
   .sz-window {
-    /* Fixed maximized height */
-    height: calc(100vh - 32px);
-    overflow: hidden; /* hard clip — no scrollbar */
+    height: 100vh;
+    overflow: hidden;
 
-    /* macOS glass appearance */
+    /* macOS glass appearance - Maximized style */
     background: rgba(248, 248, 250, 0.88);
-    border: 1px solid rgba(0, 0, 0, 0.10);
-    border-radius: 14px;
-    box-shadow:
-      0 2px 0 rgba(255,255,255,0.8) inset,
-      0 24px 56px rgba(0, 0, 0, 0.13),
-      0 4px 14px rgba(0, 0, 0, 0.07);
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.10);
+    border-radius: 0;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset; /* Keep 3D glass top edge */
+    
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     box-sizing: border-box;
     
     /* Comfortable padding for inner content */
-    padding: 60px 4vw;
+    padding: 80px 4vw;
     position: relative;
 
     /* Center content inside the giant window */
@@ -3243,18 +3241,16 @@ footer {
 
   [data-theme="dark"] .sz-window {
     background: rgba(28, 28, 32, 0.88);
-    border: 1px solid rgba(255, 255, 255, 0.07);
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.04) inset,
-      0 28px 64px rgba(0, 0, 0, 0.45);
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset;
   }
 
   /* macOS window control dots */
   .sz-window::before {
     content: '';
     position: absolute;
-    top: 16px;
-    left: 18px;
+    top: 24px;
+    left: 24px;
     width: 52px;
     height: 12px;
     background-image:
@@ -3274,22 +3270,25 @@ footer {
 
   /* ─── CENTERED SLIDE (full-width single window) ── */
   .story-slide.layout-centered .sz-window {
-    /* Full screen minus 16px gap on each side */
-    width: calc(100vw - 32px);
+    width: 100vw;
     transform: translateX(0);
   }
 
   /* ─── SPLIT SLIDE (two windows side by side) ─────
-     Perfectly anchored to left/right halves with a gap.
-     Width: 50vw minus 16px outer gap minus 8px center gap = 24px
+     Perfectly flush: 50vw wide, translated exactly by 25vw.
   ──────────────────────────────────────────────── */
   .story-slide.layout-left .sz-window {
-    width: calc(50vw - 24px);
-    transform: translateX(calc(-25vw + 8px)); /* shifts center */
+    width: 50vw;
+    transform: translateX(-25vw);
+    border-right: 1px solid rgba(0, 0, 0, 0.1); /* Split divider */
   }
+  [data-theme="dark"] .story-slide.layout-left .sz-window {
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+  }
+  
   .story-slide.layout-right .sz-window {
-    width: calc(50vw - 24px);
-    transform: translateX(calc(25vw - 8px)); /* shifts center */
+    width: 50vw;
+    transform: translateX(25vw);
   }
 
   /* ─── CONTENT DENSITY OVERRIDES ─────────────────

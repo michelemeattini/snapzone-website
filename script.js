@@ -912,17 +912,19 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       // e(v) clamps 0-1
       const e = v => Math.max(0, Math.min(1, v));
 
-      // Phase 0: 0.0 to 1.0 (Hero moves left, Gestures enters right)
-      // Phase 1: 1.0 to 2.0 (Both sit side-by-side)
-      // Phase 2: 2.0 to 3.0 (Both exit left, FancyZone enters centered)
-      // Phase 3: 3.0 to 4.0 (FancyZone sits centered)
-      // Phase 4: 4.0 to 5.0 (FancyZone moves left, HowItWorks enters right)
-      // Phase 5: 5.0 to 6.0 (Both exit left, Analytics enters centered)
-      // Phase 6: 6.0 to 7.0 (Analytics sits centered)
-      // Phase 7: 7.0 to 8.0 (Analytics moves left, Pricing enters right)
-      // Phase 8: 8.0 to 9.0 (Both exit left, Download enters centered)
+      // NEW 10-STEP SEQUENCE:
+      // p=0: Hero Centered
+      // p=1: Hero Left
+      // p=2: Gestures Right
+      // p=3: FancyZone Centered
+      // p=4: FancyZone Left
+      // p=5: HowItWorks Right
+      // p=6: Analytics Centered
+      // p=7: Analytics Left
+      // p=8: Pricing Right
+      // p=9: Download Centered
 
-      // HERO: centered p0, shrinks left p>0.05, sits p1-2, exits p2-3
+      // HERO: p0(centered), p1(left), p2(sits left), p3(exits)
       if (p < 0.05) {
         setSlide(slides.hero, 1, 0, 'layout-centered');
       } else if (p < 2) {
@@ -933,23 +935,23 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         setSlide(slides.hero, 0, -100, 'layout-left');
       }
 
-      // GESTURES: enters right p0-1, sits p1-2, exits p2-3
+      // GESTURES: p0-1(hidden), p1-2(enters right), p2-3(exits left)
       if (p < 1) {
-        setSlide(slides.gestures, e(p), 100 - 100 * e(p), 'layout-right');
+        setSlide(slides.gestures, 0, 100, 'layout-right');
       } else if (p < 2) {
-        setSlide(slides.gestures, 1, 0, 'layout-right');
+        setSlide(slides.gestures, e(p - 1), 100 - 100 * e(p - 1), 'layout-right');
       } else if (p < 3) {
         setSlide(slides.gestures, e(1 - (p - 2)), -100 * e(p - 2), 'layout-right');
       } else {
         setSlide(slides.gestures, 0, -100, 'layout-right');
       }
 
-      // FANCYZONE: enters centered p2-3, sits p3-4, shrinks left p>4.05, exits p5-6
+      // FANCYZONE: p2-3(enters centered), p3-4(sits centered), p4-5(left), p5-6(exits)
       if (p < 2) {
         setSlide(slides.fancyzone, 0, 100, 'layout-centered');
       } else if (p < 3) {
         setSlide(slides.fancyzone, e(p - 2), 100 - 100 * e(p - 2), 'layout-centered');
-      } else if (p < 4.05) {
+      } else if (p < 3.05) {
         setSlide(slides.fancyzone, 1, 0, 'layout-centered');
       } else if (p < 5) {
         setSlide(slides.fancyzone, 1, 0, 'layout-left');
@@ -959,7 +961,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         setSlide(slides.fancyzone, 0, -100, 'layout-left');
       }
 
-      // HOW-IT-WORKS: enters right p4-5, exits p5-6
+      // HOW-IT-WORKS: p4-5(enters right), p5-6(exits)
       if (p < 4) {
         setSlide(slides.howItWorks, 0, 100, 'layout-right');
       } else if (p < 5) {
@@ -970,12 +972,12 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         setSlide(slides.howItWorks, 0, -100, 'layout-right');
       }
 
-      // ANALYTICS: enters centered p5-6, sits p6-7, shrinks left p>7.05, exits p8-9
+      // ANALYTICS: p5-6(enters centered), p6-7(sits centered), p7-8(left), p8-9(exits)
       if (p < 5) {
         setSlide(slides.analytics, 0, 100, 'layout-centered');
       } else if (p < 6) {
         setSlide(slides.analytics, e(p - 5), 100 - 100 * e(p - 5), 'layout-centered');
-      } else if (p < 7.05) {
+      } else if (p < 6.05) {
         setSlide(slides.analytics, 1, 0, 'layout-centered');
       } else if (p < 8) {
         setSlide(slides.analytics, 1, 0, 'layout-left');
@@ -985,7 +987,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         setSlide(slides.analytics, 0, -100, 'layout-left');
       }
 
-      // PRICING: enters right p7-8, exits p8-9
+      // PRICING: p7-8(enters right), p8-9(exits)
       if (p < 7) {
         setSlide(slides.pricing, 0, 100, 'layout-right');
       } else if (p < 8) {
@@ -996,7 +998,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         setSlide(slides.pricing, 0, -100, 'layout-right');
       }
 
-      // DOWNLOAD: enters centered p8-9, stays
+      // DOWNLOAD: p8-9(enters centered), stays
       if (p < 8) {
         setSlide(slides.download, 0, 100, 'layout-centered');
       } else if (p < 9) {
