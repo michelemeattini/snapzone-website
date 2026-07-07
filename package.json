@@ -1,0 +1,14 @@
+{
+  "name": "snapzone-web-e2e-tests",
+  "version": "1.0.0",
+  "description": "E2E testing infrastructure for SnapZone web layout and widgets",
+  "main": "index.html",
+  "scripts": {
+    "test:e2e": "cross-env PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "cross-env": "^7.0.3",
+    "http-server": "^14.1.1"
+  }
+}

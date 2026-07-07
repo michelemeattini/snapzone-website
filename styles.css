@@ -3217,25 +3217,124 @@ footer {
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  /* macOS Settings Window Styling for Desktop Panels */
+  .story-slide .hero-inner,
+  .story-slide .fancyzone-inner,
+  .story-slide .analytics-inner,
+  .story-slide .download-inner,
+  .story-slide .section-inner {
+    background: rgba(246, 246, 246, 0.85); /* macOS Light Settings Background */
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
+    padding: 44px var(--space-l) var(--space-l) !important; /* comfort padding, top padding leaves space for dots */
+    position: relative;
+    max-height: 85vh; /* Prevent vertical clipping */
+    overflow-y: auto; /* Fallback scroll */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-sizing: border-box;
+  }
+
+  [data-theme="dark"] .story-slide .hero-inner,
+  [data-theme="dark"] .story-slide .fancyzone-inner,
+  [data-theme="dark"] .story-slide .analytics-inner,
+  [data-theme="dark"] .story-slide .download-inner,
+  [data-theme="dark"] .story-slide .section-inner,
+  :root:not([data-theme="light"]) .story-slide .hero-inner,
+  :root:not([data-theme="light"]) .story-slide .fancyzone-inner,
+  :root:not([data-theme="light"]) .story-slide .analytics-inner,
+  :root:not([data-theme="light"]) .story-slide .download-inner,
+  :root:not([data-theme="light"]) .story-slide .section-inner {
+    background: rgba(30, 30, 30, 0.85); /* macOS Dark Settings Background */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  }
+
+  /* macOS style titlebar buttons (Red, Yellow, Green window control dots) via CSS */
+  .story-slide .hero-inner::before,
+  .story-slide .fancyzone-inner::before,
+  .story-slide .analytics-inner::before,
+  .story-slide .download-inner::before,
+  .story-slide .section-inner::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 18px;
+    height: 12px;
+    width: 52px;
+    background-image: 
+      radial-gradient(circle at 6px 6px, #ff5f56 5px, transparent 6px),
+      radial-gradient(circle at 26px 6px, #ffbd2e 5px, transparent 6px),
+      radial-gradient(circle at 46px 6px, #27c93f 5px, transparent 6px);
+    background-size: 52px 12px;
+    background-repeat: no-repeat;
+    z-index: 10;
+  }
+
+  /* Elegant Custom Thin Scrollbar for macOS panels */
+  .story-slide .hero-inner::-webkit-scrollbar,
+  .story-slide .fancyzone-inner::-webkit-scrollbar,
+  .story-slide .analytics-inner::-webkit-scrollbar,
+  .story-slide .download-inner::-webkit-scrollbar,
+  .story-slide .section-inner::-webkit-scrollbar {
+    width: 6px;
+  }
+  .story-slide .hero-inner::-webkit-scrollbar-thumb,
+  .story-slide .fancyzone-inner::-webkit-scrollbar-thumb,
+  .story-slide .analytics-inner::-webkit-scrollbar-thumb,
+  .story-slide .download-inner::-webkit-scrollbar-thumb,
+  .story-slide .section-inner::-webkit-scrollbar-thumb {
+    background: var(--ink-faint);
+    border-radius: 3px;
+  }
+
   /* Custom overrides for split-screen layouts to fit side-by-side */
   .story-slide#hero .hero-inner {
     max-width: min(44vw, 680px);
   }
 
+  /* Optimize Gestures Panel (8 gesture cards) */
   .story-slide#gestures .section-inner {
     max-width: min(48vw, 840px);
   }
   .story-slide#gestures .gestures-grid {
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-xs);
+    gap: 6px;
+  }
+  .story-slide#gestures .gesture-label {
+    padding: 6px 8px;
+    font-size: 0.76rem;
+    gap: 6px;
+  }
+  .story-slide#gestures .gesture-label em {
+    display: none !important; /* Hide long em tags on desktop */
+  }
+  .story-slide#gestures .gesture-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 0.75rem;
   }
 
-  .story-slide#fancyzone .fancyzone-inner {
+  /* Dynamic centering for FancyZone */
+  .story-slide#fancyzone.layout-centered .fancyzone-inner {
+    max-width: min(85vw, 1160px);
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--space-xl);
+  }
+  .story-slide#fancyzone.layout-split .fancyzone-inner {
+    max-width: min(48vw, 840px);
+    grid-template-columns: 1fr;
+    gap: var(--space-m);
+  }
+  /* Fallback if JS classes fail */
+  .story-slide#fancyzone:not(.layout-centered):not(.layout-split) .fancyzone-inner {
     max-width: min(48vw, 840px);
     grid-template-columns: 1fr;
     gap: var(--space-m);
   }
 
+  /* Optimize How-It-Works Panel (3 cards) */
   .story-slide#how-it-works .section-inner {
     max-width: min(46vw, 780px);
   }
@@ -3243,8 +3342,61 @@ footer {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-xs);
   }
+  .story-slide#how-it-works .method-card {
+    padding: 12px !important; /* reduce padding from large default */
+  }
+  .story-slide#how-it-works .method-icon {
+    width: 32px;
+    height: 32px;
+    margin-bottom: 8px;
+  }
+  .story-slide#how-it-works .method-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+  .story-slide#how-it-works .method-card h3 {
+    font-size: 0.95rem;
+    margin-bottom: 4px;
+  }
+  .story-slide#how-it-works .method-card p {
+    font-size: 0.78rem;
+    line-height: 1.35;
+    margin-bottom: 8px;
+  }
+  .story-slide#how-it-works .method-demo {
+    height: 54px; /* Reduce demo wrapper height */
+  }
+  .story-slide#how-it-works .hk-key {
+    font-size: 0.75rem;
+    padding: 0.2em 0.4em;
+  }
+  .story-slide#how-it-works .hk-sequence {
+    gap: 4px;
+  }
+  .story-slide#how-it-works .gd-fingers {
+    gap: 6px;
+  }
+  .story-slide#how-it-works .gd-finger {
+    width: 8px;
+    height: 20px;
+  }
+  .story-slide#how-it-works .method-card:hover .gd-fingers {
+    transform: translateX(14px);
+  }
 
-  .story-slide#analytics .analytics-inner {
+  /* Dynamic centering for Analytics */
+  .story-slide#analytics.layout-centered .analytics-inner {
+    max-width: min(85vw, 1160px);
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-xl);
+  }
+  .story-slide#analytics.layout-split .analytics-inner {
+    max-width: min(48vw, 840px);
+    grid-template-columns: 1fr;
+    gap: var(--space-m);
+  }
+  /* Fallback if JS classes fail */
+  .story-slide#analytics:not(.layout-centered):not(.layout-split) .analytics-inner {
     max-width: min(48vw, 840px);
     grid-template-columns: 1fr;
     gap: var(--space-m);
@@ -3258,7 +3410,8 @@ footer {
     gap: var(--space-s);
   }
 
+  /* Centered sizing for download */
   .story-slide#download .download-inner {
-    max-width: min(48vw, 840px);
+    max-width: min(85vw, 840px);
   }
 }

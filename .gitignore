@@ -40,3 +40,10 @@ settings.local.json
 
 # Vercel
 .vercel
+
+# Teamwork and Playwright Testing
+.agents/
+test-results/
+playwright-report/
+PROJECT.md
+TEST_INFRA.md

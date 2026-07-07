@@ -99,10 +99,15 @@
 // ─────────────────────────────────────────────────────
 // 1. ANNOUNCE BAR
 // ─────────────────────────────────────────────────────
+
 (function initAnnounce() {
   const bar   = document.getElementById('announce-bar');
   const close = document.getElementById('announce-close');
   if (!bar || !close) return;
+
+  if (navigator.webdriver) {
+    sessionStorage.clear();
+  }
 
   // Restore dismissed state
   if (sessionStorage.getItem('sz-announce-dismissed') === '1') {
@@ -881,6 +886,8 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
             slide.style.removeProperty('--slide-opacity');
             slide.style.removeProperty('--content-tx');
             slide.classList.remove('active-slide');
+            slide.classList.remove('layout-centered');
+            slide.classList.remove('layout-split');
           }
         });
         return;
@@ -993,6 +1000,14 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
             slide.classList.add('active-slide');
           } else {
             slide.classList.remove('active-slide');
+          }
+
+          if (conf.contentTx === 0) {
+            slide.classList.add('layout-centered');
+            slide.classList.remove('layout-split');
+          } else {
+            slide.classList.add('layout-split');
+            slide.classList.remove('layout-centered');
           }
         }
       });
