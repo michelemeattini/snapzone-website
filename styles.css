@@ -3195,7 +3195,7 @@ footer {
     margin: 0 !important;
     opacity: var(--slide-opacity, 0);
     transform: translateX(var(--slide-tx, 100vw));
-    transition: opacity 0.85s var(--ease-out), transform 0.85s var(--ease-out);
+    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   /* Prevent mouse interactions on hidden slides */
@@ -3213,8 +3213,8 @@ footer {
   .story-slide .analytics-inner,
   .story-slide .download-inner,
   .story-slide .section-inner {
-    transition: transform 0.85s var(--ease-out), max-width 0.85s var(--ease-out);
     transform: translateX(var(--content-tx, 0));
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   /* Custom overrides for split-screen layouts to fit side-by-side */
@@ -3226,8 +3226,8 @@ footer {
     max-width: min(48vw, 840px);
   }
   .story-slide#gestures .gestures-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-s);
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-xs);
   }
 
   .story-slide#fancyzone .fancyzone-inner {
@@ -3240,8 +3240,8 @@ footer {
     max-width: min(46vw, 780px);
   }
   .story-slide#how-it-works .methods-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-s);
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xs);
   }
 
   .story-slide#analytics .analytics-inner {
@@ -3254,8 +3254,8 @@ footer {
     max-width: min(44vw, 720px);
   }
   .story-slide#pricing .pricing-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-m);
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-s);
   }
 
   .story-slide#download .download-inner {
