@@ -3204,26 +3204,27 @@ footer {
   .story-slide.active-slide { pointer-events: auto; }
 
   /* ─── THE WINDOW ─────────────────────────────────
-     Full-bleed macOS Split View. Perfectly flush to the 
-     screen edges and each other, no gaps.
+     Maximized macOS Windows. 
   ──────────────────────────────────────────────── */
   .sz-window {
-    height: 100vh;
+    height: calc(100vh - 32px); /* 16px gap top/bottom for shadow */
     overflow: hidden;
 
-    /* macOS glass appearance - Maximized style */
+    /* macOS glass appearance - Restored! */
     background: rgba(248, 248, 250, 0.88);
-    border: none;
-    border-top: 1px solid rgba(0, 0, 0, 0.10);
-    border-radius: 0;
-    box-shadow: 0 1px 0 rgba(255,255,255,0.8) inset; /* Keep 3D glass top edge */
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    border-radius: 14px;
+    box-shadow: 
+      0 2px 0 rgba(255,255,255,0.8) inset,
+      0 24px 56px rgba(0, 0, 0, 0.13),
+      0 4px 14px rgba(0, 0, 0, 0.07);
     
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
     box-sizing: border-box;
     
     /* Comfortable padding for inner content */
-    padding: 80px 4vw;
+    padding: 60px 4vw;
     position: relative;
 
     /* Center content inside the giant window */
@@ -3241,16 +3242,18 @@ footer {
 
   [data-theme="dark"] .sz-window {
     background: rgba(28, 28, 32, 0.88);
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
-    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 
+      0 1px 0 rgba(255,255,255,0.04) inset,
+      0 28px 64px rgba(0, 0, 0, 0.45);
   }
 
   /* macOS window control dots */
   .sz-window::before {
     content: '';
     position: absolute;
-    top: 24px;
-    left: 24px;
+    top: 16px;
+    left: 18px;
     width: 52px;
     height: 12px;
     background-image:
@@ -3270,25 +3273,18 @@ footer {
 
   /* ─── CENTERED SLIDE (full-width single window) ── */
   .story-slide.layout-centered .sz-window {
-    width: 100vw;
+    width: calc(100vw - 32px); /* 16px gap left/right */
     transform: translateX(0);
   }
 
-  /* ─── SPLIT SLIDE (two windows side by side) ─────
-     Perfectly flush: 50vw wide, translated exactly by 25vw.
-  ──────────────────────────────────────────────── */
+  /* ─── SPLIT SLIDE (two windows side by side) ───── */
   .story-slide.layout-left .sz-window {
-    width: 50vw;
-    transform: translateX(-25vw);
-    border-right: 1px solid rgba(0, 0, 0, 0.1); /* Split divider */
+    width: calc(50vw - 24px); /* Leaves tiny gap for shadows */
+    transform: translateX(calc(-25vw + 8px));
   }
-  [data-theme="dark"] .story-slide.layout-left .sz-window {
-    border-right: 1px solid rgba(255, 255, 255, 0.07);
-  }
-  
   .story-slide.layout-right .sz-window {
-    width: 50vw;
-    transform: translateX(25vw);
+    width: calc(50vw - 24px);
+    transform: translateX(calc(25vw - 8px));
   }
 
   /* ─── CONTENT DENSITY OVERRIDES ─────────────────
