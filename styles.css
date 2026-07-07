@@ -3179,7 +3179,7 @@ footer {
     z-index: 1;
   }
 
-  /* Full screen slide panels */
+  /* Full screen slide panels — centered by default */
   .story-slide {
     position: absolute;
     top: 0;
@@ -3195,208 +3195,168 @@ footer {
     margin: 0 !important;
     opacity: var(--slide-opacity, 0);
     transform: translateX(var(--slide-tx, 100vw));
-    transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   /* Prevent mouse interactions on hidden slides */
-  .story-slide:not(.active-slide) {
-    pointer-events: none;
-  }
+  .story-slide:not(.active-slide) { pointer-events: none; }
+  .story-slide.active-slide { pointer-events: auto; }
 
-  .story-slide.active-slide {
-    pointer-events: auto;
-  }
+  /* ─── THE WINDOW ─────────────────────────────────
+     Every single panel uses the same fixed dimensions.
+     No overflow, no scrollbar, ever.
+  ──────────────────────────────────────────────── */
+  .sz-window {
+    /* Fixed uniform dimensions */
+    width: clamp(340px, 40vw, 680px);
+    height: clamp(300px, 62vh, 560px);
+    overflow: hidden; /* hard clip — no scrollbar */
 
-  /* Content shifts inside slides to create split screens */
-  .story-slide .hero-inner,
-  .story-slide .fancyzone-inner,
-  .story-slide .analytics-inner,
-  .story-slide .download-inner,
-  .story-slide .section-inner {
-    transform: translateX(var(--content-tx, 0));
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  /* macOS Settings Window Styling for Desktop Panels */
-  .story-slide .hero-inner,
-  .story-slide .fancyzone-inner,
-  .story-slide .analytics-inner,
-  .story-slide .download-inner,
-  .story-slide .section-inner {
-    background: rgba(246, 246, 246, 0.85); /* macOS Light Settings Background */
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    border-radius: 16px;
-    box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
-    padding: 44px 40px 36px !important; /* uniform comfortable padding */
-    position: relative;
-    /* Uniform window size for split panels */
-    width: min(46vw, 800px);
-    max-height: 82vh;
-    overflow-y: auto;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    /* macOS glass appearance */
+    background: rgba(248, 248, 250, 0.88);
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    border-radius: 14px;
+    box-shadow:
+      0 2px 0 rgba(255,255,255,0.8) inset,
+      0 24px 56px rgba(0, 0, 0, 0.13),
+      0 4px 14px rgba(0, 0, 0, 0.07);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     box-sizing: border-box;
+    padding: 44px 32px 28px;
+    position: relative;
+
+    /* Animate position when centered ↔ split */
+    transition:
+      transform 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      width 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  [data-theme="dark"] .story-slide .hero-inner,
-  [data-theme="dark"] .story-slide .fancyzone-inner,
-  [data-theme="dark"] .story-slide .analytics-inner,
-  [data-theme="dark"] .story-slide .download-inner,
-  [data-theme="dark"] .story-slide .section-inner,
-  :root:not([data-theme="light"]) .story-slide .hero-inner,
-  :root:not([data-theme="light"]) .story-slide .fancyzone-inner,
-  :root:not([data-theme="light"]) .story-slide .analytics-inner,
-  :root:not([data-theme="light"]) .story-slide .download-inner,
-  :root:not([data-theme="light"]) .story-slide .section-inner {
-    background: rgba(30, 30, 30, 0.85); /* macOS Dark Settings Background */
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  [data-theme="dark"] .sz-window {
+    background: rgba(28, 28, 32, 0.88);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.04) inset,
+      0 28px 64px rgba(0, 0, 0, 0.45);
   }
 
-  /* macOS style titlebar buttons (Red, Yellow, Green window control dots) via CSS */
-  .story-slide .hero-inner::before,
-  .story-slide .fancyzone-inner::before,
-  .story-slide .analytics-inner::before,
-  .story-slide .download-inner::before,
-  .story-slide .section-inner::before {
+  /* macOS window control dots */
+  .sz-window::before {
     content: '';
     position: absolute;
     top: 16px;
-    left: 18px;
-    height: 12px;
+    left: 16px;
     width: 52px;
-    background-image: 
-      radial-gradient(circle at 6px 6px, #ff5f56 5px, transparent 6px),
-      radial-gradient(circle at 26px 6px, #ffbd2e 5px, transparent 6px),
-      radial-gradient(circle at 46px 6px, #27c93f 5px, transparent 6px);
-    background-size: 52px 12px;
+    height: 12px;
+    background-image:
+      radial-gradient(circle at 6px 6px, #ff5f57 5px, transparent 6px),
+      radial-gradient(circle at 26px 6px, #febc2e 5px, transparent 6px),
+      radial-gradient(circle at 46px 6px, #28c840 5px, transparent 6px);
     background-repeat: no-repeat;
-    z-index: 10;
+    pointer-events: none;
+    z-index: 2;
   }
 
-  /* Elegant Custom Thin Scrollbar for macOS panels */
-  .story-slide .hero-inner::-webkit-scrollbar,
-  .story-slide .fancyzone-inner::-webkit-scrollbar,
-  .story-slide .analytics-inner::-webkit-scrollbar,
-  .story-slide .download-inner::-webkit-scrollbar,
-  .story-slide .section-inner::-webkit-scrollbar {
-    width: 6px;
-  }
-  .story-slide .hero-inner::-webkit-scrollbar-thumb,
-  .story-slide .fancyzone-inner::-webkit-scrollbar-thumb,
-  .story-slide .analytics-inner::-webkit-scrollbar-thumb,
-  .story-slide .download-inner::-webkit-scrollbar-thumb,
-  .story-slide .section-inner::-webkit-scrollbar-thumb {
-    background: var(--ink-faint);
-    border-radius: 3px;
+  /* Window content — fills available space compactly */
+  .sz-window > * {
+    width: 100%;
   }
 
-  /* Optimize Gestures Panel (8 gesture cards) */
-  /* width is inherited from uniform window size above */
+  /* ─── CENTERED SLIDE (full-width single window) ── */
+  .story-slide.layout-centered {
+    justify-content: center;
+  }
+  .story-slide.layout-centered .sz-window {
+    /* Wider when shown alone in the center */
+    width: clamp(480px, 56vw, 900px);
+  }
+
+  /* ─── SPLIT SLIDE (two windows side by side) ─────
+     When a slide is on the LEFT, its window shifts left.
+     When on the RIGHT, its window shifts right.
+     Both windows are the same clamp(340px,40vw,680px) wide.
+  ──────────────────────────────────────────────── */
+  .story-slide.layout-left {
+    justify-content: flex-start;
+    padding-left: 6vw;
+  }
+  .story-slide.layout-right {
+    justify-content: flex-end;
+    padding-right: 6vw;
+  }
+
+  /* ─── CONTENT DENSITY OVERRIDES ─────────────────
+     These ensure content fits inside the fixed-height window.
+  ──────────────────────────────────────────────── */
+
+  /* Global compact typography inside windows */
+  .sz-window h2 { font-size: clamp(1.15rem, 2.2vw, 1.65rem); margin-bottom: 6px; }
+  .sz-window h3 { font-size: clamp(0.9rem, 1.4vw, 1.1rem); }
+  .sz-window p  { font-size: clamp(0.78rem, 1.1vw, 0.95rem); line-height: 1.45; margin-bottom: 8px; }
+  .sz-window .eyebrow { font-size: 0.7rem; margin-bottom: 8px; }
+
+  /* Gestures: 4-column grid of compact cards */
   .story-slide#gestures .gestures-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 6px;
   }
   .story-slide#gestures .gesture-label {
-    padding: 6px 8px;
-    font-size: 0.76rem;
-    gap: 6px;
-  }
-  .story-slide#gestures .gesture-label em {
-    display: none !important; /* Hide long em tags on desktop */
-  }
-  .story-slide#gestures .gesture-icon {
-    width: 16px;
-    height: 16px;
-    font-size: 0.75rem;
-  }
-
-  /* Dynamic centering for FancyZone — centered uses wider unified size */
-  .story-slide#fancyzone.layout-centered .fancyzone-inner {
-    width: min(72vw, 1100px);
-    grid-template-columns: 1fr 1.5fr;
-    gap: var(--space-xl);
-  }
-  .story-slide#fancyzone.layout-split .fancyzone-inner {
-    grid-template-columns: 1fr;
-    gap: var(--space-m);
-  }
-  /* Fallback if JS classes fail */
-  .story-slide#fancyzone:not(.layout-centered):not(.layout-split) .fancyzone-inner {
-    grid-template-columns: 1fr;
-    gap: var(--space-m);
-  }
-
-  /* Optimize How-It-Works Panel (3 cards) — inherits uniform window size */
-  .story-slide#how-it-works .methods-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--space-xs);
-  }
-  .story-slide#how-it-works .method-card {
-    padding: 12px !important; /* reduce padding from large default */
-  }
-  .story-slide#how-it-works .method-icon {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 8px;
-  }
-  .story-slide#how-it-works .method-icon svg {
-    width: 16px;
-    height: 16px;
-  }
-  .story-slide#how-it-works .method-card h3 {
-    font-size: 0.95rem;
-    margin-bottom: 4px;
-  }
-  .story-slide#how-it-works .method-card p {
-    font-size: 0.78rem;
-    line-height: 1.35;
-    margin-bottom: 8px;
-  }
-  .story-slide#how-it-works .method-demo {
-    height: 54px; /* Reduce demo wrapper height */
-  }
-  .story-slide#how-it-works .hk-key {
-    font-size: 0.75rem;
-    padding: 0.2em 0.4em;
-  }
-  .story-slide#how-it-works .hk-sequence {
+    padding: 8px 6px;
+    font-size: 0.72rem;
     gap: 4px;
   }
-  .story-slide#how-it-works .gd-fingers {
-    gap: 6px;
+  .story-slide#gestures .gesture-label em { display: none !important; }
+  .story-slide#gestures .gesture-icon { width: 18px; height: 18px; font-size: 0.8rem; }
+
+  /* How-it-works: 3 compact cards */
+  .story-slide#how-it-works .methods-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
   }
-  .story-slide#how-it-works .gd-finger {
-    width: 8px;
-    height: 20px;
+  .story-slide#how-it-works .method-card {
+    padding: 14px 12px !important;
   }
-  .story-slide#how-it-works .method-card:hover .gd-fingers {
-    transform: translateX(14px);
+  .story-slide#how-it-works .method-icon { width: 30px; height: 30px; margin-bottom: 8px; }
+  .story-slide#how-it-works .method-icon svg { width: 14px; height: 14px; }
+  .story-slide#how-it-works .method-card h3 { font-size: 0.88rem; margin-bottom: 4px; }
+  .story-slide#how-it-works .method-card p  { font-size: 0.74rem; line-height: 1.3; margin-bottom: 6px; }
+  .story-slide#how-it-works .method-demo { height: 48px; }
+  .story-slide#how-it-works .hk-key { font-size: 0.7rem; padding: 0.18em 0.38em; }
+  .story-slide#how-it-works .gd-fingers { gap: 5px; }
+  .story-slide#how-it-works .gd-finger { width: 7px; height: 18px; }
+  .story-slide#how-it-works .method-card:hover .gd-fingers { transform: translateX(12px); }
+
+  /* FancyZone: single column when split, two columns when centered */
+  .story-slide#fancyzone.layout-left .fancyzone-inner,
+  .story-slide#fancyzone.layout-right .fancyzone-inner {
+    display: block;
+  }
+  .story-slide#fancyzone.layout-centered .fancyzone-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--space-l);
+    align-items: center;
   }
 
-  /* Dynamic centering for Analytics — centered uses wider unified size */
+  /* Analytics: single column when split, two columns when centered */
+  .story-slide#analytics.layout-left .analytics-inner,
+  .story-slide#analytics.layout-right .analytics-inner {
+    display: block;
+  }
   .story-slide#analytics.layout-centered .analytics-inner {
-    width: min(72vw, 1100px);
+    display: grid;
     grid-template-columns: 1.2fr 1fr;
-    gap: var(--space-xl);
-  }
-  .story-slide#analytics.layout-split .analytics-inner {
-    grid-template-columns: 1fr;
-    gap: var(--space-m);
-  }
-  /* Fallback if JS classes fail */
-  .story-slide#analytics:not(.layout-centered):not(.layout-split) .analytics-inner {
-    grid-template-columns: 1fr;
-    gap: var(--space-m);
+    gap: var(--space-l);
+    align-items: start;
   }
 
+  /* Pricing: 2 columns */
   .story-slide#pricing .pricing-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-s);
   }
-
-  /* Centered sizing for download — uses wider unified size */
-  .story-slide#download .download-inner {
-    width: min(72vw, 1100px);
-  }
+  .story-slide#pricing .price-amount { font-size: clamp(1.4rem, 2.4vw, 2rem); }
+  .story-slide#pricing .pricing-card { padding: 20px 16px !important; }
 }

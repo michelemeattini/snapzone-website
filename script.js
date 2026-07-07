@@ -865,159 +865,150 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   // ─────────────────────────────────────────────────────
   (function initStoryScroll() {
     const slides = {
-      hero:         document.getElementById('hero'),
-      gestures:     document.getElementById('gestures'),
-      fancyzone:    document.getElementById('fancyzone'),
-      howItWorks:   document.getElementById('how-it-works'),
-      analytics:    document.getElementById('analytics'),
-      pricing:      document.getElementById('pricing'),
-      download:     document.getElementById('download')
+      hero:       document.getElementById('hero'),
+      gestures:   document.getElementById('gestures'),
+      fancyzone:  document.getElementById('fancyzone'),
+      howItWorks: document.getElementById('how-it-works'),
+      analytics:  document.getElementById('analytics'),
+      pricing:    document.getElementById('pricing'),
+      download:   document.getElementById('download')
     };
 
     const container = document.getElementById('story-container');
     if (!container) return;
 
+    const LAYOUT_CLASSES = ['layout-centered', 'layout-left', 'layout-right'];
+
+    function setSlide(el, opacity, tx, layout) {
+      if (!el) return;
+      el.style.setProperty('--slide-opacity', opacity);
+      el.style.setProperty('--slide-tx', tx + 'vw');
+      LAYOUT_CLASSES.forEach(c => el.classList.remove(c));
+      if (layout) el.classList.add(layout);
+      if (opacity > 0.15) el.classList.add('active-slide');
+      else el.classList.remove('active-slide');
+    }
+
     function update() {
       if (window.innerWidth < 900) {
-        // Reset all inline styles on mobile to ensure vertical layout works
         Object.values(slides).forEach(slide => {
-          if (slide) {
-            slide.style.removeProperty('--slide-tx');
-            slide.style.removeProperty('--slide-opacity');
-            slide.style.removeProperty('--content-tx');
-            slide.classList.remove('active-slide');
-            slide.classList.remove('layout-centered');
-            slide.classList.remove('layout-split');
-          }
+          if (!slide) return;
+          slide.style.removeProperty('--slide-tx');
+          slide.style.removeProperty('--slide-opacity');
+          LAYOUT_CLASSES.forEach(c => slide.classList.remove(c));
+          slide.classList.remove('active-slide');
         });
         return;
       }
 
       const rect = container.getBoundingClientRect();
       const viewH = window.innerHeight;
-      const totalHeight = container.clientHeight - viewH;
-      if (totalHeight <= 0) return;
+      if (container.clientHeight - viewH <= 0) return;
 
-      // Calculate scroll progress from 0.0 to 9.0
-      let progress = -rect.top / viewH;
-      progress = Math.max(0, Math.min(9, progress));
+      // Progress: 0.0 → 9.0 matching 9 scroll triggers (10 phases)
+      let p = Math.max(0, Math.min(9, -rect.top / viewH));
 
-      const configs = {};
+      // ── Phase helpers ──────────────────────────────────
+      // eased(v) clamps 0-1
+      const e = v => Math.max(0, Math.min(1, v));
 
-      // 0. Hero (Slide 1)
-      if (progress < 1) {
-        configs.hero = { slideTx: 0, contentTx: -22 * progress, opacity: 1 };
-      } else if (progress < 2) {
-        configs.hero = { slideTx: 0, contentTx: -22, opacity: 1 };
-      } else if (progress < 3) {
-        configs.hero = { slideTx: -100 * (progress - 2), contentTx: -22, opacity: 1 - (progress - 2) };
+      // Phase 0 – Hero enters centered
+      // Phase 1 – Gestures enter (right); Hero + Gestures sit side-by-side
+      // Phase 2 – Both exit left
+      // Phase 3 – FancyZone enters centered
+      // Phase 4 – FancyZone moves left; HowItWorks enters right
+      // Phase 5 – Both exit left
+      // Phase 6 – Analytics enters centered
+      // Phase 7 – Analytics moves left; Pricing enters right
+      // Phase 8 – Both exit left
+      // Phase 9 – Download enters centered
+
+      // HERO: centered p0→1, left p1→2, gone p2+
+      if (p < 1) {
+        setSlide(slides.hero, 1, 0, 'layout-centered');
+      } else if (p < 2) {
+        setSlide(slides.hero, 1, 0, 'layout-left');
+      } else if (p < 3) {
+        setSlide(slides.hero, e(1 - (p - 2)), -100 * e(p - 2), 'layout-left');
       } else {
-        configs.hero = { slideTx: -100, contentTx: -22, opacity: 0 };
+        setSlide(slides.hero, 0, -100, 'layout-left');
       }
 
-      // 1. Gestures (Slide 2)
-      if (progress < 1) {
-        configs.gestures = { slideTx: 100, contentTx: 22, opacity: 0 };
-      } else if (progress < 2) {
-        configs.gestures = { slideTx: 100 - 100 * (progress - 1), contentTx: 22, opacity: progress - 1 };
-      } else if (progress < 3) {
-        configs.gestures = { slideTx: -100 * (progress - 2), contentTx: 22, opacity: 1 - (progress - 2) };
+      // GESTURES: hidden p0, enters right p1→2, exits left p2→3, gone p3+
+      if (p < 1) {
+        setSlide(slides.gestures, 0, 100, 'layout-right');
+      } else if (p < 2) {
+        setSlide(slides.gestures, e(p - 1), 0, 'layout-right');
+      } else if (p < 3) {
+        setSlide(slides.gestures, e(1 - (p - 2)), -100 * e(p - 2), 'layout-right');
       } else {
-        configs.gestures = { slideTx: -100, contentTx: 22, opacity: 0 };
+        setSlide(slides.gestures, 0, -100, 'layout-right');
       }
 
-      // 2. FancyZone (Slide 3)
-      if (progress < 2) {
-        configs.fancyzone = { slideTx: 100, contentTx: 0, opacity: 0 };
-      } else if (progress < 3) {
-        configs.fancyzone = { slideTx: 100 - 100 * (progress - 2), contentTx: 0, opacity: progress - 2 };
-      } else if (progress < 4) {
-        configs.fancyzone = { slideTx: 0, contentTx: -22 * (progress - 3), opacity: 1 };
-      } else if (progress < 5) {
-        configs.fancyzone = { slideTx: 0, contentTx: -22, opacity: 1 };
-      } else if (progress < 6) {
-        configs.fancyzone = { slideTx: -100 * (progress - 5), contentTx: -22, opacity: 1 - (progress - 5) };
+      // FANCYZONE: hidden p0-2, enters centered p2→3, moves left p3→4, exits p5→6
+      if (p < 2) {
+        setSlide(slides.fancyzone, 0, 100, 'layout-centered');
+      } else if (p < 3) {
+        setSlide(slides.fancyzone, e(p - 2), 0, 'layout-centered');
+      } else if (p < 4) {
+        setSlide(slides.fancyzone, 1, 0, 'layout-left');
+      } else if (p < 5) {
+        setSlide(slides.fancyzone, 1, 0, 'layout-left');
+      } else if (p < 6) {
+        setSlide(slides.fancyzone, e(1 - (p - 5)), -100 * e(p - 5), 'layout-left');
       } else {
-        configs.fancyzone = { slideTx: -100, contentTx: -22, opacity: 0 };
+        setSlide(slides.fancyzone, 0, -100, 'layout-left');
       }
 
-      // 3. How it Works (Slide 4)
-      if (progress < 4) {
-        configs.howItWorks = { slideTx: 100, contentTx: 22, opacity: 0 };
-      } else if (progress < 5) {
-        configs.howItWorks = { slideTx: 100 - 100 * (progress - 4), contentTx: 22, opacity: progress - 4 };
-      } else if (progress < 6) {
-        configs.howItWorks = { slideTx: -100 * (progress - 5), contentTx: 22, opacity: 1 - (progress - 5) };
+      // HOW-IT-WORKS: hidden p0-3, enters right p4→5, exits left p5→6, gone p6+
+      if (p < 4) {
+        setSlide(slides.howItWorks, 0, 100, 'layout-right');
+      } else if (p < 5) {
+        setSlide(slides.howItWorks, e(p - 4), 0, 'layout-right');
+      } else if (p < 6) {
+        setSlide(slides.howItWorks, e(1 - (p - 5)), -100 * e(p - 5), 'layout-right');
       } else {
-        configs.howItWorks = { slideTx: -100, contentTx: 22, opacity: 0 };
+        setSlide(slides.howItWorks, 0, -100, 'layout-right');
       }
 
-      // 4. Analytics (Slide 5)
-      if (progress < 5) {
-        configs.analytics = { slideTx: 100, contentTx: 0, opacity: 0 };
-      } else if (progress < 6) {
-        configs.analytics = { slideTx: 100 - 100 * (progress - 5), contentTx: 0, opacity: progress - 5 };
-      } else if (progress < 7) {
-        configs.analytics = { slideTx: 0, contentTx: -22 * (progress - 6), opacity: 1 };
-      } else if (progress < 8) {
-        configs.analytics = { slideTx: 0, contentTx: -22, opacity: 1 };
-      } else if (progress < 9) {
-        configs.analytics = { slideTx: -100 * (progress - 8), contentTx: -22, opacity: 1 - (progress - 8) };
+      // ANALYTICS: hidden p0-5, enters centered p5→6, moves left p6→7, exits p8→9
+      if (p < 5) {
+        setSlide(slides.analytics, 0, 100, 'layout-centered');
+      } else if (p < 6) {
+        setSlide(slides.analytics, e(p - 5), 0, 'layout-centered');
+      } else if (p < 7) {
+        setSlide(slides.analytics, 1, 0, 'layout-left');
+      } else if (p < 8) {
+        setSlide(slides.analytics, 1, 0, 'layout-left');
+      } else if (p < 9) {
+        setSlide(slides.analytics, e(1 - (p - 8)), -100 * e(p - 8), 'layout-left');
       } else {
-        configs.analytics = { slideTx: -100, contentTx: -22, opacity: 0 };
+        setSlide(slides.analytics, 0, -100, 'layout-left');
       }
 
-      // 5. Pricing (Slide 6)
-      if (progress < 7) {
-        configs.pricing = { slideTx: 100, contentTx: 22, opacity: 0 };
-      } else if (progress < 8) {
-        configs.pricing = { slideTx: 100 - 100 * (progress - 7), contentTx: 22, opacity: progress - 7 };
-      } else if (progress < 9) {
-        configs.pricing = { slideTx: -100 * (progress - 8), contentTx: 22, opacity: 1 - (progress - 8) };
+      // PRICING: hidden p0-6, enters right p7→8, exits left p8→9, gone p9+
+      if (p < 7) {
+        setSlide(slides.pricing, 0, 100, 'layout-right');
+      } else if (p < 8) {
+        setSlide(slides.pricing, e(p - 7), 0, 'layout-right');
+      } else if (p < 9) {
+        setSlide(slides.pricing, e(1 - (p - 8)), -100 * e(p - 8), 'layout-right');
       } else {
-        configs.pricing = { slideTx: -100, contentTx: 22, opacity: 0 };
+        setSlide(slides.pricing, 0, -100, 'layout-right');
       }
 
-      // 6. Download (Slide 7)
-      if (progress < 8) {
-        configs.download = { slideTx: 100, contentTx: 0, opacity: 0 };
-      } else if (progress < 9) {
-        configs.download = { slideTx: 100 - 100 * (progress - 8), contentTx: 0, opacity: progress - 8 };
+      // DOWNLOAD: hidden p0-8, enters centered p8→9, stays
+      if (p < 8) {
+        setSlide(slides.download, 0, 100, 'layout-centered');
+      } else if (p < 9) {
+        setSlide(slides.download, e(p - 8), 0, 'layout-centered');
       } else {
-        configs.download = { slideTx: 0, contentTx: 0, opacity: 1 };
+        setSlide(slides.download, 1, 0, 'layout-centered');
       }
-
-      // Apply configs to slides
-      Object.keys(slides).forEach(key => {
-        const slide = slides[key];
-        const conf = configs[key];
-        if (slide && conf) {
-          slide.style.setProperty('--slide-tx', `${conf.slideTx}vw`);
-          slide.style.setProperty('--slide-opacity', conf.opacity);
-          slide.style.setProperty('--content-tx', `${conf.contentTx}vw`);
-          
-          if (conf.opacity > 0.15) {
-            slide.classList.add('active-slide');
-          } else {
-            slide.classList.remove('active-slide');
-          }
-
-          if (conf.contentTx === 0) {
-            slide.classList.add('layout-centered');
-            slide.classList.remove('layout-split');
-          } else {
-            slide.classList.add('layout-split');
-            slide.classList.remove('layout-centered');
-          }
-        }
-      });
     }
 
-    // Attach listeners
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
-    
-    // Initial run
     update();
   })();
 })();
