@@ -3227,10 +3227,12 @@ footer {
     border: 1px solid rgba(0, 0, 0, 0.12);
     border-radius: 16px;
     box-shadow: 0 20px 48px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.05);
-    padding: 44px var(--space-l) var(--space-l) !important; /* comfort padding, top padding leaves space for dots */
+    padding: 44px 40px 36px !important; /* uniform comfortable padding */
     position: relative;
-    max-height: 85vh; /* Prevent vertical clipping */
-    overflow-y: auto; /* Fallback scroll */
+    /* Uniform window size for split panels */
+    width: min(46vw, 800px);
+    max-height: 82vh;
+    overflow-y: auto;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     box-sizing: border-box;
@@ -3289,15 +3291,8 @@ footer {
     border-radius: 3px;
   }
 
-  /* Custom overrides for split-screen layouts to fit side-by-side */
-  .story-slide#hero .hero-inner {
-    max-width: min(44vw, 680px);
-  }
-
   /* Optimize Gestures Panel (8 gesture cards) */
-  .story-slide#gestures .section-inner {
-    max-width: min(48vw, 840px);
-  }
+  /* width is inherited from uniform window size above */
   .story-slide#gestures .gestures-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 6px;
@@ -3316,28 +3311,23 @@ footer {
     font-size: 0.75rem;
   }
 
-  /* Dynamic centering for FancyZone */
+  /* Dynamic centering for FancyZone — centered uses wider unified size */
   .story-slide#fancyzone.layout-centered .fancyzone-inner {
-    max-width: min(85vw, 1160px);
+    width: min(72vw, 1100px);
     grid-template-columns: 1fr 1.5fr;
     gap: var(--space-xl);
   }
   .story-slide#fancyzone.layout-split .fancyzone-inner {
-    max-width: min(48vw, 840px);
     grid-template-columns: 1fr;
     gap: var(--space-m);
   }
   /* Fallback if JS classes fail */
   .story-slide#fancyzone:not(.layout-centered):not(.layout-split) .fancyzone-inner {
-    max-width: min(48vw, 840px);
     grid-template-columns: 1fr;
     gap: var(--space-m);
   }
 
-  /* Optimize How-It-Works Panel (3 cards) */
-  .story-slide#how-it-works .section-inner {
-    max-width: min(46vw, 780px);
-  }
+  /* Optimize How-It-Works Panel (3 cards) — inherits uniform window size */
   .story-slide#how-it-works .methods-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-xs);
@@ -3384,34 +3374,29 @@ footer {
     transform: translateX(14px);
   }
 
-  /* Dynamic centering for Analytics */
+  /* Dynamic centering for Analytics — centered uses wider unified size */
   .story-slide#analytics.layout-centered .analytics-inner {
-    max-width: min(85vw, 1160px);
+    width: min(72vw, 1100px);
     grid-template-columns: 1.2fr 1fr;
     gap: var(--space-xl);
   }
   .story-slide#analytics.layout-split .analytics-inner {
-    max-width: min(48vw, 840px);
     grid-template-columns: 1fr;
     gap: var(--space-m);
   }
   /* Fallback if JS classes fail */
   .story-slide#analytics:not(.layout-centered):not(.layout-split) .analytics-inner {
-    max-width: min(48vw, 840px);
     grid-template-columns: 1fr;
     gap: var(--space-m);
   }
 
-  .story-slide#pricing .section-inner {
-    max-width: min(44vw, 720px);
-  }
   .story-slide#pricing .pricing-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-s);
   }
 
-  /* Centered sizing for download */
+  /* Centered sizing for download — uses wider unified size */
   .story-slide#download .download-inner {
-    max-width: min(85vw, 840px);
+    width: min(72vw, 1100px);
   }
 }
