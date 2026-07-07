@@ -843,6 +843,8 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         card.classList.remove('visible');
       }
     });
+  })();
+
   // ─────────────────────────────────────────────────────
   // 14. GDPR YOUTUBE LAZY LOADER
   // ─────────────────────────────────────────────────────
