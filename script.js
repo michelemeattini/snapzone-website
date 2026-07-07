@@ -25,8 +25,14 @@
   let currentLang = localStorage.getItem('sz-lang');
 
   if (!currentLang) {
-    const browserLang = navigator.language ? navigator.language.split('-')[0] : 'en';
-    currentLang = supportedLangs.includes(browserLang) ? browserLang : 'en';
+    // Walk the browser's full priority list (e.g. ['it-IT', 'it', 'en-US', 'en'])
+    // and pick the first one that matches a supported language.
+    const preferred = (navigator.languages && navigator.languages.length)
+      ? navigator.languages
+      : [navigator.language || 'en'];
+    currentLang = preferred
+      .map(l => l.split('-')[0].toLowerCase())
+      .find(l => supportedLangs.includes(l)) || 'en';
   } else if (!supportedLangs.includes(currentLang)) {
     currentLang = 'en';
   }
