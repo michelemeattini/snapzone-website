@@ -909,22 +909,21 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       let p = Math.max(0, Math.min(9, -rect.top / viewH));
 
       // ── Phase helpers ──────────────────────────────────
-      // eased(v) clamps 0-1
+      // e(v) clamps 0-1
       const e = v => Math.max(0, Math.min(1, v));
 
-      // Phase 0 – Hero enters centered
-      // Phase 1 – Gestures enter (right); Hero + Gestures sit side-by-side
-      // Phase 2 – Both exit left
-      // Phase 3 – FancyZone enters centered
-      // Phase 4 – FancyZone moves left; HowItWorks enters right
-      // Phase 5 – Both exit left
-      // Phase 6 – Analytics enters centered
-      // Phase 7 – Analytics moves left; Pricing enters right
-      // Phase 8 – Both exit left
-      // Phase 9 – Download enters centered
+      // Phase 0: 0.0 to 1.0 (Hero moves left, Gestures enters right)
+      // Phase 1: 1.0 to 2.0 (Both sit side-by-side)
+      // Phase 2: 2.0 to 3.0 (Both exit left, FancyZone enters centered)
+      // Phase 3: 3.0 to 4.0 (FancyZone sits centered)
+      // Phase 4: 4.0 to 5.0 (FancyZone moves left, HowItWorks enters right)
+      // Phase 5: 5.0 to 6.0 (Both exit left, Analytics enters centered)
+      // Phase 6: 6.0 to 7.0 (Analytics sits centered)
+      // Phase 7: 7.0 to 8.0 (Analytics moves left, Pricing enters right)
+      // Phase 8: 8.0 to 9.0 (Both exit left, Download enters centered)
 
-      // HERO: centered p0→1, left p1→2, gone p2+
-      if (p < 1) {
+      // HERO: centered p0, shrinks left p>0.05, sits p1-2, exits p2-3
+      if (p < 0.05) {
         setSlide(slides.hero, 1, 0, 'layout-centered');
       } else if (p < 2) {
         setSlide(slides.hero, 1, 0, 'layout-left');
@@ -934,24 +933,24 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         setSlide(slides.hero, 0, -100, 'layout-left');
       }
 
-      // GESTURES: hidden p0, enters right p1→2, exits left p2→3, gone p3+
+      // GESTURES: enters right p0-1, sits p1-2, exits p2-3
       if (p < 1) {
-        setSlide(slides.gestures, 0, 100, 'layout-right');
+        setSlide(slides.gestures, e(p), 100 - 100 * e(p), 'layout-right');
       } else if (p < 2) {
-        setSlide(slides.gestures, e(p - 1), 0, 'layout-right');
+        setSlide(slides.gestures, 1, 0, 'layout-right');
       } else if (p < 3) {
         setSlide(slides.gestures, e(1 - (p - 2)), -100 * e(p - 2), 'layout-right');
       } else {
         setSlide(slides.gestures, 0, -100, 'layout-right');
       }
 
-      // FANCYZONE: hidden p0-2, enters centered p2→3, moves left p3→4, exits p5→6
+      // FANCYZONE: enters centered p2-3, sits p3-4, shrinks left p>4.05, exits p5-6
       if (p < 2) {
         setSlide(slides.fancyzone, 0, 100, 'layout-centered');
       } else if (p < 3) {
-        setSlide(slides.fancyzone, e(p - 2), 0, 'layout-centered');
-      } else if (p < 4) {
-        setSlide(slides.fancyzone, 1, 0, 'layout-left');
+        setSlide(slides.fancyzone, e(p - 2), 100 - 100 * e(p - 2), 'layout-centered');
+      } else if (p < 4.05) {
+        setSlide(slides.fancyzone, 1, 0, 'layout-centered');
       } else if (p < 5) {
         setSlide(slides.fancyzone, 1, 0, 'layout-left');
       } else if (p < 6) {
@@ -960,24 +959,24 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         setSlide(slides.fancyzone, 0, -100, 'layout-left');
       }
 
-      // HOW-IT-WORKS: hidden p0-3, enters right p4→5, exits left p5→6, gone p6+
+      // HOW-IT-WORKS: enters right p4-5, exits p5-6
       if (p < 4) {
         setSlide(slides.howItWorks, 0, 100, 'layout-right');
       } else if (p < 5) {
-        setSlide(slides.howItWorks, e(p - 4), 0, 'layout-right');
+        setSlide(slides.howItWorks, e(p - 4), 100 - 100 * e(p - 4), 'layout-right');
       } else if (p < 6) {
         setSlide(slides.howItWorks, e(1 - (p - 5)), -100 * e(p - 5), 'layout-right');
       } else {
         setSlide(slides.howItWorks, 0, -100, 'layout-right');
       }
 
-      // ANALYTICS: hidden p0-5, enters centered p5→6, moves left p6→7, exits p8→9
+      // ANALYTICS: enters centered p5-6, sits p6-7, shrinks left p>7.05, exits p8-9
       if (p < 5) {
         setSlide(slides.analytics, 0, 100, 'layout-centered');
       } else if (p < 6) {
-        setSlide(slides.analytics, e(p - 5), 0, 'layout-centered');
-      } else if (p < 7) {
-        setSlide(slides.analytics, 1, 0, 'layout-left');
+        setSlide(slides.analytics, e(p - 5), 100 - 100 * e(p - 5), 'layout-centered');
+      } else if (p < 7.05) {
+        setSlide(slides.analytics, 1, 0, 'layout-centered');
       } else if (p < 8) {
         setSlide(slides.analytics, 1, 0, 'layout-left');
       } else if (p < 9) {
@@ -986,22 +985,22 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
         setSlide(slides.analytics, 0, -100, 'layout-left');
       }
 
-      // PRICING: hidden p0-6, enters right p7→8, exits left p8→9, gone p9+
+      // PRICING: enters right p7-8, exits p8-9
       if (p < 7) {
         setSlide(slides.pricing, 0, 100, 'layout-right');
       } else if (p < 8) {
-        setSlide(slides.pricing, e(p - 7), 0, 'layout-right');
+        setSlide(slides.pricing, e(p - 7), 100 - 100 * e(p - 7), 'layout-right');
       } else if (p < 9) {
         setSlide(slides.pricing, e(1 - (p - 8)), -100 * e(p - 8), 'layout-right');
       } else {
         setSlide(slides.pricing, 0, -100, 'layout-right');
       }
 
-      // DOWNLOAD: hidden p0-8, enters centered p8→9, stays
+      // DOWNLOAD: enters centered p8-9, stays
       if (p < 8) {
         setSlide(slides.download, 0, 100, 'layout-centered');
       } else if (p < 9) {
-        setSlide(slides.download, e(p - 8), 0, 'layout-centered');
+        setSlide(slides.download, e(p - 8), 100 - 100 * e(p - 8), 'layout-centered');
       } else {
         setSlide(slides.download, 1, 0, 'layout-centered');
       }

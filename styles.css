@@ -3265,26 +3265,23 @@ footer {
   }
 
   /* ─── CENTERED SLIDE (full-width single window) ── */
-  .story-slide.layout-centered {
-    justify-content: center;
-  }
   .story-slide.layout-centered .sz-window {
     /* Wider when shown alone in the center */
     width: clamp(480px, 56vw, 900px);
+    transform: translateX(0);
   }
 
   /* ─── SPLIT SLIDE (two windows side by side) ─────
-     When a slide is on the LEFT, its window shifts left.
-     When on the RIGHT, its window shifts right.
-     Both windows are the same clamp(340px,40vw,680px) wide.
+     Instead of jumping via justify-content, we animate 
+     the translate position so it's perfectly smooth.
   ──────────────────────────────────────────────── */
-  .story-slide.layout-left {
-    justify-content: flex-start;
-    padding-left: 7vw !important;
+  .story-slide.layout-left .sz-window {
+    width: clamp(340px, 40vw, 680px);
+    transform: translateX(-24vw); /* anchor to left */
   }
-  .story-slide.layout-right {
-    justify-content: flex-end;
-    padding-right: 7vw !important;
+  .story-slide.layout-right .sz-window {
+    width: clamp(340px, 40vw, 680px);
+    transform: translateX(24vw); /* anchor to right */
   }
 
   /* ─── CONTENT DENSITY OVERRIDES ─────────────────
