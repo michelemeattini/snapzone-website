@@ -1552,7 +1552,7 @@ a {
 
 .fancyzone-inner {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
+  grid-template-columns: 1fr 1.5fr;
   gap: var(--space-xl);
   align-items: center;
 }
@@ -1588,7 +1588,7 @@ a {
 .fz-showcase-video {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 10;
   border-radius: var(--r-l);
   overflow: hidden;
   box-shadow: var(--shadow-xl);
