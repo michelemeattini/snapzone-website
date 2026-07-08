@@ -1,45 +1,15 @@
 const { test, expect } = require('@playwright/test');
 
 async function scrollToProgress(page, progress, viewportHeight = 800) {
-  const info = await page.evaluate(({ p, vh }) => {
-    const container = document.getElementById('story-container');
-    const offset = container ? container.offsetTop : 0;
-    const rect = container ? container.getBoundingClientRect() : { top: 0 };
-    return {
-      y: Math.round(p * vh) + offset,
-      offsetTop: offset,
-      rectTop: rect.top,
-      scrollY: window.scrollY
-    };
-  }, { p: progress, vh: viewportHeight });
-
-  console.log(`[TEST DEBUG] scrollToProgress(${progress}):`, info);
-  
-  const snapType = await page.evaluate(() => {
-    return {
-      snapType: getComputedStyle(document.documentElement).scrollSnapType,
-      behavior: getComputedStyle(document.documentElement).scrollBehavior
-    };
-  });
-  console.log(`[TEST DEBUG] html style:`, snapType);
-
+  const y = Math.round(progress * viewportHeight);
   await page.evaluate((yVal) => {
     window.scrollTo(0, yVal);
-  }, info.y);
-
-  await page.waitForTimeout(60);
-  
-  const postInfo = await page.evaluate(() => {
-    const container = document.getElementById('story-container');
-    const rect = container ? container.getBoundingClientRect() : { top: 0 };
-    return {
-      scrollY: window.scrollY,
-      rectTop: rect.top,
-      progress: container ? (-rect.top / window.innerHeight) : 0
-    };
-  });
-  console.log(`[TEST DEBUG] post-scroll:`, postInfo);
-  
+  }, y);
+  await page.waitForFunction((yVal) => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const target = Math.min(yVal, maxScroll);
+    return Math.abs(window.scrollY - target) < 10;
+  }, y);
   await page.evaluate(() => new Promise(requestAnimationFrame));
 }
 
@@ -50,10 +20,8 @@ test.describe('Tier 1: Feature Coverage (F1-F6)', () => {
   // ----------------------------------------------------------------
   test.describe('F1: Spatial & Visual Layout', () => {
     test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => { sessionStorage.clear(); if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } });
       await page.setViewportSize({ width: 1200, height: 800 });
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; scroll-snap-type: none !important; }' });
     });
 
@@ -104,10 +72,8 @@ test.describe('Tier 1: Feature Coverage (F1-F6)', () => {
   // ----------------------------------------------------------------
   test.describe('F2: Fade-based Transitions', () => {
     test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => { sessionStorage.clear(); if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } });
       await page.setViewportSize({ width: 1200, height: 800 });
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; scroll-snap-type: none !important; }' });
     });
 
@@ -159,8 +125,8 @@ test.describe('Tier 1: Feature Coverage (F1-F6)', () => {
       const heroTx = await hero.evaluate(el => el.style.getPropertyValue('--slide-tx'));
       const gesturesTx = await gestures.evaluate(el => el.style.getPropertyValue('--slide-tx'));
 
-      expect(Math.abs(parseFloat(heroTx) || 0)).toBeLessThanOrEqual(3);
-      expect(Math.abs(parseFloat(gesturesTx) || 0)).toBeLessThanOrEqual(3);
+      expect(heroTx.trim()).toBe('0vw');
+      expect(gesturesTx.trim()).toBe('0vw');
     });
   });
 
@@ -169,10 +135,8 @@ test.describe('Tier 1: Feature Coverage (F1-F6)', () => {
   // ----------------------------------------------------------------
   test.describe('F3: Responsive Cleanliness', () => {
     test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => { sessionStorage.clear(); if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } });
       await page.setViewportSize({ width: 1200, height: 800 });
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; scroll-snap-type: none !important; }' });
     });
 
@@ -237,10 +201,8 @@ test.describe('Tier 1: Feature Coverage (F1-F6)', () => {
   // ----------------------------------------------------------------
   test.describe('F4: Interactive User Widgets', () => {
     test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => { sessionStorage.clear(); if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } });
       await page.setViewportSize({ width: 1200, height: 800 });
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; scroll-snap-type: none !important; }' });
     });
 
@@ -301,10 +263,8 @@ test.describe('Tier 1: Feature Coverage (F1-F6)', () => {
   // ----------------------------------------------------------------
   test.describe('F5: GDPR Lazy Video Consent', () => {
     test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => { sessionStorage.clear(); if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } });
       await page.setViewportSize({ width: 1200, height: 800 });
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; scroll-snap-type: none !important; }' });
       await scrollToProgress(page, 3.5, 800);
     });
@@ -347,8 +307,7 @@ test.describe('Tier 1: Feature Coverage (F1-F6)', () => {
   // ----------------------------------------------------------------
   test.describe('F6: Strict Asset Self-Hosting', () => {
     test('26. Local stylesheet and script links check', async ({ page }) => {
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
 
       const cssLink = page.locator('link[rel="stylesheet"]');
       const cssHref = await cssLink.getAttribute('href');
@@ -361,8 +320,7 @@ test.describe('Tier 1: Feature Coverage (F1-F6)', () => {
     });
 
     test('27. Logo assets load from local directories', async ({ page }) => {
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       
       const logoPng = page.locator('link[rel="alternate icon"]');
       const logoPngHref = await logoPng.getAttribute('href');
@@ -383,8 +341,7 @@ test.describe('Tier 1: Feature Coverage (F1-F6)', () => {
         route.continue();
       });
 
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       expect(externalRequests.length).toBe(0);
     });
 
@@ -398,14 +355,12 @@ test.describe('Tier 1: Feature Coverage (F1-F6)', () => {
         route.continue();
       });
 
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       expect(thirdPartyHosts.length).toBe(0);
     });
 
     test('30. Favicon elements reference local assets', async ({ page }) => {
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       const favicon = page.locator('link[rel="icon"]');
       await expect(favicon).toBeAttached();
       const href = await favicon.getAttribute('href');

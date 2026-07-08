@@ -1,18 +1,16 @@
 const { test, expect } = require('@playwright/test');
 
 async function scrollToProgress(page, progress, viewportHeight = 800) {
-  const y = await page.evaluate(({ p, vh }) => {
-    const container = document.getElementById('story-container');
-    const offset = container ? container.offsetTop : 0;
-    return Math.round(p * vh) + offset;
-  }, { p: progress, vh: viewportHeight });
-
+  const y = Math.round(progress * viewportHeight);
   await page.evaluate((yVal) => {
     window.scrollTo(0, yVal);
   }, y);
-
   // Wait until scroll position stabilizes near target or max scrollable height
-  await page.waitForTimeout(60);
+  await page.waitForFunction((yVal) => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const target = Math.min(yVal, maxScroll);
+    return Math.abs(window.scrollY - target) < 10;
+  }, y);
   await page.evaluate(() => new Promise(requestAnimationFrame));
 }
 
@@ -23,9 +21,7 @@ test.describe('Tier 2: Boundary & Corner Cases (F1-F6)', () => {
   // ----------------------------------------------------------------
   test.describe('F1: Spatial & Visual Layout', () => {
     test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => { sessionStorage.clear(); if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } });
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; scroll-snap-type: none !important; }' });
       await page.setViewportSize({ width: 1200, height: 800 });
     });
@@ -62,12 +58,12 @@ test.describe('Tier 2: Boundary & Corner Cases (F1-F6)', () => {
     });
 
     test('4. Active slide boundary threshold toggle', async ({ page }) => {
-      // Scroll to progress 1.10. Opacity of gestures should be 0.10 <= 0.15. Inactive.
-      await scrollToProgress(page, 1.10, 800);
+      // Scroll to progress 1.14. Opacity of gestures should be 0.14 <= 0.15. Inactive.
+      await scrollToProgress(page, 1.14, 800);
       await expect(page.locator('#gestures')).not.toHaveClass(/active-slide/);
- 
-      // Scroll to progress 1.20. Opacity of gestures should be 0.20 > 0.15. Active.
-      await scrollToProgress(page, 1.20, 800);
+
+      // Scroll to progress 1.16. Opacity of gestures should be 0.16 > 0.15. Active.
+      await scrollToProgress(page, 1.16, 800);
       await expect(page.locator('#gestures')).toHaveClass(/active-slide/);
     });
 
@@ -87,9 +83,7 @@ test.describe('Tier 2: Boundary & Corner Cases (F1-F6)', () => {
   // ----------------------------------------------------------------
   test.describe('F2: Fade-based Transitions', () => {
     test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => { sessionStorage.clear(); if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } });
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; scroll-snap-type: none !important; }' });
       await page.setViewportSize({ width: 1200, height: 800 });
     });
@@ -100,7 +94,7 @@ test.describe('Tier 2: Boundary & Corner Cases (F1-F6)', () => {
         await scrollToProgress(page, progress, 800);
         
         const activeCount = await page.locator('.story-slide.active-slide').count();
-        expect(activeCount).toBeLessThanOrEqual(3); // 3 slides can overlap during step transitions in the new sequence
+        expect(activeCount).toBeLessThanOrEqual(2);
       }
     });
 
@@ -147,9 +141,7 @@ test.describe('Tier 2: Boundary & Corner Cases (F1-F6)', () => {
   // ----------------------------------------------------------------
   test.describe('F3: Responsive Cleanliness', () => {
     test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => { sessionStorage.clear(); if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } });
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; scroll-snap-type: none !important; }' });
     });
 
@@ -174,13 +166,13 @@ test.describe('Tier 2: Boundary & Corner Cases (F1-F6)', () => {
     test('13. Rapid resize oscillation maintains clean state', async ({ page }) => {
       for (let i = 0; i < 3; i++) {
         await page.setViewportSize({ width: 800, height: 600 });
-        await page.waitForTimeout(150);
+        await page.waitForTimeout(50);
         await page.setViewportSize({ width: 1000, height: 800 });
-        await page.waitForTimeout(150);
+        await page.waitForTimeout(50);
       }
       
       await page.setViewportSize({ width: 800, height: 600 });
-      await page.waitForTimeout(150);
+      await page.waitForTimeout(50);
 
       const hero = page.locator('#hero');
       const opacity = await hero.evaluate(el => el.style.getPropertyValue('--slide-opacity'));
@@ -210,9 +202,7 @@ test.describe('Tier 2: Boundary & Corner Cases (F1-F6)', () => {
   // ----------------------------------------------------------------
   test.describe('F4: Interactive User Widgets', () => {
     test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => { sessionStorage.clear(); if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } });
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; scroll-snap-type: none !important; }' });
       await page.setViewportSize({ width: 1200, height: 800 });
     });
@@ -294,9 +284,7 @@ test.describe('Tier 2: Boundary & Corner Cases (F1-F6)', () => {
   // ----------------------------------------------------------------
   test.describe('F5: GDPR Lazy Video Consent', () => {
     test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => { sessionStorage.clear(); if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } });
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; scroll-snap-type: none !important; }' });
       await page.setViewportSize({ width: 1200, height: 800 });
       await scrollToProgress(page, 3.5, 800);
@@ -357,8 +345,7 @@ test.describe('Tier 2: Boundary & Corner Cases (F1-F6)', () => {
         route.continue();
       });
 
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       await page.waitForTimeout(500);
       expect(youtubeRequests.length).toBe(0);
     });
@@ -369,9 +356,7 @@ test.describe('Tier 2: Boundary & Corner Cases (F1-F6)', () => {
   // ----------------------------------------------------------------
   test.describe('F6: Strict Asset Self-Hosting', () => {
     test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => { sessionStorage.clear(); if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } });
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; scroll-snap-type: none !important; }' });
     });
 
@@ -410,8 +395,7 @@ test.describe('Tier 2: Boundary & Corner Cases (F1-F6)', () => {
       await page.route(url => !url.href.includes('localhost') && !url.href.includes('127.0.0.1'), route => {
         route.abort();
       });
-      await page.goto('about:blank');
-    await page.goto('/');
+      await page.goto('/');
       
       const headline = page.locator('#hero-headline');
       await expect(headline).toBeVisible();

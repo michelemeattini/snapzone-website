@@ -1,26 +1,22 @@
 const { test, expect } = require('@playwright/test');
 
 async function scrollToProgress(page, progress, viewportHeight = 800) {
-  const y = await page.evaluate(({ p, vh }) => {
-    const container = document.getElementById('story-container');
-    const offset = container ? container.offsetTop : 0;
-    return Math.round(p * vh) + offset;
-  }, { p: progress, vh: viewportHeight });
-
+  const y = Math.round(progress * viewportHeight);
   await page.evaluate((yVal) => {
     window.scrollTo(0, yVal);
   }, y);
-
   // Wait until scroll position stabilizes near target or max scrollable height
-  await page.waitForTimeout(60);
+  await page.waitForFunction((yVal) => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const target = Math.min(yVal, maxScroll);
+    return Math.abs(window.scrollY - target) < 10;
+  }, y);
   await page.evaluate(() => new Promise(requestAnimationFrame));
 }
 
 test.describe('Tier 3: Pairwise Cross-Feature Interactions', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.addInitScript(() => { sessionStorage.clear(); if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } });
-    await page.goto('about:blank');
     await page.goto('/');
     await page.addStyleTag({ content: 'html { scroll-behavior: auto !important; scroll-snap-type: none !important; }' });
     await page.setViewportSize({ width: 1200, height: 800 });

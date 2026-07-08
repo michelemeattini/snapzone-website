@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-  <script>
-    if ('scrollRestoration' in history) {
-      history.scrollRestoration = 'manual';
-    }
-  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SnapZone — macOS Window Management, Mastered</title>
@@ -76,10 +71,8 @@
   </nav>
 
   <!-- ═══════════════════════════════════════════════ HERO ═══════════════════════════════════════════════ -->
-  <div id="story-container">
-    <div id="story-sticky">
-      <section id="hero" class="story-slide" aria-labelledby="hero-headline">
-    <div class="hero-inner sz-window">
+  <section id="hero" aria-labelledby="hero-headline">
+    <div class="hero-inner">
 
       <!-- Hero copy — centered -->
       <div class="hero-text">
@@ -114,8 +107,8 @@
 
 
   <!-- ══════════════ GESTURE ANIMATIONS ══════════════ -->
-  <section id="gestures" class="story-slide" aria-labelledby="gestures-heading">
-    <div class="section-inner sz-window">
+  <section id="gestures" aria-labelledby="gestures-heading">
+    <div class="section-inner">
       <h2 id="gestures-heading" class="section-h2" data-i18n="gestures_title">Every gesture, instant response</h2>
       <p class="section-sub" data-i18n="gestures_sub">Hover any window's titlebar, then swipe two fingers in any direction. SnapZone recognises eight gestures and snaps in 200 ms.</p>
 
@@ -206,8 +199,8 @@
   </section>
 
   <!-- ══════════════ FANCYZONE SHOWCASE ══════════════ -->
-  <section id="fancyzone" class="story-slide" aria-labelledby="fancyzone-heading">
-    <div class="section-inner fancyzone-inner sz-window">
+  <section id="fancyzone" aria-labelledby="fancyzone-heading">
+    <div class="section-inner fancyzone-inner">
 
       <!-- Left: text -->
       <div class="fz-showcase-text">
@@ -236,8 +229,8 @@
   </section>
 
   <!-- ════════════════ HOW IT WORKS ════════════════ -->
-  <section id="how-it-works" class="story-slide" aria-labelledby="how-heading">
-    <div class="section-inner sz-window">
+  <section id="how-it-works" aria-labelledby="how-heading">
+    <div class="section-inner">
       <h2 id="how-heading" class="section-h2" data-i18n="how_title">Three ways to snap</h2>
       <p class="section-sub" data-i18n="how_sub">Use whichever method feels natural. SnapZone handles all three simultaneously.</p>
       <div class="methods-grid">
@@ -303,8 +296,8 @@
   </section>
 
   <!-- ══════════════ ANALYTICS ══════════════ -->
-  <section id="analytics" class="story-slide" aria-labelledby="analytics-heading">
-    <div class="section-inner analytics-inner sz-window">
+  <section id="analytics" aria-labelledby="analytics-heading">
+    <div class="section-inner analytics-inner">
       <div class="analytics-text">
         <h2 id="analytics-heading" class="section-h2" data-i18n="analytics_title">Know where your time goes</h2>
         <p class="section-sub left-align" data-i18n="analytics_sub">
@@ -356,8 +349,8 @@
   </section>
 
   <!-- ══════════════ PRICING ══════════════ -->
-  <section id="pricing" class="story-slide" aria-labelledby="pricing-heading">
-    <div class="section-inner sz-window">
+  <section id="pricing" aria-labelledby="pricing-heading">
+    <div class="section-inner">
       <h2 id="pricing-heading" class="section-h2" data-i18n="pricing_title">Simple, honest pricing</h2>
       <p class="section-sub" style="text-align:center;max-width:none;" data-i18n="pricing_sub">Try everything free for 10 days. No credit card, no strings attached.</p>
 
@@ -458,8 +451,8 @@
 
 
   <!-- ══════════════ DOWNLOAD CTA ══════════════ -->
-  <section id="download" class="story-slide" aria-labelledby="download-heading">
-    <div class="section-inner download-inner sz-window">
+  <section id="download" aria-labelledby="download-heading">
+    <div class="section-inner download-inner">
       <div class="download-glow" aria-hidden="true"></div>
       <div class="download-logo-wrap">
         <img src="assets/logo.png" alt="SnapZone App Icon" class="download-logo-img" loading="lazy" decoding="async">
@@ -485,17 +478,6 @@
       </div>
     </div>
   </section>
-    </div> <!-- end #story-sticky -->
-    <div class="story-trigger"></div>
-    <div class="story-trigger"></div>
-    <div class="story-trigger"></div>
-    <div class="story-trigger"></div>
-    <div class="story-trigger"></div>
-    <div class="story-trigger"></div>
-    <div class="story-trigger"></div>
-    <div class="story-trigger"></div>
-    <div class="story-trigger"></div>
-  </div> <!-- end #story-container -->
 
   <!-- Footer -->
   <footer id="site-footer" role="contentinfo">
