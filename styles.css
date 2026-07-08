@@ -576,7 +576,7 @@ a {
 .section-inner {
   max-width: 1160px;
   margin: 0 auto;
-  padding: var(--space-2xl) var(--space-l);
+  padding: var(--space-xl) var(--space-l);
 }
 
 #how-it-works,
@@ -585,9 +585,7 @@ a {
 #analytics,
 #pricing,
 #gestures,
-#testimonials,
 #download {
-  min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
