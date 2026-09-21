@@ -1,14 +1,11 @@
 {
-  "name": "snapzone-web-e2e-tests",
+  "name": "snapzone-web",
   "version": "1.0.0",
-  "description": "E2E testing infrastructure for SnapZone web layout and widgets",
-  "main": "index.html",
+  "description": "SnapZone marketing site (static, deployed on Vercel)",
   "scripts": {
-    "test:e2e": "cross-env PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 playwright test"
+    "start": "http-server . -p 8080 -c-1"
   },
   "devDependencies": {
-    "@playwright/test": "^1.40.0",
-    "cross-env": "^7.0.3",
     "http-server": "^14.1.1"
   }
 }
