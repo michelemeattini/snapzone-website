@@ -76,9 +76,11 @@
 
       <!-- Hero copy — centered -->
       <div class="hero-text">
-        <div class="hero-badge" aria-label="Version badge" data-i18n="hero_badge">
+        <div class="hero-badge" aria-label="Version badge">
           <span class="badge-dot" aria-hidden="true"></span>
-          v2.0 · Now in Beta
+          <span class="hero-version" id="hero-version">v1.4</span>
+          <span aria-hidden="true">·</span>
+          <span data-i18n="hero_badge">Available now</span>
         </div>
         <h1 id="hero-headline" class="hero-h1" data-i18n="hero_headline">
           Window management,<br>
@@ -92,7 +94,7 @@
           <a href="#pricing" class="btn-primary" id="hero-download-btn" data-i18n="hero_btn_trial">Start Free Trial</a>
           <a href="#how-it-works" class="btn-ghost" id="hero-learn-btn" data-i18n="hero_btn_learn">See how it works</a>
         </div>
-        <p class="hero-footnote" data-i18n="hero_footnote">10-day free trial · macOS 13+ · No account required</p>
+        <p class="hero-footnote" data-i18n="hero_footnote">10-day free trial · macOS 14+ · No account required</p>
       </div>
 
 
@@ -458,7 +460,7 @@
         <img src="assets/logo.png" alt="SnapZone App Icon" class="download-logo-img" loading="lazy" decoding="async">
       </div>
       <h2 id="download-heading" class="download-h2" data-i18n="download_title">Take control of your workspace.</h2>
-      <p class="download-sub" data-i18n="download_sub">10-day free trial. No account. macOS 13 Ventura or later.</p>
+      <p class="download-sub" data-i18n="download_sub">10-day free trial. No account. macOS 14 Sonoma or later.</p>
       <div class="download-actions">
         <a href="https://github.com/michelemeattini/snapzone-website/releases/download/v1.4/SnapZone-1.4.zip" class="btn-primary btn-large" id="download-main-btn" download>
           <svg width="20" height="20" viewBox="8 8 22 23" fill="currentColor" aria-hidden="true" focusable="false">
@@ -467,7 +469,7 @@
           </svg>
           <span data-i18n="download_btn">Download for macOS</span>
         </a>
-        <span class="download-version" data-i18n="download_version">v1.4</span>
+        <span class="download-version" id="download-version">v1.4</span>
       </div>
       <div class="download-trust">
         <span data-i18n="download_trust1">🔒 Notarized by Apple</span>

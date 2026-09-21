@@ -833,6 +833,33 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   })();
 
   // ─────────────────────────────────────────────────────
+  // 15. VERSION & DOWNLOAD LINK FROM APPCAST
+  //     Single source of truth: appcast.xml (updated by release.sh).
+  //     The static values in index.html remain as a no-JS fallback.
+  // ─────────────────────────────────────────────────────
+  (function initVersionFromAppcast() {
+    const btn = document.getElementById('download-main-btn');
+    const versionEls = [
+      document.getElementById('download-version'),
+      document.getElementById('hero-version')
+    ].filter(Boolean);
+    if (!btn && !versionEls.length) return;
+
+    fetch('appcast.xml', { cache: 'no-cache' })
+      .then(r => (r.ok ? r.text() : Promise.reject(new Error('HTTP ' + r.status))))
+      .then(xml => {
+        const doc = new DOMParser().parseFromString(xml, 'application/xml');
+        const item = doc.querySelector('item');
+        if (!item) return;
+        const version = item.getElementsByTagName('sparkle:shortVersionString')[0]?.textContent?.trim();
+        const url = item.querySelector('enclosure')?.getAttribute('url');
+        if (version) versionEls.forEach(el => { el.textContent = 'v' + version; });
+        if (btn && url && /^https:\/\//.test(url)) btn.setAttribute('href', url);
+      })
+      .catch(() => { /* keep static fallback */ });
+  })();
+
+  // ─────────────────────────────────────────────────────
   // 14. GDPR YOUTUBE LAZY LOADER
   // ─────────────────────────────────────────────────────
   (function initYouTubeLazyLoad() {

@@ -10,7 +10,7 @@ macOS power users — developers, designers, content creators, and knowledge wor
 
 ## Product Purpose
 
-SnapZone is a macOS window management daemon that runs invisibly in the background. It provides instant window snapping via drag gestures, configurable trackpad gestures, global keyboard shortcuts, a custom layout editor, an optional sidebar (picture-in-picture) mode, and real-time usage analytics that show how much time has been saved compared to manual window dragging. The goal is total workspace mastery — windows go exactly where you want, instantly, without breaking flow.
+SnapZone is a macOS window management daemon that runs invisibly in the background. It provides instant window snapping via drag gestures, configurable trackpad gestures, global keyboard shortcuts, a custom layout editor, and real-time usage analytics that show how much time has been saved compared to manual window dragging. The goal is total workspace mastery — windows go exactly where you want, instantly, without breaking flow.
 
 ## Brand Personality
 

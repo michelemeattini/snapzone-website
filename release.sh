@@ -21,9 +21,13 @@ VERSION="$2"
 BUILD_NUMBER="$3"
 RELEASE_DATE=$(date -R)
 
-SPARKLE_BIN=~/Library/Developer/Xcode/DerivedData/SnapZone-fcooqtkxzbarbqbfdejdmtjbsvof/SourcePackages/artifacts/sparkle/Sparkle/bin
-SIGN_UPDATE="$SPARKLE_BIN/sign_update"
-APPCAST="$(dirname "$0")/appcast.xml"
+# sign_update: sovrascrivibile con SIGN_UPDATE=/percorso, altrimenti cercato in DerivedData
+if [ -z "$SIGN_UPDATE" ]; then
+  SIGN_UPDATE=$(ls -d ~/Library/Developer/Xcode/DerivedData/SnapZone-*/SourcePackages/artifacts/sparkle/Sparkle/bin/sign_update 2>/dev/null | head -1)
+fi
+WEB_DIR="$(cd "$(dirname "$0")" && pwd)"
+APPCAST="$WEB_DIR/appcast.xml"
+INDEX_HTML="$WEB_DIR/index.html"
 TAG="v${VERSION}"
 
 # ── Validazioni ──────────────────────────────────────────────
@@ -38,8 +42,9 @@ if [ ! -f "$ZIP_PATH" ]; then
   exit 1
 fi
 
-if [ ! -f "$SIGN_UPDATE" ]; then
-  echo "❌  sign_update non trovato in: $SIGN_UPDATE"
+if [ -z "$SIGN_UPDATE" ] || [ ! -f "$SIGN_UPDATE" ]; then
+  echo "❌  sign_update non trovato (DerivedData di Sparkle assente?)."
+  echo "    Passa il percorso esplicito: SIGN_UPDATE=/path/to/sign_update $0 ..."
   exit 1
 fi
 
@@ -130,17 +135,26 @@ with open(appcast_path, "w") as f:
 print("✅  appcast.xml aggiornato con versione", version)
 PYEOF
 
+# ── 3b. Aggiorna i fallback statici in index.html ───────────
+# (il sito legge versione e URL dall'appcast via JS; questi valori servono senza JS e ai crawler)
+echo "📝 Aggiornamento fallback statici in index.html..."
+sed -i '' \
+  -e "s#https://github.com/michelemeattini/snapzone-website/releases/download/v[0-9.]*/SnapZone-[0-9.]*\.zip#$DOWNLOAD_URL#g" \
+  -e "s#id=\"hero-version\">v[0-9.]*<#id=\"hero-version\">v$VERSION<#" \
+  -e "s#id=\"download-version\">v[0-9.]*<#id=\"download-version\">v$VERSION<#" \
+  "$INDEX_HTML"
+
 # ── 4. Git Commit & Push automatico su Vercel ───────────────
 echo "⚙️  Invio modifiche a GitHub (Deploy automatico su Vercel)..."
-cd "$(dirname "$0")"
-git add appcast.xml
+cd "$WEB_DIR"
+git add appcast.xml index.html
 # Facciamo commit solo se ci sono modifiche effettive
 if ! git diff --cached --quiet; then
   git commit -m "release: update appcast.xml for v$VERSION"
   git push origin main
   echo "✅ Push completato con successo!"
 else
-  echo "ℹ️  Nessuna modifica rilevata in appcast.xml."
+  echo "ℹ️  Nessuna modifica rilevata in appcast.xml / index.html."
 fi
 
 echo ""
