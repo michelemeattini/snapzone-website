@@ -97,10 +97,31 @@ echo "📦  Dimensione: $FILE_SIZE bytes"
 # ── 3. Aggiorna appcast.xml ──────────────────────────────────
 echo "📝 Aggiornamento appcast.xml..."
 
-python3 - "$APPCAST" "$VERSION" "$BUILD_NUMBER" "$RELEASE_DATE" "$DOWNLOAD_URL" "$FILE_SIZE" "$SIGNATURE" <<'PYEOF'
+python3 - "$APPCAST" "$VERSION" "$BUILD_NUMBER" "$RELEASE_DATE" "$DOWNLOAD_URL" "$FILE_SIZE" "$SIGNATURE" "$WEB_DIR/RELEASE_NOTES.md" <<'PYEOF'
 import sys, re
 
-appcast_path, version, build, date, url, size, sig = sys.argv[1:]
+appcast_path, version, build, date, url, size, sig, notes_file = sys.argv[1:]
+
+# Release notes shown by Sparkle in the update dialog. Taken from RELEASE_NOTES.md
+# (a "## <version>" section) so users see what changed, not a dead link.
+notes_html = "        <h2>SnapZone %s</h2>\n" % version
+try:
+    with open(notes_file) as nf:
+        block, capturing = [], False
+        for line in nf:
+            if line.startswith("## "):
+                if capturing:
+                    break
+                capturing = line[3:].strip() == version
+                continue
+            if capturing and line.strip().startswith("- "):
+                block.append("          <li>%s</li>" % line.strip()[2:].strip())
+        if block:
+            notes_html += "        <ul>\n" + "\n".join(block) + "\n        </ul>"
+        else:
+            notes_html += "        <p>See the in-app changelog for details.</p>"
+except FileNotFoundError:
+    notes_html += "        <p>See the in-app changelog for details.</p>"
 
 with open(appcast_path, "r") as f:
     content = f.read()
@@ -123,10 +144,7 @@ new_item = f"""
         sparkle:edSignature="{sig}"
       />
       <description><![CDATA[
-        <h2>SnapZone {version}</h2>
-        <ul>
-          <li>See <a href="https://snapzone-seven.vercel.app">snapzone.app</a> for release notes.</li>
-        </ul>
+{notes_html}
       ]]></description>
     </item>
 
@@ -153,7 +171,7 @@ sed -i '' \
 # ── 4. Git Commit & Push automatico su Vercel ───────────────
 echo "⚙️  Invio modifiche a GitHub (Deploy automatico su Vercel)..."
 cd "$WEB_DIR"
-git add appcast.xml index.html
+git add appcast.xml index.html RELEASE_NOTES.md
 # Facciamo commit solo se ci sono modifiche effettive
 if ! git diff --cached --quiet; then
   git commit -m "release: update appcast.xml for v$VERSION"
