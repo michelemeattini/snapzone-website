@@ -21,9 +21,15 @@ VERSION="$2"
 BUILD_NUMBER="$3"
 RELEASE_DATE=$(date -R)
 
-# sign_update: sovrascrivibile con SIGN_UPDATE=/percorso, altrimenti cercato in DerivedData
+# sign_update: sovrascrivibile con SIGN_UPDATE=/percorso, altrimenti cercato nella DerivedData
+# configurata in Xcode (IDECustomDerivedDataLocation, oggi sull'SSD esterno) e in quella di default.
 if [ -z "$SIGN_UPDATE" ]; then
-  SIGN_UPDATE=$(ls -d ~/Library/Developer/Xcode/DerivedData/SnapZone-*/SourcePackages/artifacts/sparkle/Sparkle/bin/sign_update 2>/dev/null | head -1)
+  CUSTOM_DD=$(defaults read com.apple.dt.Xcode IDECustomDerivedDataLocation 2>/dev/null)
+  for DD in "$CUSTOM_DD" ~/Library/Developer/Xcode/DerivedData; do
+    [ -n "$DD" ] || continue
+    SIGN_UPDATE=$(ls -d "$DD"/SnapZone-*/SourcePackages/artifacts/sparkle/Sparkle/bin/sign_update 2>/dev/null | head -1)
+    [ -n "$SIGN_UPDATE" ] && break
+  done
 fi
 WEB_DIR="$(cd "$(dirname "$0")" && pwd)"
 APPCAST="$WEB_DIR/appcast.xml"
