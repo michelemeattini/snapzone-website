@@ -9,7 +9,7 @@
     <!-- ==================== VERSION 1.5 ==================== -->
     <item>
       <title>SnapZone 1.5</title>
-      <pubDate>Tue, 22 Sep 2026 16:28:34 +0200</pubDate>
+      <pubDate>Tue, 22 Sep 2026 16:29:46 +0200</pubDate>
       <sparkle:version>6</sparkle:version>
       <sparkle:shortVersionString>1.5</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
@@ -22,10 +22,21 @@
       <description><![CDATA[
         <h2>SnapZone 1.5</h2>
         <ul>
-          <li>See <a href="https://snapzone-seven.vercel.app">snapzone.app</a> for release notes.</li>
+          <li>Rewritten trackpad gesture engine: the target zone is previewed on screen with a haptic tick while you swipe, direction detection is more accurate, and slow drifts or three-finger system gestures are ignored.</li>
+          <li>Each of the four corner gestures can now be enabled or disabled individually.</li>
+          <li>New "Window Spacing" setting to leave a gap between snapped windows and the screen edges.</li>
+          <li>Reorganised Settings: snapping options under General, a new License tab for licence, updates and beta, and every tab now fits the window.</li>
+          <li>Fixed: top/bottom splits created in the custom layout editor were saved upside down.</li>
+          <li>Fixed: keyboard shortcuts could silently stop working, and snapped to the wrong screen with multiple monitors.</li>
+          <li>Fixed: the "update available" badge in the menu bar never appeared.</li>
+          <li>Pausing SnapZone no longer changes your gesture and shortcut preferences; Accessibility permission granted after launch is picked up without restarting.</li>
+          <li>License validation no longer revokes a valid licence on temporary server errors.</li>
+          <li>SnapZone now follows your system language on first launch (English, Italian, Spanish).</li>
         </ul>
       ]]></description>
     </item>
+
+
 
 
     <!-- ==================== VERSION 1.4 ==================== -->
