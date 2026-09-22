@@ -6,6 +6,28 @@
     <link>https://snapzone-seven.vercel.app</link>
     <description>SnapZone version history</description>
     <language>en</language>
+    <!-- ==================== VERSION 1.5 ==================== -->
+    <item>
+      <title>SnapZone 1.5</title>
+      <pubDate>Tue, 22 Sep 2026 16:28:34 +0200</pubDate>
+      <sparkle:version>6</sparkle:version>
+      <sparkle:shortVersionString>1.5</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <enclosure
+        url="https://github.com/michelemeattini/snapzone-website/releases/download/v1.5/SnapZone-1.5.zip"
+        length="1574254"
+        type="application/zip"
+        sparkle:edSignature="WnarC97uB0f1fD6+WdneQlvfXajF5RPEAGex0IBzTsiB/nlfDYvfvXFVzUiI0XzPyj/O2XABcOaIbkk5nTDtDA=="
+      />
+      <description><![CDATA[
+        <h2>SnapZone 1.5</h2>
+        <ul>
+          <li>See <a href="https://snapzone-seven.vercel.app">snapzone.app</a> for release notes.</li>
+        </ul>
+      ]]></description>
+    </item>
+
+
     <!-- ==================== VERSION 1.4 ==================== -->
     <item>
       <title>SnapZone 1.4</title>
