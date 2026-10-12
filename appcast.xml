@@ -6,6 +6,44 @@
     <link>https://snapzone-seven.vercel.app</link>
     <description>SnapZone version history</description>
     <language>en</language>
+    <!-- ==================== VERSION 1.6 ==================== -->
+    <item>
+      <title>SnapZone 1.6</title>
+      <pubDate>Mon, 12 Oct 2026 16:43:50 +0200</pubDate>
+      <sparkle:version>7</sparkle:version>
+      <sparkle:shortVersionString>1.6</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+      <enclosure
+        url="https://github.com/michelemeattini/snapzone-website/releases/download/v1.6/SnapZone-1.6.zip"
+        length="2311657"
+        type="application/zip"
+        sparkle:edSignature="EVYbTR7LhFDTyrpVmKcYG/VxoaSRWltU9AgfZSw2gebtlaza3PE1l4YCCKFd+eH53AkVQ+2HK9oWt825D4EKDA=="
+      />
+      <description><![CDATA[
+        <h2>SnapZone 1.6</h2>
+        <ul>
+          <li>Trackpad gestures are reliable again: no more accidental snaps while scrolling or with a resting thumb, the direction is decided once, and swipes work in apps like Notion and other Electron apps.</li>
+          <li>The zone preview now looks like macOS tiling: a white outline with rounded corners beneath the window you are moving, and the haptic tick fires only once you are inside a zone.</li>
+          <li>Fixed: Google Chrome and some other apps could end up in the wrong place or snap in two steps.</li>
+          <li>Workspaces: save where the windows of all your apps are and put them back in one click, from the menu bar, Settings or Shortcuts.</li>
+          <li>19 window actions (halves, thirds, quarters, center, next or previous display, restore) with keyboard shortcuts you can record, clear or reset to the defaults.</li>
+          <li>Pressing ⌃⌥⌘← or → repeatedly cycles the window through ½, ⅔ and ⅓ of the screen.</li>
+          <li>The new Restore action puts a snapped window back to its original size; dragging it away can do the same (off by default, in Settings).</li>
+          <li>Custom layouts can now be edited after saving, and exported or imported as a file.</li>
+          <li>Centered zones keep their aspect ratio on every screen, and layouts bound to a monitor tell apart two monitors of the same model.</li>
+          <li>Shortcuts app, Siri and Spotlight support, plus snapzone:// links for Raycast, Alfred or a Stream Deck.</li>
+          <li>New Excluded Apps list, and SnapZone now leaves dialogs, full-screen windows and fixed-size windows alone.</li>
+          <li>The menu bar menu can snap the frontmost window and apply workspaces, and always offers Check for Updates.</li>
+          <li>Notifications before the trial ends; Unlock Pro opens the License tab and Buy links go to the SnapZone store.</li>
+          <li>A new app icon, the system accent color in the snap panel, Reduce Motion support and better VoiceOver labels.</li>
+          <li>Warning when macOS window tiling is on, since dragging to the menu bar then competes with SnapZone's panel.</li>
+          <li>Fixed: a trial that expired while SnapZone was running kept working until the next launch.</li>
+          <li>Fixed: windows with a minimum size could end up partly off screen after a snap.</li>
+        </ul>
+      ]]></description>
+    </item>
+
+
     <!-- ==================== VERSION 1.5 ==================== -->
     <item>
       <title>SnapZone 1.5</title>
